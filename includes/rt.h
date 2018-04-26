@@ -155,16 +155,30 @@ typedef	struct			s_lrt
 	double			nl_s;
 }						t_lrt;
 
+typedef struct		s_text
+{
+	TTF_Font		*font;
+	SDL_Surface		*message;
+	SDL_Texture		*tex;
+	SDL_Rect		text_rect;
+	SDL_Color		color;
+}					t_text;
+
+typedef struct		s_prop
+{
+	SDL_Texture		**texture;
+}					t_prop;
+
 typedef struct		s_gui
 {
 	SDL_Rect		*button;
-	SDL_Renderer	*rend;
+	SDL_Renderer	*rend[3];
 	SDL_Texture		**but_on;
 	SDL_Texture		**but_off;
 	Uint32			*flag;
 }					t_gui;
 
-typedef struct			s_view
+typedef struct		s_view
 {
 	int				exit_loop;
 	SDL_Window		*win[4];
@@ -173,7 +187,7 @@ typedef struct			s_view
 	unsigned int	*buff;
 	t_gui			rr;
 	t_space			*space;
-}						t_view;
+}					t_view;
 
 int						exit_x(t_view *view);
 void					do_rt(t_view *view);
@@ -258,7 +272,8 @@ SDL_Texture		*get_tex(char *file, SDL_Renderer *ren_tar);
 void			init_rect(t_gui *r);
 void			key_down(SDL_Scancode key, t_view *s);
 void			button_off_on(SDL_Rect *rect, SDL_Event e, t_view *s);
-
+SDL_Texture		*create_text(t_view *s, char *name, int i);
+void			print_properties(t_prop *p, t_view *s);
 /*END*/
 
 #endif

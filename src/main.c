@@ -42,10 +42,11 @@ int			main(int argc, char **argv)
 	{
 		if (!poll_event(&view))
 			view.exit_loop = 0;
-		SDL_RenderClear(view.rr.rend);
+		SDL_RenderClear(view.rr.rend[0]);
 		button_staff(&view);
-		SDL_RenderPresent(view.rr.rend);
+		SDL_RenderPresent(view.rr.rend[0]);
 		SDL_UpdateWindowSurface(view.win[0]);
+		// SDL_UpdateWindowSurface(view.win[2]);
 	}
 	return (0);
 }
