@@ -41,7 +41,8 @@ VECTORDIR = ./src/vector/
 PARSEDIR = ./src/parse/
 #	Source files
 SRCFILES = do_rt.c main.c space.c sdl_errors.c sdl_init.c init_buttons.c \
-			button_functions.c create_text.c
+			button_functions.c create_text.c print_list_obj.c list_properties.c \
+			utils1.c
 COLORFILES = color.c
 FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c
 LIGHTFILES = light.c

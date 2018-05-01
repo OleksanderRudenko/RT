@@ -17,6 +17,8 @@ static void	view_init(t_view *view,char *filename)
 	space_init(filename, view);
 	init_rect(&view->rr);
 	set_things_up(view);
+	object_init(view);
+	sphere_prop(view);
 	do_rt(view);
 }
 
@@ -42,11 +44,10 @@ int			main(int argc, char **argv)
 	{
 		if (!poll_event(&view))
 			view.exit_loop = 0;
-		SDL_RenderClear(view.rr.rend[0]);
 		button_staff(&view);
-		SDL_RenderPresent(view.rr.rend[0]);
+		print_shper_prop(&view);
 		SDL_UpdateWindowSurface(view.win[0]);
-		// SDL_UpdateWindowSurface(view.win[2]);
 	}
+	/*destroy texture..., cleaning staff HERE*/
 	return (0);
 }

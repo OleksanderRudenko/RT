@@ -29,6 +29,9 @@
 # define FOV_Y 30
 # define LIGHT_TYPE_AMBIENT 0
 # define LIGHT_TYPE_POINT 1
+# define NUM_BUTTONS 2
+# define MAX_TEXT_LEN 100
+// # define NUM_PROP 3 
 
 typedef union			u_color
 {
@@ -164,14 +167,21 @@ typedef struct		s_text
 	SDL_Color		color;
 }					t_text;
 
-typedef struct		s_prop
+typedef struct		s_list_obj
 {
-	SDL_Texture		**texture;
-}					t_prop;
+	SDL_Texture		**obj_tex;
+	SDL_Rect		*obj_rect;
+}					t_list_obj;
+
+typedef struct		s_list_prop
+{
+	SDL_Texture		**prop_tex;
+	SDL_Rect		*prop_rect;
+}					t_list_prop;
 
 typedef struct		s_gui
 {
-	SDL_Rect		*button;
+	SDL_Rect		*but_rect;
 	SDL_Renderer	*rend[3];
 	SDL_Texture		**but_on;
 	SDL_Texture		**but_off;
@@ -186,6 +196,8 @@ typedef struct		s_view
 	SDL_Surface		*win_surface[3];/*will be neede only one*/
 	unsigned int	*buff;
 	t_gui			rr;
+	t_list_obj		l_obj;
+	t_list_prop		l_prop;
 	t_space			*space;
 }					t_view;
 
@@ -270,10 +282,20 @@ void			set_things_up(t_view *s);
 void			button_staff(t_view *s);
 SDL_Texture		*get_tex(char *file, SDL_Renderer *ren_tar);
 void			init_rect(t_gui *r);
-void			key_down(SDL_Scancode key, t_view *s);
+void			mouse_key_down(t_view *s, SDL_Event e);
+void			mouse_key_up(t_view *s);
 void			button_off_on(SDL_Rect *rect, SDL_Event e, t_view *s);
 SDL_Texture		*create_text(t_view *s, char *name, int i);
-void			print_properties(t_prop *p, t_view *s);
+void			init_buttons(t_view *s);
+void			object_init(t_view *s);
+void			objects_draw(t_view *s);
+void			button_highlight(t_view *s, SDL_Event e, SDL_Rect *rect);
+SDL_Rect		make_rect(int x, int y, int w, int h);
+int				text_width(TTF_Font *f, char *str);
+void			print_shper_prop(t_view *s);
+void			sphere_prop(t_view *s);
+int				num_figures(t_view *s);
+char			*figure_type(t_figure_type num);
 /*END*/
 
 #endif

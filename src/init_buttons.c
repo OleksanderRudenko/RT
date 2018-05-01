@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "rt.h"
-# define NUM_BUTTONS 3
 
 SDL_Texture *get_tex(char *file, SDL_Renderer *ren_tar)
 {
@@ -36,79 +35,58 @@ SDL_Texture *get_tex(char *file, SDL_Renderer *ren_tar)
 	return (texture);
 }
 
-char	*name_of_file(char *str, int num)
-{
-	char *buf;
-	char *tmp;
-
-	buf = ft_strnew(50);
-
-	ft_strcpy(buf, str);
-	tmp = (ft_itoa(num));
-	ft_strcat(buf, tmp);
-	ft_strcat(buf, ".bmp");
-	ft_strdel(&tmp);
-	return (buf);
-}
-
 void	init_rect(t_gui *r)
 {
-	r->button = (SDL_Rect *)malloc(sizeof(SDL_Rect) * 3);
+	r->but_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * 3);
 
-	r->button[0].x = 0;
-	r->button[0].y = 0;
-	r->button[0].w = 50;
-	r->button[0].h = 50;
+	r->but_rect[0].x = 0;
+	r->but_rect[0].y = 0;
+	r->but_rect[0].w = 75;
+	r->but_rect[0].h = 75;
 
-	
-	r->button[1].x = 50;
-	r->button[1].y = 0;
-	r->button[1].w = 50;
-	r->button[1].h = 50;
+	r->but_rect[1].x = 75;
+	r->but_rect[1].y = 0;
+	r->but_rect[1].w = 75;
+	r->but_rect[1].h = 75;
+}
 
-
-	r->button[2].x = 100;
-	r->button[2].y = 0;
-	r->button[2].w = 50;
-	r->button[2].h = 50;
+void	init_buttons(t_view *s)
+{
+	s->rr.but_on[0] = get_tex("img/plane_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[0] = get_tex("img/plane_off.bmp", s->rr.rend[0]);
+	s->rr.but_on[1] = get_tex("img/sphere_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[1] = get_tex("img/sphere_off.bmp", s->rr.rend[0]);
 }
 
 void	set_things_up(t_view *s)
 {
 	int i;
-	char *str;
-	char *str2;
 
 	i = -1;
-	s->rr.but_on = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * 3);
-	s->rr.but_off = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * 3);
-	s->rr.flag = (Uint32 *)malloc(sizeof(Uint32) * 6);
+	s->rr.but_on = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * NUM_BUTTONS);
+	s->rr.but_off = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * NUM_BUTTONS);
+	s->rr.flag = (Uint32 *)malloc(sizeof(Uint32) * NUM_BUTTONS * 2);
 	s->rr.rend[0] = SDL_CreateRenderer(s->win[3], -1, SDL_RENDERER_ACCELERATED);/*options*/
-	s->rr.rend[1] = SDL_CreateRenderer(s->win[1], -1, SDL_RENDERER_ACCELERATED);/*have to be list of properties*/
-	s->rr.rend[2] = SDL_CreateRenderer(s->win[2], -1, SDL_RENDERER_ACCELERATED);/*have to be list of figures*/
-	while (++i < 3)
-	{
+	s->rr.rend[1] = SDL_CreateRenderer(s->win[1], -1, SDL_RENDERER_ACCELERATED);/*have to be list of figures*/
+	s->rr.rend[2] = SDL_CreateRenderer(s->win[2], -1, SDL_RENDERER_ACCELERATED);/*have to be list of properties*/
+	while (++i < NUM_BUTTONS * 2)
 		s->rr.flag[i] = 1;
-		str = name_of_file("img/button_on", i);
-		str2 = name_of_file("img/button_off", i);
-		s->rr.but_on[i] = get_tex(str, s->rr.rend[0]);
-		s->rr.but_off[i] = get_tex(str2, s->rr.rend[0]);
-		free(str);
-	}
+	init_buttons(s);
 }
-
 
 void	button_staff(t_view *s)
 {
 	int i;
 
 	i = 0;
+	SDL_RenderClear(s->rr.rend[0]);
 	while (i < NUM_BUTTONS)
 	{
 		if (s->rr.flag[i] == 1)
-			SDL_RenderCopy(s->rr.rend[0], s->rr.but_on[i],NULL, &s->rr.button[i]);
+			SDL_RenderCopy(s->rr.rend[0], s->rr.but_on[i],NULL, &s->rr.but_rect[i]);
 		else
-			SDL_RenderCopy(s->rr.rend[0], s->rr.but_off[i],NULL, &s->rr.button[i]);
+			SDL_RenderCopy(s->rr.rend[0], s->rr.but_off[i],NULL, &s->rr.but_rect[i]);
 		i++;
 	}
+	SDL_RenderPresent(s->rr.rend[0]);
 }

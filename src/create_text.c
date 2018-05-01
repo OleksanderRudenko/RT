@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "rt.h"
-# define NUM_PROP 3
 
 SDL_Texture	*create_text(t_view *s, char *name, int i)
 {
@@ -27,12 +26,4 @@ SDL_Texture	*create_text(t_view *s, char *name, int i)
 	t.tex = SDL_CreateTextureFromSurface(s->rr.rend[i], t.message);
 	SDL_FreeSurface(t.message);
 	return (t.tex);
-}
-
-void		print_properties(t_prop *p, t_view *s)
-{
-	p->texture = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * NUM_PROP);
-	p->texture[0] = create_text(s, "Pos X", 1);
-	p->texture[1] = create_text(s, "Pos Y", 1);
-	p->texture[2] = create_text(s, "Pos Z", 1);
 }
