@@ -130,6 +130,14 @@ typedef struct		s_cube
 	t_squard		planes[6];
 }					t_cube;
 
+typedef struct   	s_elipsoid					 /* ELIPSOID */
+{
+	t_vector  		position;
+	t_vector  		rotation;
+	double			radius;
+	double			rdistance;
+}      				t_elipsoid;
+
 typedef struct			s_figure
 {
 	void			*figure;
@@ -269,6 +277,8 @@ void					parse_ambient(JSON_Object *light, t_view *view);
 void					parse_point(JSON_Object *light, t_view *view);
 void					parse_cam(JSON_Object *root, t_view *view);
 void					parse_triangle(JSON_Object *triangle, t_view *view);
+/*parse/pelipsoid*/
+void					parse_elipsoid(JSON_Object *elipsoid, t_view *view);
 t_figure				*cube_init(t_ray *pnr, t_vector scale, int color,
 		double reflection);
 
