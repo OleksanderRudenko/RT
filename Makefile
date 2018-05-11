@@ -48,7 +48,7 @@ FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c
 LIGHTFILES = light.c
 VECTORFILES = vector.c vector2.c rotate.c
 PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
-				pplane.c psphere.c ptriangle.c 
+				pplane.c psphere.c ptriangle.c pelipsoid.c preflection.c pvector.c \
 #	Header folder
 INCLUDE = ./includes $(LIBSDLINCLUDE)
 #	Binaries folder

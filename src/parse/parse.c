@@ -32,6 +32,8 @@ static void			parse_figure(JSON_Object *figure, t_view *view)
 		parse_cone(figure, view);
 	else if (ft_strequ(type, "triangle"))
 		parse_triangle(figure, view);
+	else if (ft_strequ(type, "elipsoid"))
+		parse_elipsoid(figure, view);
 	else
 		ft_putendl_fd("Unknown figure found. Skipped", STDERR_FILENO);
 }
@@ -106,7 +108,11 @@ void				parse_scene(char *filename, t_view *view)
 	JSON_Object		*root_obj;
 
 	errno = 0;
-	root = json_parse_file(filename);
+	if (!(root = json_parse_file(filename)))
+	{
+				ft_putendl_fd("Cannot parse file", STDERR_FILENO);
+				exit(-1);
+	}
 	type = json_value_get_type(root);
 	if (type != JSONObject)
 		root_parse_error(view);
