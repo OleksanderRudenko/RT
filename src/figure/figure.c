@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   figure.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 11:58:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 16:20:16 by abutok           ###   ########.fr       */
+/*   Updated: 2018/05/14 15:45:05 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ double		check_intersection(t_ray *ray, t_figure *figure)
 		return (check_cylinder_intersection(ray, figure->figure));
 	else if (figure->type == InfiniteCone)
 		return (check_cone_intersection(ray, figure->figure));
+	else if (figure->type == Tor)
+		return (check_tor_intersection(ray, figure->figure));
 	return (-1);
 }
 

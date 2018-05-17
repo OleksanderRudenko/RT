@@ -117,7 +117,7 @@ void		do_rt(t_view *view)
 					tan(M_PI / 360 * FOV_X);
 			ray->v.y = (1 - 2 * ((y + 0.5) / HEIGHT)) *
 					tan(M_PI / 360 * FOV_Y);
-			ray->v.z = 1; 
+			ray->v.z = 1;
 			cam_rotate(ray, view->space->cam->v);
 			view->buff[y * WIDTH + x] = rt(view->space, ray);
 		}

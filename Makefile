@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abutok <abutok@student.42.fr>              +#+  +:+       +#+         #
+#    By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 16:24:00 by abutok            #+#    #+#              #
-#    Updated: 2018/03/22 20:16:18 by abutok           ###   ########.fr        #
+#    Updated: 2018/05/10 16:58:06 by vvinogra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,7 @@ LINKPARSON = -L ./parson -lparson
 LIBSDLINCLUDE = -I ./frameworks/SDL2.framework/Versions/A/Headers \
 				-I ./frameworks/SDL2_ttf.framework/Versions/A/Headers \
 				-I ./frameworks/SDL2_image.framework/Versions/A/Headers \
-				-F ./frameworks/ 
+				-F ./frameworks/
 LIBSDLFRAMES = -F ./frameworks \
 				-rpath ./frameworks \
 				-framework SDL2 \
@@ -40,15 +40,13 @@ LIGHTDIR = ./src/light/
 VECTORDIR = ./src/vector/
 PARSEDIR = ./src/parse/
 #	Source files
-SRCFILES = do_rt.c main.c space.c sdl_errors.c sdl_init.c init_buttons.c \
-			button_functions.c create_text.c print_list_obj.c list_properties.c \
-			utils1.c
+SRCFILES = do_rt.c main.c space.c sdl_errors.c sdl_init.c init_buttons.c button_functions.c solve_quatric.c solve_cubic.c
 COLORFILES = color.c
-FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c
+FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c ftor.c
 LIGHTFILES = light.c
 VECTORFILES = vector.c vector2.c rotate.c
 PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
-				pplane.c psphere.c ptriangle.c 
+				pplane.c psphere.c ptriangle.c ptor.c
 #	Header folder
 INCLUDE = ./includes $(LIBSDLINCLUDE)
 #	Binaries folder
@@ -73,7 +71,7 @@ all: $(LIBFT) $(PARSON) $(NAME)
 
 $(NAME): $(BINDIR) $(BIN)
 	$(GCC) $(LINKLIB) -o $(NAME) $(BIN) -I $(LIBFTINCLUDE) -I $(INCLUDE) \
-		-I $(PARSONINCLUDE) 
+		-I $(PARSONINCLUDE)
 
 $(BINDIR):
 	@if [ ! -d "$(BINDIR)" ]; then mkdir $(BINDIR); fi

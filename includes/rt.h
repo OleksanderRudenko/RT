@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 16:44:20 by abutok           ###   ########.fr       */
+/*   Updated: 2018/05/10 16:48:29 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,6 @@
 # define FOV_Y 30
 # define LIGHT_TYPE_AMBIENT 0
 # define LIGHT_TYPE_POINT 1
-# define NUM_BUTTONS 2
-# define MAX_TEXT_LEN 100
-// # define NUM_PROP 3 
 
 typedef union			u_color
 {
@@ -80,8 +77,16 @@ typedef enum			e_figure_type
 	InfiniteCylinder = 2,
 	InfiniteCone = 3,
 	Triangle = 4,
-	Cube = 5
+	Cube = 5,
+	Tor = 6
 }						t_figure_type;
+
+typedef struct 		s_itor
+{
+	double					r;
+	double					r_b;
+	t_vector				center;
+}									t_itor;
 
 typedef struct			s_iplane
 {
@@ -158,37 +163,16 @@ typedef	struct			s_lrt
 	double			nl_s;
 }						t_lrt;
 
-typedef struct		s_text
-{
-	TTF_Font		*font;
-	SDL_Surface		*message;
-	SDL_Texture		*tex;
-	SDL_Rect		text_rect;
-	SDL_Color		color;
-}					t_text;
-
-typedef struct		s_list_obj
-{
-	SDL_Texture		**obj_tex;
-	SDL_Rect		*obj_rect;
-}					t_list_obj;
-
-typedef struct		s_list_prop
-{
-	SDL_Texture		**prop_tex;
-	SDL_Rect		*prop_rect;
-}					t_list_prop;
-
 typedef struct		s_gui
 {
-	SDL_Rect		*but_rect;
-	SDL_Renderer	*rend[3];
+	SDL_Rect		*button;
+	SDL_Renderer	*rend;
 	SDL_Texture		**but_on;
 	SDL_Texture		**but_off;
 	Uint32			*flag;
 }					t_gui;
 
-typedef struct		s_view
+typedef struct			s_view
 {
 	int				exit_loop;
 	SDL_Window		*win[4];
@@ -196,10 +180,35 @@ typedef struct		s_view
 	SDL_Surface		*win_surface[3];/*will be neede only one*/
 	unsigned int	*buff;
 	t_gui			rr;
-	t_list_obj		l_obj;
-	t_list_prop		l_prop;
 	t_space			*space;
-}					t_view;
+}						t_view;
+
+typedef struct	s_cubic
+{
+	double a;
+	double b;
+	double c;
+	double d;
+	double *ret;
+	double p;
+	double q;
+	double s;
+}				t_cubic;
+
+typedef struct	s_quadric
+{
+	double a;
+	double b;
+	double c;
+	double d;
+	double e;
+	double *sqr;
+	double *cub;
+	double *ret;
+	double p;
+	double q;
+	double r;
+}				t_quadric;
 
 int						exit_x(t_view *view);
 void					do_rt(t_view *view);
@@ -251,6 +260,8 @@ t_figure				*cone_init(t_ray *axis, double k, int color,
 
 t_figure				*triangle_init(t_ray *ray, t_vector third_point, int color,
 		double reflection);
+t_figure		*tor_init(t_vector center, const double radiuses[2], int color,
+				double reflection);
 
 void					parse_scene(char *filename, t_view *view);
 void					root_parse_error(t_view *view);
@@ -269,8 +280,13 @@ void					parse_ambient(JSON_Object *light, t_view *view);
 void					parse_point(JSON_Object *light, t_view *view);
 void					parse_cam(JSON_Object *root, t_view *view);
 void					parse_triangle(JSON_Object *triangle, t_view *view);
+void					parse_tor(JSON_Object *tor, t_view *view);
 t_figure				*cube_init(t_ray *pnr, t_vector scale, int color,
 		double reflection);
+
+double					*find_cube_sqrt(double a, double b, double c, double d);
+double					*quadric_solver(const double (*nums)[5]);
+double					*find_sqrt(double a, double b, double c);
 
 /*SDL FUNCTIONS (and other by arudenko)*/
 void			sdl_init_err(void);
@@ -282,20 +298,9 @@ void			set_things_up(t_view *s);
 void			button_staff(t_view *s);
 SDL_Texture		*get_tex(char *file, SDL_Renderer *ren_tar);
 void			init_rect(t_gui *r);
-void			mouse_key_down(t_view *s, SDL_Event e);
-void			mouse_key_up(t_view *s);
+void			key_down(SDL_Scancode key, t_view *s);
 void			button_off_on(SDL_Rect *rect, SDL_Event e, t_view *s);
-SDL_Texture		*create_text(t_view *s, char *name, int i);
-void			init_buttons(t_view *s);
-void			object_init(t_view *s);
-void			objects_draw(t_view *s);
-void			button_highlight(t_view *s, SDL_Event e, SDL_Rect *rect);
-SDL_Rect		make_rect(int x, int y, int w, int h);
-int				text_width(TTF_Font *f, char *str);
-void			print_shper_prop(t_view *s);
-void			sphere_prop(t_view *s);
-int				num_figures(t_view *s);
-char			*figure_type(t_figure_type num);
+
 /*END*/
 
 #endif
