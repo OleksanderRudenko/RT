@@ -37,19 +37,19 @@ WWW = -Wall -Wextra -Werror
 all: $(NAME)
 
 $(NAME): $(OBJDIR) $(OBJ)
-	ar rc $(NAME) $(OBJ)
-	ranlib libft.a
+	@ar rc $(NAME) $(OBJ)
+	@ranlib libft.a
 
 $(OBJDIR):
-	if [ ! -d "$(OBJDIR)" ]; then mkdir $(OBJDIR); fi
+	@if [ ! -d "$(OBJDIR)" ]; then mkdir $(OBJDIR); fi
 
 $(OBJDIR)%.o: %.c
-	$(GCC) $(WWW) $(HDR) $< -o $@
+	@$(GCC) $(WWW) $(HDR) $< -o $@
 
 clean:
-	if [ -d "$(OBJDIR)" ]; then rm -rf $(OBJDIR); fi
+	@if [ -d "$(OBJDIR)" ]; then rm -rf $(OBJDIR); fi
 
 fclean: clean
-	if [ -f "$(NAME)" ]; then rm $(NAME); fi
+	@if [ -f "$(NAME)" ]; then rm $(NAME); fi
 
 re: fclean all

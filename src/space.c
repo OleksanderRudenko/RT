@@ -53,7 +53,7 @@ void		space_init(char *filename, t_view *view)
 	view->space->cam = NULL;
 	view->space->figures = NULL;
 	view->space->lights = NULL;
-	parse_scene(filename, view);
+	parse_scene(filename, view); 																/*  PARSE  */
 	if (view->space->cam == NULL)
 		view->space->cam = ray_init((t_vector){0, 0, -10},
 				(t_vector){0, 0, 0});

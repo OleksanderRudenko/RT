@@ -112,8 +112,7 @@ void		do_rt(t_view *view)
 		x = -1;
 		while (++x < WIDTH)
 		{
-			ray->v.x = (((x + 0.5) / WIDTH) * 2 - 1) *
-					(((double)WIDTH) / HEIGHT) *
+			ray->v.x = (((x + 0.5) / WIDTH) * 2 - 1) * (((double)WIDTH) / HEIGHT) *
 					tan(M_PI / 360 * FOV_X);
 			ray->v.y = (1 - 2 * ((y + 0.5) / HEIGHT)) *
 					tan(M_PI / 360 * FOV_Y);

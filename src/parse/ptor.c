@@ -14,7 +14,7 @@
 
 void		parse_tor(JSON_Object *tor, t_view *view)
 {
-	t_figure	 *ftor;
+	t_figure	*ftor;
 	const double radiuses[2] = {1, 2};
 
     ftor = tor_init((t_vector){0, 0, 0}, radiuses, 0xffffff, 0);
@@ -25,13 +25,13 @@ void		parse_tor(JSON_Object *tor, t_view *view)
 	else
 		ft_putendl_fd("Unknown tor center. Default applied", STDERR_FILENO);
 	if (json_object_has_value_of_type(tor, "radius1", JSONNumber))
-		((t_itor*)ftor->figure)->radius = json_object_get_number(tor,
+		((t_itor*)ftor->figure)->r = json_object_get_number(tor,
 				"radius1");
 	else
 		ft_putendl_fd("Unknown or invalid tor small radius. Default applied",
                 STDERR_FILENO);
     if (json_object_has_value_of_type(tor, "radius2", JSONNumber))
-        ((t_itor*)ftor->figure)->radius_b = json_object_get_number(tor,
+        ((t_itor*)ftor->figure)->r_b = json_object_get_number(tor,
                  "radius2");
     else
         ft_putendl_fd("Unknown or invalid tor big radius. Default applied",

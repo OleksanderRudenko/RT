@@ -12,8 +12,16 @@
 
 #include "rt.h"
 
-void 				check_figure(char *type, JSON_Object *figure, t_view *view)
+static void			parse_figure(JSON_Object *figure, t_view *view)
 {
+	char	*type;
+
+	if (!json_object_dothas_value_of_type(figure, "type", JSONString))
+	{
+		ft_putendl_fd("Unknown figure found. Skipped", STDERR_FILENO);
+		return ;
+	}
+	type = (char*)json_object_get_string(figure, "type");
 	if (ft_strequ(type, "sphere"))
 		parse_sphere(figure, view);
 	else if (ft_strequ(type, "plane"))
@@ -32,19 +40,6 @@ void 				check_figure(char *type, JSON_Object *figure, t_view *view)
 		parse_paraboloid(figure, view);
 	else
 		ft_putendl_fd("Unknown figure found. Skipped", STDERR_FILENO);
-}
-
-static void			parse_figure(JSON_Object *figure, t_view *view)
-{
-	char	*type;
-
-	if (!json_object_dothas_value_of_type(figure, "type", JSONString))
-	{
-		ft_putendl_fd("Unknown figure found. Skipped", STDERR_FILENO);
-		return ;
-	}
-	type = (char*)json_object_get_string(figure, "type");
-	check_figure(type, figure, view);
 }
 
 static void			parse_figures(JSON_Object *root, t_view *view)

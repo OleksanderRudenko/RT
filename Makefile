@@ -43,9 +43,9 @@ OPENCLDIR = ./src/opencl/
 #	Source files
 SRCFILES = main.c do_rt.c space.c sdl_errors.c sdl_init.c init_buttons.c \
 			button_functions.c create_text.c print_list_obj.c list_properties.c \
-			utils1.c opencl_init.c
+			utils1.c opencl_init.c solve_cubic.c solve_quatric.c
 COLORFILES = color.c
-FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c
+FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c ftor.c
 LIGHTFILES = light.c
 VECTORFILES = vector.c vector2.c rotate.c
 PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \

@@ -12,15 +12,24 @@
 
 #include "rt.h"
 
-// void	key_down(SDL_Scancode key, t_view *s)
-// {
-// 	if (key == SDL_SCANCODE_W)
-// 	{
-// 		ft_bzero(s->win_surface[0]->pixels, WIDTH * HEIGHT * 4);
-// 		s->figure[1].pos.x += 0.1;
-// 		draw(s);
-// 	}
-// }
+void	mouse_key_down(t_view *s, SDL_Event e)
+{
+	if (e.window.windowID == 4)
+		button_off_on(s->rr.but_rect, e, s);
+	// if (e.window.windowID == 4)
+}
+
+void	mouse_key_up(t_view *s)
+{
+	int	i;
+
+	i = 0;
+	while (i < NUM_BUTTONS * 2)
+	{
+		s->rr.flag[i] = (s->rr.flag[i] == 0) ? 1 : 1;
+		i++;
+	}
+}
 
 void	button_off_on(SDL_Rect *rect, SDL_Event e, t_view *s)
 {
@@ -29,7 +38,7 @@ void	button_off_on(SDL_Rect *rect, SDL_Event e, t_view *s)
 	int id;
 
 	id = -1;
-	while (++id < 3)
+	while (++id < NUM_BUTTONS)
 	{
 		x = e.button.x;
 		y = e.button.y;

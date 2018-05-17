@@ -18,14 +18,16 @@ void	init_sdl(t_view *s)
 		sdl_init_err();
 	if (TTF_Init() < 0)
 		sdl_ttf_err();
-	s->win[0] = SDL_CreateWindow("RTv1", SDL_WINDOWPOS_CENTERED,
-	SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
-
-	s->win[1] = SDL_CreateWindow("Object_list", 550, SDL_WINDOWPOS_CENTERED, 200, 1000, SDL_WINDOW_OPENGL);
-	s->win[2] = SDL_CreateWindow("Properties", 1800, SDL_WINDOWPOS_CENTERED, 150, 1000, SDL_WINDOW_OPENGL);
-	s->win[3] = SDL_CreateWindow("Options-Line", SDL_WINDOWPOS_CENTERED, 0, 1000, 200, SDL_WINDOW_OPENGL);
+	s->win[0] = SDL_CreateWindow("RT", SDL_WINDOWPOS_CENTERED,
+		SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
+	s->win[1] = SDL_CreateWindow("Object_list", 350, SDL_WINDOWPOS_CENTERED,
+		300, 1000, SDL_WINDOW_OPENGL);
+	s->win[2] = SDL_CreateWindow("Properties", 1900, SDL_WINDOWPOS_CENTERED,
+		200, 1000, SDL_WINDOW_OPENGL);
+	s->win[3] = SDL_CreateWindow("Options-Line", SDL_WINDOWPOS_CENTERED, 100,
+		1000, 200, SDL_WINDOW_OPENGL);
 	s->win_surface[0] = SDL_GetWindowSurface(s->win[0]);
-	s->win_surface[2] = SDL_GetWindowSurface(s->win[2]);
+	// s->win_surface[2] = SDL_GetWindowSurface(s->win[2]);
 	s->buff = s->win_surface[0]->pixels;
 	s->exit_loop = 1;
 }
@@ -40,13 +42,17 @@ int		poll_event(t_view *s)
 				s->exit_loop = 0;
 		/*Just example: we do not redraw if dont needed*/
 		/*Can be rotation here or whatever*/
-		// else if (e.type == SDL_KEYDOWN)
-		// {
-		// 	key_down(e.key.keysym.scancode, s);
-		// }
-		else if (e.type == SDL_MOUSEBUTTONDOWN && e.window.windowID == 4)
+		else if (e.type == SDL_MOUSEBUTTONDOWN)
 		{
-				button_off_on(s->rr.button, e, s);
+			mouse_key_down(s, e);
+		}
+		else if (e.type == SDL_MOUSEBUTTONUP && e.window.windowID == 4)
+		{
+			mouse_key_up(s);
+		}
+		else if (e.window.windowID == 2)
+		{
+			button_highlight(s, e, s->l_obj.obj_rect);
 		}
 	return (1);
 }

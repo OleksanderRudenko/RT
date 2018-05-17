@@ -202,13 +202,39 @@ typedef struct   		s_elipsoid					              /* ELIPSOID */
 
 typedef struct 			s_itor					                       /* TOR */
 {
-	double				radius;
-	double				radius_b;
+	double				r;
+	double				r_b;
 	t_vector			center;
 }						t_itor;
 
 /* END */
 
+typedef struct			s_cubic
+{
+	double 				a;
+	double 				b;
+	double 				c;
+	double 				d;
+	double 				*ret;
+	double 				p;
+	double 				q;
+	double 				s;
+}						t_cubic;
+
+typedef struct			s_quadric
+{
+	double 				a;
+	double 				b;
+	double 				c;
+	double 				d;
+	double 				e;
+	double 				*sqr;
+	double 				*cub;
+	double 				*ret;
+	double 				p;
+	double 				q;
+	double 				r;
+}						t_quadric;
 
 typedef struct			s_figure
 {
@@ -345,6 +371,12 @@ void					cam_rotate(t_ray *ray, t_vector vector);
 int						num_figures(t_view *s);
 char					*figure_type(t_figure_type num);
 
+//solve_cubic
+double					*find_cube_sqrt(double a, double b, double c, double d);
+
+//solve_quatric
+double					*quadric_solver(const double (*nums)[5]);
+
 //vector/rotate
 void					rotate_x(t_vector *ps, double l);
 void					rotate_y(t_vector *ps, double l);
@@ -406,6 +438,7 @@ void					parse_tor(JSON_Object *elipsoid, t_view *view);
 //parse/pcut_plane
 void					parse_cut_plane(t_iplane *fplane, t_capses *caps,
 									JSON_Object *paraboloid, const char *name);
+t_capses 				*init_cut_plane(void);
 
 //parse/perror
 void					root_parse_error(t_view *view);
@@ -433,6 +466,11 @@ t_figure				*cone_init(t_ray *axis, double k, int color,
 //figure/fcube
 t_figure				*cube_init(t_ray *pnr, t_vector scale, int color,
 															double reflection);
+
+//figure/ftor
+t_figure				*tor_init(t_vector center, const double radiuses[2],
+												int color, double reflection);
+double			check_tor_intersection(t_ray *ray, t_itor *tor);
 
 //figure/fcylinder
 double					check_cylinder_intersection(t_ray *ray,
