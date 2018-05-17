@@ -34,7 +34,6 @@ void		parse_cone(JSON_Object *cone, t_view *view)
 {
 	t_figure	*fcone;
 
-	printf("\n* CONE *\n");
 	fcone = cone_init(ray_init((t_vector){0, 0, 0},
 			(t_vector){0, -1, 0}), 1, 0xffffff, 0);
 	if (json_object_has_value_of_type(cone, "start", JSONArray))
