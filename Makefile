@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+         #
+#    By: abutok <abutok@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 16:24:00 by abutok            #+#    #+#              #
-#    Updated: 2018/05/10 16:58:06 by vvinogra         ###   ########.fr        #
+#    Updated: 2018/03/22 20:16:18 by abutok           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,11 +27,11 @@ LIBSDLINCLUDE = -I ./frameworks/SDL2.framework/Versions/A/Headers \
 LIBSDLFRAMES = -F ./frameworks \
 				-rpath ./frameworks \
 				-framework SDL2 \
-				-framework SDL2_ttf -framework SDL2_image\
+				-framework SDL2_ttf -framework SDL2_image \
 
 
 #	Libs linking
-LINKLIB = -framework OpenGL -framework AppKit -lmlx $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES)
+LINKLIB = -framework OpenGL -framework AppKit -framework OpenCl -lmlx $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES)
 #	Sources directories
 SRCDIR = ./src/
 COLORDIR = ./src/color/
@@ -39,14 +39,19 @@ FIGUREDIR = ./src/figure/
 LIGHTDIR = ./src/light/
 VECTORDIR = ./src/vector/
 PARSEDIR = ./src/parse/
+OPENCLDIR = ./src/opencl/
 #	Source files
-SRCFILES = do_rt.c main.c space.c sdl_errors.c sdl_init.c init_buttons.c button_functions.c solve_quatric.c solve_cubic.c
+SRCFILES = main.c do_rt.c space.c sdl_errors.c sdl_init.c init_buttons.c \
+			button_functions.c create_text.c print_list_obj.c list_properties.c \
+			utils1.c opencl_init.c
 COLORFILES = color.c
-FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c ftor.c
+FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c
 LIGHTFILES = light.c
 VECTORFILES = vector.c vector2.c rotate.c
 PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
-				pplane.c psphere.c ptriangle.c ptor.c
+				pplane.c psphere.c ptriangle.c pelipsoid.c preflection.c pvector.c \
+				ptor.c pparaboloid.c pcut_plane.c
+OPENCLFILES = opencl_init.c
 #	Header folder
 INCLUDE = ./includes $(LIBSDLINCLUDE)
 #	Binaries folder
@@ -76,38 +81,44 @@ $(NAME): $(BINDIR) $(BIN)
 $(BINDIR):
 	@if [ ! -d "$(BINDIR)" ]; then mkdir $(BINDIR); fi
 
+# $(BINDIR)%.o: $(OPENCLDIR)%.c
+# 	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+
 $(BINDIR)%.o: $(PARSEDIR)%.c
-	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(SRCDIR)%.c
-	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(COLORDIR)%.c
-	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(FIGUREDIR)%.c
-	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(LIGHTDIR)%.c
-	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE)  $< -o $@
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(VECTORDIR)%.c
-	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 clean:
-	make -C ./libft/ clean
-	make -C ./parson/ clean
-	if [ -d "$(BINDIR)" ]; then rm -rf $(BINDIR); fi
+	@make -C ./libft/ clean
+	@make -C ./parson/ clean
+	@if [ -d "$(BINDIR)" ]; then rm -rf $(BINDIR); fi
+	@echo "\033[32;1mCleaned\033[0m"
 
 fclean: clean
-	make -C ./libft/ fclean
-	make -C ./parson/ fclean
-	if [ -f "$(NAME)" ]; then rm -rf $(NAME); fi
+	@make -C ./libft/ fclean
+	@make -C ./parson/ fclean
+	@if [ -f "$(NAME)" ]; then rm -rf $(NAME); fi
 
 re: fclean all
 
 $(LIBFT):
-	make -C ./libft/
+	@echo "\033[33;1mCompilation of libft...\033[0m"
+	@make -C ./libft/
 
 $(PARSON):
-	make -C ./parson/
+	@echo "\033[33;1mCompilation of parson...\033[0m"
+	@make -C ./parson/
