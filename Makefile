@@ -50,7 +50,7 @@ LIGHTFILES = light.c
 VECTORFILES = vector.c vector2.c rotate.c
 PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
 				pplane.c psphere.c ptriangle.c pelipsoid.c preflection.c pvector.c \
-				ptor.c pparaboloid.c pcut_plane.c
+				ptor.c pparaboloid.c pcut_plane.c pquadrate.c
 OPENCLFILES = opencl_init.c
 #	Header folder
 INCLUDE = ./includes $(LIBSDLINCLUDE)

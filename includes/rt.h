@@ -440,6 +440,9 @@ void					parse_cut_plane(t_iplane *fplane, t_capses *caps,
 									JSON_Object *paraboloid, const char *name);
 t_capses 				*init_cut_plane(void);
 
+//parse/pquadrate
+void 					parse_quadrate(JSON_Object *quadrate, t_view *view);
+
 //parse/perror
 void					root_parse_error(t_view *view);
 
