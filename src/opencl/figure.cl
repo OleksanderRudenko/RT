@@ -23,7 +23,14 @@ float		check_intersection(float3 ray_origin, float3 ray_vector, t_cl_figure figu
 	return (-1);
 }
 
-int			check_intersections(float3 ray_origin, float3 ray_vector, __global t_cl_figure *figures, size_t figures_num)
+// char	figure_equ(t_cl_figure figure1, t_cl_figure figure2)
+// {
+// 	if (figure1 == figure2)
+// 		return (1);
+// 	return (0);
+// }
+
+int			check_intersections(float3 ray_origin, float3 ray_vector, __global t_cl_figure *figures, size_t figures_num, t_cl_figure figure)
 {
 	float	k;
 	size_t 	n;
@@ -31,6 +38,15 @@ int			check_intersections(float3 ray_origin, float3 ray_vector, __global t_cl_fi
 	n = 0;
 	while (n < figures_num)
 	{
+
+		if (figures[n].point.x == figure.point.x
+				&& figures[n].point.y == figure.point.y
+					&& figures[n].point.z == figure.point.z)
+		// if(figure_equ(figures[n], figure))
+		{
+			n++;
+			continue;
+		}
 		k = check_intersection(ray_origin, ray_vector, figures[n]);
 		if (k < 1 && k >= 1e-11)
 			return (1);

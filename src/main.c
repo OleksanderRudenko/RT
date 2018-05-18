@@ -12,20 +12,14 @@
 
 #include "rt.h"
 
-static void	view_init(t_view *view, const char *filename)
+static void	view_init(t_view *view,char *filename)
 {
 	space_init(filename, view);
 	init_rect(&view->rr);
 	set_things_up(view);
 	object_init(view);
-	init_slider(view);
 	sphere_prop(view);
-	object_default_init(view);
-	select_init(view);
-	light_list_init(view);
-	ok_button_init(view);
-	// data_init(view);
-	do_rt(view);
+	// do_rt(view);
 }
 
 int			exit_x(t_view *view)
@@ -37,28 +31,24 @@ int			exit_x(t_view *view)
 
 int			main(int argc, char **argv)
 {
-	t_view	view;
-	
+	t_view view;
+
+	init_sdl(&view);
 	if (argc != 2)
 	{
 		ft_putstr("usage: RT scene_filename\n");
 		return (0);
 	}
-	init_sdl(&view);
 	view_init(&view, argv[1]);
+	opencl_init(&view);
 	while (view.exit_loop == 1)
 	{
 		if (!poll_event(&view))
 			view.exit_loop = 0;
 		button_staff(&view);
-		print_default_text(&view);
-		// display_colored_rect(&view);
-		what_to_print(&view);
+		print_shper_prop(&view);
 		SDL_UpdateWindowSurface(view.win[0]);
 	}
-	// clean_staff(&view); /*TODO: make it good w/o segfault*/
-	system("leaks RT");
-	
 	/*destroy texture..., cleaning staff HERE*/
 	return (0);
 }

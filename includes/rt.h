@@ -30,8 +30,7 @@
 # define FOV_Y 30
 # define LIGHT_TYPE_AMBIENT 0
 # define LIGHT_TYPE_POINT 1
-# define NUM_BUTTONS 4
-# define NUM_SPH_PROP 5
+# define NUM_BUTTONS 2
 # define MAX_TEXT_LEN 100
 
 # define PLANE 0
@@ -272,14 +271,6 @@ typedef struct			s_quadric
 	double 				r;
 }						t_quadric;
 
-typedef struct   	s_elipsoid					 /* ELIPSOID */
-{
-	t_vector  		position;
-	t_vector  		rotation;
-	double			radius;
-	double			rdistance;
-}      				t_elipsoid;
-
 typedef struct			s_figure
 {
 	void				*figure;
@@ -308,136 +299,66 @@ typedef	struct			s_lrt
 	double				nl_s;
 }						t_lrt;
 
-typedef struct		s_color
+typedef struct			s_text
 {
-	unsigned char	red;
-	unsigned char	green;
-	unsigned char	blue;
-}					t_col;
+	TTF_Font			*font;
+	SDL_Surface			*message;
+	SDL_Texture			*tex;
+	SDL_Rect			text_rect;
+	SDL_Color			color;
+}						t_text;
 
-typedef struct		s_ok
+typedef struct			s_list_obj
 {
-	SDL_Texture		*b_ok;
-	SDL_Rect		ok_rect;
-}					t_ok;
+	SDL_Texture			**obj_tex;
+	SDL_Rect			*obj_rect;
+}						t_list_obj;
 
-typedef struct		s_slider
+typedef struct			s_list_prop
 {
-	t_col			clr;
-	SDL_Texture		*line;
-	SDL_Texture		*slider_but;
-	SDL_Rect		slider_rect;
-	SDL_Rect		line_rect;
-}					t_slider;
+	SDL_Texture			**prop_tex;
+	SDL_Rect			*prop_rect;
+}						t_list_prop;
 
-typedef struct		s_select
+typedef struct			s_gui
 {
-	SDL_Texture		**sel_tex_on;
-	SDL_Texture		**sel_tex_off;
-	SDL_Rect		*sel_rect;
-	int				*s_flag;
-}					t_select;
+	SDL_Rect			*but_rect;
+	SDL_Renderer		*rend[3];
+	SDL_Texture			**but_on;
+	SDL_Texture			**but_off;
+	Uint32				*flag;
+}						t_gui;
 
-typedef struct		s_text
+typedef struct			s_view
 {
-	TTF_Font		*font;
-	SDL_Surface		*message;
-	SDL_Texture		*tex;
-	SDL_Color		color;
-}					t_text;
+	int					exit_loop;
+	size_t 				figures_num;
+	size_t 				lights_num;
+	SDL_Window			*win[4];
+	SDL_Event			event;
+	SDL_Surface			*win_surface[3]; /*will be neede only one*/
+	unsigned int		*buff;
+	t_gui				rr;
+	t_list_obj			l_obj;
+	t_list_prop			l_prop;
+	t_space				*space;
+	t_ray				*ray;
+	t_opencl 			cl;
+}						t_view;
 
-typedef struct		s_list_light
-{
-	SDL_Texture		**light_tex;
-	SDL_Rect		*light_rect;
-	int				l_flag;
-	t_figure		*f;
-}					t_list_light;
-
-typedef struct		s_list_obj
-{
-	SDL_Texture		**obj_tex;
-	SDL_Rect		*obj_rect;
-	SDL_Texture		*def_tex;
-	SDL_Rect		def_rect;
-	int				d_flag;
-}					t_list_obj;
-
-typedef struct		s_prop
-{
-	SDL_Texture		**tex;
-	SDL_Rect		*rect;
-	SDL_Texture		**prop;
-	SDL_Rect		*pr_rect;
-
-	SDL_Texture		**ic; /*infinite cylinder*/
-	SDL_Rect		*ic_rect;
-	// SDL_Texture		**prop;
-	// SDL_Rect		*pr_rect;
-}					t_prop;
-
-typedef struct		s_numbers
-{
-	int				x;
-	int				y;
-	int				z;
-	int				a;
-}					t_num;
-
-typedef struct		s_gui
-{
-	SDL_Rect		*but_rect;
-	SDL_Renderer	*rend[3];
-	SDL_Texture		**but_on;
-	SDL_Texture		**but_off;
-	int				*flag;
-	Uint32			select_flag;
-	t_num		fl;
-	// t_num		fl2;
-}					t_gui;
-
-typedef struct		s_data
-{
-	t_vector		center;
-	float			radius;
-	float			reflection;
-	t_col			col;
-}					t_data;
-
-typedef struct		s_view
-{
-	int				exit_loop;
-	size_t 			figures_num;
-	size_t 			lights_num;
-	SDL_Window		*win[4];
-	SDL_Event		event;
-	SDL_Surface		*win_surface;
-	unsigned int	*buff;
-	t_gui			rr;
-	t_select		select;
-	t_list_obj		l_obj;
-	t_prop			prop;
-	t_list_light	l_light;
-	t_space			*space;
-	t_slider		**sl;
-	// t_data			*data;
-	t_ok			*ok;
-	int				flag;
-}					t_view;
-/*End*/
 //main
 int						exit_x(t_view *view);
 
 //opencl_init
 void					opencl_init(t_view *v);
 
-// //button_functions
-// void					mouse_key_down(t_view *s, SDL_Event e);
-// void					mouse_key_up(t_view *s);
-// void					button_off_on(SDL_Rect *rect, SDL_Event e, t_view *s);
+//button_functions
+void					mouse_key_down(t_view *s, SDL_Event e);
+void					mouse_key_up(t_view *s);
+void					button_off_on(SDL_Rect *rect, SDL_Event e, t_view *s);
 
-// //create_text
-// SDL_Texture				*create_text(t_view *s, char *name, int i);
+//create_text
+SDL_Texture				*create_text(t_view *s, char *name, int i);
 
 //do_rt
 double					rt_lightr(t_vector l, t_vector normale,
@@ -449,41 +370,41 @@ int						do_lightrt(t_space *space, t_ray *ray,
 int						rt(t_space *space, t_ray *ray);
 void					do_rt(t_view *view);
 
-// //init_buttons
-// SDL_Texture 			*get_tex(char *file, SDL_Renderer *ren_tar);
-// void					init_rect(t_gui *r);
-// void					init_buttons(t_view *s);
-// void					set_things_up(t_view *s);
-// void					button_staff(t_view *s);
+//init_buttons
+SDL_Texture 			*get_tex(char *file, SDL_Renderer *ren_tar);
+void					init_rect(t_gui *r);
+void					init_buttons(t_view *s);
+void					set_things_up(t_view *s);
+void					button_staff(t_view *s);
 
-// //list_properties
-// void					sphere_prop(t_view *s);
-// void					print_shper_prop(t_view *s);
+//list_properties
+void					sphere_prop(t_view *s);
+void					print_shper_prop(t_view *s);
 
-// //print_list_obj
-// SDL_Rect				make_rect(int x, int y, int w, int h);
-// int						text_width(TTF_Font *f, char *str);
-// void					object_init(t_view *s);
-// void					button_highlight(t_view *s, SDL_Event e, SDL_Rect *rect);
+//print_list_obj
+SDL_Rect				make_rect(int x, int y, int w, int h);
+int						text_width(TTF_Font *f, char *str);
+void					object_init(t_view *s);
+void					button_highlight(t_view *s, SDL_Event e, SDL_Rect *rect);
 
-// //sdl_errors
-// void					sdl_init_err(void);
-// void					sdl_ttf_err(void);
+//sdl_errors
+void					sdl_init_err(void);
+void					sdl_ttf_err(void);
 
-// //sdl_init
-// void					init_sdl(t_view *s);
-// int						poll_event(t_view *s);
+//sdl_init
+void					init_sdl(t_view *s);
+int						poll_event(t_view *s);
 
 //space
 void					add_light(t_light *light, t_view *view);
 void					add_figure(t_figure *figure, t_view *view);
 t_vector				get_intersection(t_ray *ray, double k);
-void					space_init(const char *filename, t_view *view);
+void					space_init(char *filename, t_view *view);
 void					cam_rotate(t_ray *ray, t_vector vector);
 
-// //utils1
-// int						num_figures(t_view *s);
-// char					*figure_type(t_figure_type num);
+//utils1
+int						num_figures(t_view *s);
+char					*figure_type(t_figure_type num);
 
 //solve_cubic
 double					*find_cube_sqrt(double a, double b, double c, double d);
@@ -514,7 +435,7 @@ int						check_hex(const char *str);
 int						ft_hexatoi(const char *str);
 
 //parse/parse
-void					parse_scene(const char *filename, t_view *view);
+void					parse_scene(char *filename, t_view *view);
 
 //parse/pcam
 void					parse_cam(JSON_Object *root, t_view *view);
@@ -569,7 +490,6 @@ t_vector				parse_vector(JSON_Array *vector, t_vector def);
 
 //parse/preflection
 void					parse_color_reflection(JSON_Object *sphere,
-<<<<<<< HEAD
 															t_figure *figure);
 
 //light/light
@@ -582,18 +502,6 @@ t_figure				*cone_init(t_ray *axis, double k, int color,
 															double reflection);
 
 //figure/fcube
-=======
-		t_figure *figure);
-void					parse_plane(JSON_Object *plane, t_view *view);
-void					parse_cylinder(JSON_Object *cylinder, t_view *view);
-void					parse_cone(JSON_Object *cone, t_view *view);
-void					parse_ambient(JSON_Object *light, t_view *view);
-void					parse_point(JSON_Object *light, t_view *view);
-void					parse_cam(JSON_Object *root, t_view *view);
-void					parse_triangle(JSON_Object *triangle, t_view *view);
-/*parse/pelipsoid*/
-void					parse_elipsoid(JSON_Object *elipsoid, t_view *view);
->>>>>>> daf13fc2116913d483aa6d15af77327d88b2bcf6
 t_figure				*cube_init(t_ray *pnr, t_vector scale, int color,
 															double reflection);
 
@@ -640,81 +548,5 @@ t_figure				*elipsoid_init(t_vector position, t_vector rotation,
 //color/color
 int						set_brightness(int color, double brightness,
 														double bbrightness);
-
-/*SDL FUNCTIONS (and other by arudenko)*/
-void			sdl_init_err(void);
-void			sdl_ttf_err(void);
-void			init_sdl(t_view *s);
-int				poll_event(t_view *s);
-char			*name_of_file(char *str, int num);
-void			set_things_up(t_view *s);
-void			button_staff(t_view *s);
-SDL_Texture		*get_tex(char *file, SDL_Renderer *ren_tar);
-void			init_rect(t_gui *r);
-void			mouse_key_down(t_view *s, SDL_Event e);
-
-void			mouse_key_up(t_view *s);
-void			select_button_up(t_view *s, SDL_Event e, int num);
-
-int				button_off_on(SDL_Rect *rect, int *flag, int num, SDL_Event	e);
-
-SDL_Texture		*create_text(t_view *s, char *name, int i, int font_size);
-void			init_buttons(t_view *s);
-void			object_init(t_view *s);
-void			objects_draw(t_view *s);
-void			obj_highlight(t_view *s, SDL_Event e, SDL_Rect *rect);
-SDL_Rect		make_rect(int x, int y, int w, int h);
-int				text_width(TTF_Font *f, char *str);
-
-void	print_prop(t_view *s);
-void			sphere_prop(t_view *s);/*sphere prop*/
-
-int				num_figures(t_view *s);
-char			*figure_type(t_figure_type num);
-int				select_figure(SDL_Rect *rect, SDL_Event e, int num);
-void			object_default_init(t_view *s);
-void			print_default_text(t_view *s);
-void			what_to_print(t_view *s);
-void			camera_move(t_view *s, SDL_Scancode key);
-void			camera_rot(t_view *s, SDL_Scancode key);
-int				is_in_rect(SDL_Rect rect, SDL_Event e);
-void			select_init(t_view *s);
-// void			draw_select_button(t_view *s, SDL_Event e);
-void			draw_select_button(t_view *s);
-int				num_lights(t_view *s);
-char			*light_type(char num);
-void			light_list_init(t_view *s);
-void			light_list_highlight(t_view *s, SDL_Event e, SDL_Rect *rect);
-void			set_const_highlight(t_view *s, int id);
-void			detect_type_of_figure(t_view *s);
-char			*ft_ftoa(double value);
-SDL_Texture		*create_text_ftoa(t_view *s, float num, int i, int font_size);
-void			clean_staff(t_view *s);
-void			clean_sphere_prop(t_view *s);
-void			clean_buttons(t_view *s);
-void			clean_list_obj(t_view *s);
-void			clean_light(t_view *s);
-
-// void			init_red_slider(t_view *s);
-// void			init_green_slider(t_view *s);
-void	init_slider(t_view *s);
-void			display_colored_rect(t_view *s);
-void			slider_click_event(SDL_Keycode key, t_view *s, SDL_Event e);
-void			slider_motion_event(t_view *s, SDL_Event e);
-void			init_sphere_prop(t_view *s, t_sphere *f, t_figure *fig);
-int		color_unite(int r, int g, int b);
-void			ok_button_init(t_view *s);
-void			ok_button_function(t_view *s, SDL_Event e);
-void			open_scene(t_view *s);
-/*16.05.18*/
-double			par_input();
-void			xxx(int num, t_view *s);
-t_figure	*detect_figure(t_view *s);
-t_col		col_parse(int col);
-void			data_init(t_view *s);
-void	init_incyl_prop(t_view *s, t_icylinder *cyl, t_figure *fig);
-void	p_sp_prop(t_view *s, int num, SDL_Texture **t, SDL_Rect *r);
-/*END*/
-
 
 #endif

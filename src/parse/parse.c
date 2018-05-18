@@ -34,15 +34,12 @@ static void			parse_figure(JSON_Object *figure, t_view *view)
 		parse_triangle(figure, view);
 	else if (ft_strequ(type, "elipsoid"))
 		parse_elipsoid(figure, view);
-<<<<<<< HEAD
 	else if (ft_strequ(type, "tor"))
 		parse_tor(figure, view);
 	else if (ft_strequ(type, "paraboloid"))
 		parse_paraboloid(figure, view);
 	else if (ft_strequ(type, "quadrate"))
 		parse_quadrate(figure, view);
-=======
->>>>>>> daf13fc2116913d483aa6d15af77327d88b2bcf6
 	else
 		ft_putendl_fd("Unknown figure found. Skipped", STDERR_FILENO);
 }
@@ -112,7 +109,7 @@ static void			parse_lights(JSON_Object *root, t_view *view)
 		parse_light(json_object_dotget_object(root, "lights"), view);
 }
 
-void				parse_scene(const char *filename, t_view *view)
+void				parse_scene(char *filename, t_view *view)
 {
 	JSON_Value		*root;
 	JSON_Value_Type	type;

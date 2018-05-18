@@ -14,7 +14,7 @@
 typedef union			u_color
 {
 	unsigned int		color;
-	unsigned int 		chanel[4];
+	unsigned char 		chanel[4];
 	//0 - r
 	//1 - g
 	//2 - b
@@ -128,7 +128,7 @@ float					rt_lightr(float3 l, float3 normale, float3 view, float3 buf);
 /* figure */
 float					check_intersection(float3 ray_origin, float3 ray_vector, t_cl_figure figure);
 int						check_intersections(float3 ray_origin, float3 ray_vector,
-										__global t_cl_figure *figures, size_t figures_num);
+										__global t_cl_figure *figures, size_t figures_num, t_cl_figure figure);
 float3					get_normale(float3 ray, t_cl_figure f);
 
 /* space */

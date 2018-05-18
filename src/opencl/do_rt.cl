@@ -55,7 +55,7 @@ unsigned int				do_lightrt(__global t_cl_light *lights,
 			v.vlight = subtraction(v.light[n].origin, v.intersection);
 			v.buf_origin = (float3)(v.intersection.x, v.intersection.y, v.intersection.z);
 			v.buf_vector = (float3)(v.vlight.x, v.vlight.y, v.vlight.z);
-			if (!(check_intersections(v.buf_origin, v.buf_vector, figures, figures_num)))
+			if (!(check_intersections(v.buf_origin, v.buf_vector, figures, figures_num, figure)))
 			{
 				if ((v.nl_s = dot(v.normale, v.vlight)) > 0.0f)
 					v.bright += v.light[n].inten * v.nl_s / fast_length(v.vlight);
@@ -68,6 +68,16 @@ unsigned int				do_lightrt(__global t_cl_light *lights,
 			}
 		}
 		n++;
+	}
+	if (v.bright >= 1)
+	{
+		printf("%f-v.bright", v.bright);
+		// exit(1);
+	}
+	if (v.reflected >= 1)
+	{
+		printf("%f-v.reflected", v.reflected);
+		// exit(1);
 	}
 	return (set_brightness(figure.color, v.bright, v.reflected));
 }
