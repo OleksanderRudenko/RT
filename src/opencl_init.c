@@ -12,12 +12,12 @@
 
 #include "rt.h"
 
-#ifdef cl_khr_fp64
-	#pragma OPENCL EXTENSION cl_khr_fp64 : enable
-#elif defined(cl_amd_fp64)
-	#pragma OPENCL EXTENSION cl_amd_fp64 : enable
-#endif
-
+// #ifdef cl_khr_fp64
+// 	#pragma OPENCL EXTENSION cl_khr_fp64 : enable
+// #elif defined(cl_amd_fp64)
+// 	#pragma OPENCL EXTENSION cl_amd_fp64 : enable
+// #endif
+//
 void	opencl_errors(const char *msg)
 {
 	ft_putendl(msg);
@@ -30,25 +30,24 @@ static char 	*get_kernel(void)
   "#include \"rt_h.cl\"\n#include \"color.cl\"\n" \
   "#include \"do_rt.cl\"\n#include \"figure.cl\"\n" \
   "#include \"space.cl\"\n#include \"vector.cl\"\n" \
-  "#include \"fcone.cl\"\n#include \"fcylinder.cl\"\n" \
+  "#include \"fcylinder.cl\"\n" \
   "#include \"fplane.cl\"\n#include \"fsphere.cl\"\n" \
-  "#include \"ftriangle.cl\"\n"
-  "kernel void kernel_rt(     					\n" \
-	"			 unsigned int width, 						\n" \
-	"			 unsigned int height, 					\n" \
-  "      __global t_figure *figure,     \n" \
+  "kernel void kernel_rt(     			\n" \
+  "		 unsigned int width, 			\n" \
+  "		 unsigned int height, 			\n" \
+  "		 size_t figures_num, 			\n" \
+  "		 size_t lights_num, 			\n" \
+  "      __global t_cl_figure *figures, \n" \
   "      __global t_cl_light *light,    \n" \
   "      __global float *cam_v,   	    \n" \
-  "      __global float *cam_o,  		    \n" \
+  "      __global float *cam_o,  		\n" \
   "      __global unsigned int *output){\n" \
   " unsigned int x = get_global_id(0);  \n" \
   " unsigned int y = get_global_id(1);  \n" \
-	// " x = x % width; 											\n" \
-	// " y = x / width; 											\n" \
-  // " size_t width = get_global_size(0);  \n" \
-  // " size_t height = get_global_size(1); \n"
   " unsigned int color;                 \n" \
-  " color = do_rt(x, y, width, height, figure, light, cam_v, cam_o);\n" \
+  " color = do_rt(x, y, width, height,  \n" \
+  "	  figures, light, cam_v, cam_o,      \n" \
+  "	  figures_num, lights_num);			\n" \
   " output[y * width + x] = color;}     \n";
   return (ft_strdup(kernel));
 }
@@ -69,7 +68,7 @@ void	getting_results(t_view *v)
 					v->buff, 0, NULL, &v->cl.read_results_event);
 	/*=======results====*/
 	// int i = 0;
-	// while (i < WIDTH)
+	// while (i < WIDTH * HEIGHT)
 	// {
 	// 	printf("%#x\n", v->buff[i]);
 	// 	i++;
@@ -102,73 +101,106 @@ void 	cl_set_arg(t_view *v, void *arg, size_t arg_size, cl_uint index)
 
 t_cl_light *copy_light(t_view *v)
 {
-	t_cl_light *light;
-	// int n;
-	t_cl_light *head;
+	t_cl_light  *light;
 	t_light 	*tmp;
+	int 		n;
 
 	tmp = v->space->lights;
-	light = (t_cl_light*)malloc(sizeof(t_cl_light));
+	light = (t_cl_light*)malloc(sizeof(t_cl_light) * v->lights_num);
+	n = 0;
+	while (tmp)
+	{
+		light[n].origin.x = tmp->o.x;
+		light[n].origin.y = tmp->o.y;
+		light[n].origin.z = tmp->o.z;
+		light[n].inten = tmp->inten;
+		light[n].type = tmp->type;
+		tmp = tmp->next;
+		n++;
+	}
 	// n = 0;
-	// while (tmp)
-	// {
-	// 	light[n].origin.x = tmp->o.x;
-	// 	light[n].origin.y = tmp->o.y;
-	// 	light[n].origin.z = tmp->o.z;
-	// 	light[n].inten = tmp->inten;
-	// 	light[n].type = tmp->type;
-	// 	tmp = tmp->next;
-	// 	n++;
-	// }
-	// n = 0;
-	// while (n < 2)
+	// while (n < (int)v->lights_num)
 	// {
 	// 	printf("inten -> %f origin (%f %f %f) type->%i\n", light[n].inten, light[n].origin.x,
 	// 										light[n].origin.y, light[n].origin.z, light[n].type);
 	// 	n++;
 	// }
-	head = light;
-	light->origin.x = tmp->o.x;
-	light->origin.y = tmp->o.y;
-	light->origin.z = tmp->o.z;
-	light->inten = tmp->inten;
-	light->type = tmp->type;
-	light->next = NULL;
-	tmp = tmp->next;
+	return (light);
+}
+
+t_cl_figure *copy_figures(t_view *v)
+{
+	t_cl_figure *figures;
+	t_figure 	*tmp;
+	int 		n;
+
+	tmp = v->space->figures;
+	figures = (t_cl_figure*)malloc(sizeof(t_cl_figure) * v->figures_num);
+
+	n = 0;
 	while (tmp)
 	{
-		light = head;
-		while (light->next)
-			light = light->next;
-		light->next = (t_cl_light*)malloc(sizeof(t_cl_light));
-		light->next->origin.x = tmp->o.x;
-		light->next->origin.y = tmp->o.y;
-		light->next->origin.z = tmp->o.z;
-		light->next->inten = tmp->inten;
-		light->next->type = tmp->type;
-		light->next->next = NULL;
+		// printf("%i\n", tmp->type);
+		figures[n].type = tmp->type;
+		if (tmp->type == InfinitePlane)
+		{
+			figures[n].normale.x = ((t_iplane*)tmp->figure)->normale.x;
+			figures[n].normale.y = ((t_iplane*)tmp->figure)->normale.y;
+			figures[n].normale.z = ((t_iplane*)tmp->figure)->normale.z;
+			figures[n].point.x = ((t_iplane*)tmp->figure)->point.x;
+			figures[n].point.y = ((t_iplane*)tmp->figure)->point.y;
+			figures[n].point.z = ((t_iplane*)tmp->figure)->point.z;
+		}
+		if (tmp->type == Sphere)
+		{
+			figures[n].center.x = ((t_sphere*)tmp->figure)->center.x;
+			figures[n].center.y = ((t_sphere*)tmp->figure)->center.y;
+			figures[n].center.z = ((t_sphere*)tmp->figure)->center.z;
+			figures[n].radius = ((t_sphere*)tmp->figure)->radius;
+		}
+		if (tmp->type == InfiniteCylinder)
+		{
+			figures[n].start.x = ((t_icylinder*)tmp->figure)->start.x;
+			figures[n].start.y = ((t_icylinder*)tmp->figure)->start.y;
+			figures[n].start.z = ((t_icylinder*)tmp->figure)->start.z;
+			figures[n].vector.x = ((t_icylinder*)tmp->figure)->vector.x;
+			figures[n].vector.y = ((t_icylinder*)tmp->figure)->vector.y;
+			figures[n].vector.z = ((t_icylinder*)tmp->figure)->vector.z;
+			figures[n].radius = ((t_icylinder*)tmp->figure)->radius;
+		}
+		figures[n].color = tmp->color;
+		figures[n].reflection = tmp->reflection;
+		figures[n].type = tmp->type;
 		tmp = tmp->next;
+		n++;
 	}
-	// t_cl_light *temp;
-	// temp = light;
-	// while (temp)
+	n = 0;
+	// while (n < (int)v->figures_num)
 	// {
-	// 	printf("inten -> %f origin (%f %f %f) type->%i\n", temp->inten, temp->origin.x,
-	// 									temp->origin.y, temp->origin.z, temp->type);
-	// 	temp = temp->next;
+	// 	printf("type->%i\n", figures[n].type);
+	// 	if (figures[n].type == InfinitePlane)
+	// 		printf("Plane : ");
+	// 	if (figures[n].type == Sphere)
+	// 		printf("Sphere : ");
+	// 	if (figures[n].type == InfiniteCylinder)
+	// 		printf("Cylinder : ");
+	// 	printf("color -> %#x reflection ->%f \n", figures[n].color, figures[n].reflection);
+	// 	n++;
 	// }
-	return (light);
+	return (figures);
 }
 
 void set_arguments(t_view *v)
 {
-	t_cl_light *light;
+	t_cl_light *lights;
+	t_cl_figure *figures;
 	unsigned int width;
 	unsigned int height;
-	float cam_o[3];
-	float cam_v[3];
+	float 		cam_o[3];
+	float 		cam_v[3];
 
-	light = copy_light(v);
+	figures = copy_figures(v);
+	lights = copy_light(v);
 	cam_o[0] = v->space->cam->o.x;
 	cam_o[1] = v->space->cam->o.y;
 	cam_o[2] = v->space->cam->o.z;
@@ -183,15 +215,19 @@ void set_arguments(t_view *v)
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while setting kernel arguments");
 	v->cl.result = clSetKernelArg(v->cl.kernel, 1, sizeof(unsigned int), &height);
-		if (v->cl.result != CL_SUCCESS)
-			opencl_errors("Error while setting kernel arguments");
-	// cl_set_arg(v, &width, sizeof(unsigned int), 0);
-	// cl_set_arg(v, &height, sizeof(unsigned int), 1);
-	cl_set_arg(v, v->space->figures, sizeof(t_figure) * v->figures_num, 2);
-	cl_set_arg(v, light, sizeof(t_cl_light) * v->lights_num, 3);
-	cl_set_arg(v, &cam_v, sizeof(float) * 3, 4);
-	cl_set_arg(v, &cam_o, sizeof(float) * 3, 5);
-	v->cl.result = clSetKernelArg(v->cl.kernel, 6, sizeof(cl_mem), &v->cl.output_buffer);
+	if (v->cl.result != CL_SUCCESS)
+		opencl_errors("Error while setting kernel arguments");
+	v->cl.result = clSetKernelArg(v->cl.kernel, 2, sizeof(size_t), &v->figures_num);
+	if (v->cl.result != CL_SUCCESS)
+		opencl_errors("Error while setting kernel arguments");
+	v->cl.result = clSetKernelArg(v->cl.kernel, 3, sizeof(size_t), &v->lights_num);
+	if (v->cl.result != CL_SUCCESS)
+		opencl_errors("Error while setting kernel arguments");
+	cl_set_arg(v, figures, (sizeof(t_cl_figure) * v->figures_num), 4);
+	cl_set_arg(v, lights, (sizeof(t_cl_light) * v->lights_num), 5);
+	cl_set_arg(v, &cam_v, sizeof(float) * 3, 6);
+	cl_set_arg(v, &cam_o, sizeof(float) * 3, 7);
+	v->cl.result = clSetKernelArg(v->cl.kernel, 8, sizeof(cl_mem), &v->cl.output_buffer);
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while setting kernel arguments");
 }
@@ -257,8 +293,8 @@ void	opencl_init(t_view *v)
 		opencl_errors("Error while creating the program");
 
 	printf("Compilation of the program...\n\n");
-	// if ((v->cl.result = clBuildProgram(v->cl.program, 0, NULL, NULL, NULL, NULL)) != CL_SUCCESS)
-	// 	opencl_errors("Error while compiling the program");
+	// // if ((v->cl.result = clBuildProgram(v->cl.program, 0, NULL, NULL, NULL, NULL)) != CL_SUCCESS)
+	// // 	opencl_errors("Error while compiling the program");
 	v->cl.result = clBuildProgram(v->cl.program, 0, NULL, "-I src/opencl", NULL, NULL);
 	cl_int result = v->cl.result;
   	/* DEBBUGING */
@@ -301,8 +337,8 @@ void	opencl_init(t_view *v)
 		ft_putendl("");
 		exit(1);
 	}
-
-
+    //
+    //
 	printf("Creation of the kernel...\n");
 	v->cl.kernel = clCreateKernel(v->cl.program, "kernel_rt", &v->cl.result);
 	if (v->cl.result != CL_SUCCESS)

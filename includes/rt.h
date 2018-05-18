@@ -32,6 +32,10 @@
 # define LIGHT_TYPE_POINT 1
 # define NUM_BUTTONS 2
 # define MAX_TEXT_LEN 100
+
+# define PLANE 0
+# define SPHERE 1
+# define CYLINDER 2
 // # define NUM_PROP 3
 
 // #ifdef cl_khr_byte_addressable_store
@@ -55,6 +59,18 @@ typedef union			u_color
 	}					spectrum;
 }						t_color;
 
+typedef enum			e_figure_type
+{
+	InfinitePlane = 0,
+	Sphere,
+	InfiniteCylinder,
+	InfiniteCone,
+	Triangle,
+	Cube,
+	Elipsoid,
+	Tor
+}						t_figure_type;
+
 typedef struct			s_vector
 {
 	double				x;
@@ -70,13 +86,45 @@ typedef struct			s_light
 	struct s_light		*next;
 }						t_light;
 
+//structure for OPenCL
 typedef struct			s_cl_light
 {
 	int					type;
 	float				inten;
 	cl_float3			origin;
-	struct s_cl_light *next;
 }						t_cl_light;
+
+typedef struct			s_cl_figure
+{
+	int					color;
+	float				reflection;
+	cl_float3			start;
+	cl_float3			vector;
+	cl_float3			normale;
+	cl_float3			point;
+	cl_float3			center;
+	float				radius;
+	int					type;
+}						t_cl_figure;
+
+typedef struct			s_cl_icylinder
+{
+	cl_float3			start;
+	cl_float3			vector;
+	float				radius;
+}						t_cl_icylinder;
+
+typedef struct			s_cl_iplane
+{
+	cl_float3			normale;
+	cl_float3			point;
+}						t_cl_iplane;
+
+typedef struct			s_cl_sphere
+{
+	cl_float3			center;
+	float				radius;
+}						t_cl_sphere;
 															/* OPEN CL STRUCT */
 typedef struct			s_opencl
 {
@@ -111,18 +159,6 @@ typedef struct			s_ray
 	t_vector			v;
 }						t_ray;
 
-typedef enum			e_figure_type
-{
-	InfinitePlane = 0,
-	Sphere,
-	InfiniteCylinder,
-	InfiniteCone,
-	Triangle,
-	Cube,
-	Elipsoid,
-	Tor
-}						t_figure_type;
-
 
 /* FIGURES */
 
@@ -141,11 +177,10 @@ typedef struct   		s_capses 									/* CAPSES */
 
 typedef struct   		s_parabaloid 							/* PARABOLOID */
 {
- t_vector  				position;
- t_vector  				rotation;
- double   				radius;
-
- t_capses  *caps;
+ 	t_vector  			position;
+ 	t_vector  			rotation;
+ 	double   			radius;
+ 	t_capses  			*caps;
 }      					t_parabaloid;
 
 typedef struct			s_sphere									/* SPHERE */

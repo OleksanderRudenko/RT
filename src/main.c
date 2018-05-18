@@ -19,7 +19,7 @@ static void	view_init(t_view *view,char *filename)
 	set_things_up(view);
 	object_init(view);
 	sphere_prop(view);
-	do_rt(view);
+	// do_rt(view);
 }
 
 int			exit_x(t_view *view)
@@ -40,15 +40,15 @@ int			main(int argc, char **argv)
 		return (0);
 	}
 	view_init(&view, argv[1]);
-	// opencl_init(&view);
-	while (view.exit_loop == 1)
-	{
-		if (!poll_event(&view))
-			view.exit_loop = 0;
-		button_staff(&view);
-		print_shper_prop(&view);
-		SDL_UpdateWindowSurface(view.win[0]);
-	}
+	opencl_init(&view);
+	// while (view.exit_loop == 1)
+	// {
+	// 	if (!poll_event(&view))
+	// 		view.exit_loop = 0;
+	// 	button_staff(&view);
+	// 	print_shper_prop(&view);
+	// 	SDL_UpdateWindowSurface(view.win[0]);
+	// }
 	/*destroy texture..., cleaning staff HERE*/
 	return (0);
 }
