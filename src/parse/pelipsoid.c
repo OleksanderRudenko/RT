@@ -26,8 +26,14 @@ static void check_radius_and_distance(JSON_Object *elipsoid, t_figure  *felipsoi
   else
     ft_putendl_fd("Unknown or invalid elipsoid radiuses distance. Default applied",
           STDERR_FILENO);
+<<<<<<< HEAD
   if (((t_elipsoid*)felipsoid->figure)->rdistance < 0)
     ft_putendl_fd("Radiuses distance is invalid. Default applied",
+=======
+  if (((t_elipsoid*)felipsoid->figure)->rdistance > (0.9 *
+      ((t_elipsoid*)felipsoid->figure)->radius))
+    ft_putendl_fd("Radiuses distance is too big. Default applied",
+>>>>>>> daf13fc2116913d483aa6d15af77327d88b2bcf6
           STDERR_FILENO);
 }
 
@@ -48,8 +54,13 @@ void		parse_elipsoid(JSON_Object *elipsoid, t_view *view)
   else
       ft_putendl_fd("Unknown elipsoid rotation parameter. Default applied",
       			STDERR_FILENO);
+<<<<<<< HEAD
   /* init elipsoid */
 //  felipsoid = elipsoid_init(vector[0], vector[1], 0xffffff, 0);
+=======
+ /* init elipsoid */
+ // felipsoid = elipsoid_init(vector[0], vector[1], 0xffffff, 0);
+>>>>>>> daf13fc2116913d483aa6d15af77327d88b2bcf6
   check_radius_and_distance(elipsoid, felipsoid);
   parse_color_reflection(elipsoid, felipsoid);
   add_figure(felipsoid, view);

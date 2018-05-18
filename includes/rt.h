@@ -272,6 +272,14 @@ typedef struct			s_quadric
 	double 				r;
 }						t_quadric;
 
+typedef struct   	s_elipsoid					 /* ELIPSOID */
+{
+	t_vector  		position;
+	t_vector  		rotation;
+	double			radius;
+	double			rdistance;
+}      				t_elipsoid;
+
 typedef struct			s_figure
 {
 	void				*figure;
@@ -561,6 +569,7 @@ t_vector				parse_vector(JSON_Array *vector, t_vector def);
 
 //parse/preflection
 void					parse_color_reflection(JSON_Object *sphere,
+<<<<<<< HEAD
 															t_figure *figure);
 
 //light/light
@@ -573,6 +582,18 @@ t_figure				*cone_init(t_ray *axis, double k, int color,
 															double reflection);
 
 //figure/fcube
+=======
+		t_figure *figure);
+void					parse_plane(JSON_Object *plane, t_view *view);
+void					parse_cylinder(JSON_Object *cylinder, t_view *view);
+void					parse_cone(JSON_Object *cone, t_view *view);
+void					parse_ambient(JSON_Object *light, t_view *view);
+void					parse_point(JSON_Object *light, t_view *view);
+void					parse_cam(JSON_Object *root, t_view *view);
+void					parse_triangle(JSON_Object *triangle, t_view *view);
+/*parse/pelipsoid*/
+void					parse_elipsoid(JSON_Object *elipsoid, t_view *view);
+>>>>>>> daf13fc2116913d483aa6d15af77327d88b2bcf6
 t_figure				*cube_init(t_ray *pnr, t_vector scale, int color,
 															double reflection);
 

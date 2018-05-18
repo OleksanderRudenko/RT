@@ -35,7 +35,11 @@ TINYFD_INCLUDE = -I./lib_tinyFD
 TINY_LIB		= -lft lib_tinyFD/libtfd.a
 
 #	Libs linking
+<<<<<<< HEAD
 LINKLIB = -framework OpenGL -framework AppKit -framework OpenCl -lmlx $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES) $(TINY_LIB)
+=======
+LINKLIB = -framework OpenGL -framework AppKit -framework OpenCL -lmlx $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES)
+>>>>>>> daf13fc2116913d483aa6d15af77327d88b2bcf6
 #	Sources directories
 SRCDIR = ./src/
 COLORDIR = ./src/color/
@@ -43,8 +47,12 @@ FIGUREDIR = ./src/figure/
 LIGHTDIR = ./src/light/
 VECTORDIR = ./src/vector/
 PARSEDIR = ./src/parse/
+<<<<<<< HEAD
 OPENCLDIR = ./src/opencl/
 GUIDIR = ./src/gui/
+=======
+OPENCLDIR = ./src/opencl/ 
+>>>>>>> daf13fc2116913d483aa6d15af77327d88b2bcf6
 #	Source files
 SRCFILES = main.c do_rt.c space.c solve_cubic.c solve_quatric.c
 
@@ -54,12 +62,21 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c\
 			inf_cyl_prop.c
 
 COLORFILES = color.c
+<<<<<<< HEAD
 FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c ftor.c
 LIGHTFILES = light.c
 VECTORFILES = vector.c vector2.c rotate.c
 PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
 				pplane.c psphere.c ptriangle.c pelipsoid.c preflection.c pvector.c \
 				ptor.c pparaboloid.c pcut_plane.c pquadrate.c
+=======
+FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c \
+							felipsoid.c
+LIGHTFILES = light.c
+VECTORFILES = vector.c vector2.c rotate.c
+PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
+				pplane.c psphere.c ptriangle.c pelipsoid.c preflection.c pvector.c 
+>>>>>>> daf13fc2116913d483aa6d15af77327d88b2bcf6
 OPENCLFILES = opencl_init.c
 #	Header folder
 INCLUDE = ./includes $(LIBSDLINCLUDE)  $(TINYFD_INCLUDE)
