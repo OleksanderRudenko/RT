@@ -15,13 +15,17 @@ typedef union			u_color
 {
 	unsigned int		color;
 	unsigned int 		chanel[4];
+	//0 - r
+	//1 - g
+	//2 - b
+	//4 = a
 }						t_color;
 
 typedef enum			e_figure_type
 {
 	InfinitePlane = 0,
-	Sphere,
-	InfiniteCylinder,
+	Sphere = 1,
+	InfiniteCylinder = 2,
 	InfiniteCone,
 	Triangle,
 	Cube,

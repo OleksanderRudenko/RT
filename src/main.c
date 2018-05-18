@@ -41,14 +41,14 @@ int			main(int argc, char **argv)
 	}
 	view_init(&view, argv[1]);
 	opencl_init(&view);
-	// while (view.exit_loop == 1)
-	// {
-	// 	if (!poll_event(&view))
-	// 		view.exit_loop = 0;
-	// 	button_staff(&view);
-	// 	print_shper_prop(&view);
-	// 	SDL_UpdateWindowSurface(view.win[0]);
-	// }
+	while (view.exit_loop == 1)
+	{
+		if (!poll_event(&view))
+			view.exit_loop = 0;
+		button_staff(&view);
+		print_shper_prop(&view);
+		SDL_UpdateWindowSurface(view.win[0]);
+	}
 	/*destroy texture..., cleaning staff HERE*/
 	return (0);
 }

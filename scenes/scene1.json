@@ -1,0 +1,171 @@
+{
+  "figures":
+  [
+    {
+      "type": "plane",
+      "normale": [0.0, -1.0, 0.0],
+      "point": [0, -3, 0],
+      "color": "0xaaaaaa",
+      "reflection": 100
+    },
+    {
+      "type": "plane",
+      "normale": [0.0, -1.0, 0.0],
+      "point": [0, 3, 0],
+      "color": "0xffffff",
+      "reflection": 100
+    },
+    {
+      "type": "plane",
+      "normale": [0.0, 0.0, 1.0],
+      "point": [0, 0, 20],
+      "color": "0x00000aa",
+      "reflection": 0
+    },
+    {
+      "type": "plane",
+      "normale":[1, 0, 0],
+      "point": [5, 0, 0],
+      "color": "0x00000aa",
+      "reflection": 0
+    },
+    {
+      "type": "plane",
+      "normale":[1, 0, 0],
+      "point": [-5, 0, 0],
+      "color": "0x00000aa",
+      "reflection": 0
+    },
+    {
+      "type": "cylinder",
+      "start": [-3.0, 0.0, 4],
+      "vector": [0.0, 1.0, 0.0],
+      "radius": 0.625,
+      "color": "0xffffff",
+      "reflection": 200
+    },
+    {
+      "type": "cylinder",
+      "start": [3.0, 0.0, 4],
+      "vector": [0.0, 1.0, 0.0],
+      "radius": 0.625,
+      "color": "0xffffff",
+      "reflection": 200
+    },
+    {
+      "type": "cylinder",
+      "start": [3.0, 0.0, 12],
+      "vector": [0.0, 1.0, 0.0],
+      "radius": 0.625,
+      "color": "0xffffff",
+      "reflection": 200
+    },
+    {
+      "type": "cylinder",
+      "start": [-3.0, 0.0, 12],
+      "vector": [0.0, 1.0, 0.0],
+      "radius": 0.625,
+      "color": "0xffffff",
+      "reflection": 200
+    },
+    {
+      "type": "sphere",
+      "center": [-3, -3, 4],
+      "radius": 1,
+      "color": "0xffffff",
+      "reflection": 10
+    },
+    {
+      "type": "sphere",
+      "center": [-3, 3, 4],
+      "radius": 1,
+      "color": "0xffffff",
+      "reflection": 10
+    },
+    {
+      "type": "sphere",
+      "center": [3, -3, 4],
+      "radius": 1,
+      "color": "0xffffff",
+      "reflection": 10
+    },
+    {
+      "type": "sphere",
+      "center": [3, 3, 4],
+      "radius": 1,
+      "color": "0xffffff",
+      "reflection": 10
+    },
+    {
+      "type": "sphere",
+      "center": [-3, -3, 12],
+      "radius": 1,
+      "color": "0xffffff",
+      "reflection": 10
+    },
+    {
+      "type": "sphere",
+      "center": [-3, 3, 12],
+      "radius": 1,
+      "color": "0xffffff",
+      "reflection": 10
+    },
+    {
+      "type": "sphere",
+      "center": [3, -3, 12],
+      "radius": 1,
+      "color": "0xffffff",
+      "reflection": 10
+    },
+    {
+      "type": "sphere",
+      "center": [3, 3, 12],
+      "radius": 1,
+      "color": "0xffffff",
+      "reflection": 10
+    },
+    {
+      "type": "sphere",
+      "center": [-3, -3, 4],
+      "radius": 1,
+      "color": "0xffffff",
+      "reflection": 10
+    },
+    {
+      "type": "sphere",
+      "center": [0, -2, 5],
+      "radius": 0.5,
+      "color": "0xff0000",
+      "reflection": 10
+    },
+	{
+		"type": "triangle",
+		"points":
+				[
+					[0, 0, 0],
+					[0, 1, 1],
+					[0, 0, 1]
+				],
+		"color": "0xff0000",
+		"reflection": 10
+	}
+  ],
+  "lights":
+  [
+    {
+      "type": "point",
+      "position": [-3.0, 0.0, 0.0],
+      "intensity": 0.5
+    },
+    {
+      "type": "point",
+      "position": [3.0, 0.0, 0.0],
+      "intensity": 0.5
+    }
+  ],
+  "cam":
+  {
+    "position": [0.0, 0.0, -10.0],
+    "rotation": [0.0, 0.0, 0.0]
+  }
+}

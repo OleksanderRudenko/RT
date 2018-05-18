@@ -29,8 +29,8 @@ unsigned int	set_brightness(unsigned int color, float brightness, float bbrightn
 	color_t.chanel[1] = limit_spectrum(
 			set_spectrum_brightness(color_t.chanel[1], brightness,
 					bbrightness), 0, 255);
-	color_t.chanel[3] = limit_spectrum(
-			set_spectrum_brightness(color_t.chanel[3], brightness,
+	color_t.chanel[2] = limit_spectrum(
+			set_spectrum_brightness(color_t.chanel[2], brightness,
 					bbrightness), 0, 255);
 	return (color_t.color);
 }

@@ -84,7 +84,6 @@ unsigned int	rt(__global t_cl_light *lights, __global t_cl_figure *figures,
 	len = INFINITY;
 	while (n < figures_num)
 	{
-		printf("type->%i\n", figures[n].type);
 		lbuf = check_intersection(ray_origin, ray_vector, figures[n]);
 		if (lbuf >= 1.0 && lbuf < len)
 		{
@@ -115,7 +114,7 @@ unsigned int	do_rt(unsigned int x,
 	unsigned int 		color;
 	float3 				cam_vector;
 	float3 				cam_origin;
-	
+
 	cam_vector = (float3)(cam_v[0], cam_v[1], cam_v[2]);
 	cam_origin = (float3)(cam_o[0], cam_o[1], cam_o[2]);
 	ray_origin = cam_origin;
