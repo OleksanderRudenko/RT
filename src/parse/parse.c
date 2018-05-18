@@ -109,7 +109,7 @@ static void			parse_lights(JSON_Object *root, t_view *view)
 		parse_light(json_object_dotget_object(root, "lights"), view);
 }
 
-void				parse_scene(char *filename, t_view *view)
+void				parse_scene(const char *filename, t_view *view)
 {
 	JSON_Value		*root;
 	JSON_Value_Type	type;

@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   create_text.c                                      :+:      :+:    :+:   */
+/*   sdl_quit.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arudenko <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/26 16:16:40 by arudenko          #+#    #+#             */
-/*   Updated: 2018/04/26 16:16:42 by arudenko         ###   ########.fr       */
+/*   Created: 2018/05/02 12:40:27 by arudenko          #+#    #+#             */
+/*   Updated: 2018/05/02 12:40:30 by arudenko         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-SDL_Texture	*create_text(t_view *s, char *name, int i)
+void	clean_staff(t_view *s)
 {
-	t_text t;
-
-	t.font = TTF_OpenFont("Roboto-Black.ttf", 32);
-	if (t.font == NULL)
-	{
-		ft_putendl(TTF_GetError());
-	}
-	t.color = (SDL_Color){100, 100, 100, 0};
-	t.message = TTF_RenderText_Solid(t.font, name, t.color);
-	t.tex = SDL_CreateTextureFromSurface(s->rr.rend[i], t.message);
-	SDL_FreeSurface(t.message);
-	return (t.tex);
+	SDL_FreeSurface(s->win_surface);
+	clean_sphere_prop(s);
+	clean_buttons(s);
+	clean_list_obj(s);
+	SDL_DestroyRenderer(s->rr.rend[0]);
+	SDL_DestroyRenderer(s->rr.rend[1]);
+	SDL_DestroyRenderer(s->rr.rend[2]);
+	SDL_DestroyTexture(s->l_obj.def_tex);
+	clean_light(s);
+	TTF_Quit();
+	SDL_Quit();
+	// ft_putendl("cleaned");
+	/*delete textures and so on*/
 }
