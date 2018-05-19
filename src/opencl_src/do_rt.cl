@@ -18,12 +18,10 @@ float			rt_lightr(float3 light, float3 normale, float3 view, float3 buf)
 		return (0.0f);
 }
 
-t_lrt			tlrt_init(__global t_cl_light *lights,
-						  float3 ray_origin, float3 ray_vector, t_cl_figure figure, double k)
+t_lrt			tlrt_init(float3 ray_origin, float3 ray_vector, t_cl_figure figure, double k)
 {
 	t_lrt	var;
 
-	var.light = lights;
 	var.intersection = get_intersection(ray_origin, ray_vector, k);
 	var.normale = get_normale(var.intersection, figure);
 	if (dot(var.normale, ray_vector) >= 0)
@@ -33,7 +31,7 @@ t_lrt			tlrt_init(__global t_cl_light *lights,
 	return (var);
 }
 
-unsigned int				do_lightrt(__global t_cl_light *lights,
+unsigned int	do_lightrt(__global t_cl_light *lights,
 						   __global t_cl_figure *figures,
 						   t_cl_figure figure,
 						   float3 ray_origin, float3 ray_vector, double k,
@@ -45,23 +43,23 @@ unsigned int				do_lightrt(__global t_cl_light *lights,
 	float3 	view;
 
 	n = 0;
-	v = tlrt_init(lights, ray_origin, ray_vector, figure, k);
+	v = tlrt_init(ray_origin, ray_vector, figure, k);
 	while (n < lights_num)
 	{
-		if (v.light[n].type == LIGHT_TYPE_AMBIENT)
-			v.bright += v.light[n].inten;
+		if (lights[n].type == LIGHT_TYPE_AMBIENT)
+			v.bright += lights[n].inten;
 		else
 		{
-			v.vlight = subtraction(v.light[n].origin, v.intersection);
+			v.vlight = subtraction(lights[n].origin, v.intersection);
 			v.buf_origin = (float3)(v.intersection.x, v.intersection.y, v.intersection.z);
 			v.buf_vector = (float3)(v.vlight.x, v.vlight.y, v.vlight.z);
-			if (!(check_intersections(v.buf_origin, v.buf_vector, figures, figures_num)))
+			if (!(check_intersections(v.buf_origin, v.buf_vector, figures, figures_num, figure)))
 			{
 				if ((v.nl_s = dot(v.normale, v.vlight)) > 0.0f)
-					v.bright += v.light[n].inten * v.nl_s / fast_length(v.vlight);
+					v.bright += lights[n].inten * v.nl_s / fast_length(v.vlight);
 				if (v.nl_s > 0.0f && figure.reflection > 0.0f)
 				{
-					buf = (float3)(v.light[n].inten, figure.reflection, 0.0f);
+					buf = (float3)(lights[n].inten, figure.reflection, 0.0f);
 					view = k_multiply(ray_vector, -1.0f);
 					v.reflected += rt_lightr(v.vlight, v.normale, view, buf);
 				}
@@ -69,6 +67,16 @@ unsigned int				do_lightrt(__global t_cl_light *lights,
 		}
 		n++;
 	}
+	// if (v.bright >= 1)
+	// {
+	// 	printf("%f-v.bright", v.bright);
+	// 	// exit(1);
+	// }
+	// if (v.reflected >= 1)
+	// {
+	// 	printf("%f-v.reflected", v.reflected);
+	// 	// exit(1);
+	// }
 	return (set_brightness(figure.color, v.bright, v.reflected));
 }
 
@@ -111,9 +119,9 @@ unsigned int	do_rt(unsigned int x,
 {
 	float3				ray_origin;
 	float3				ray_vector;
-	unsigned int 		color;
 	float3 				cam_vector;
 	float3 				cam_origin;
+	unsigned int 		color;
 
 	cam_vector = (float3)(cam_v[0], cam_v[1], cam_v[2]);
 	cam_origin = (float3)(cam_o[0], cam_o[1], cam_o[2]);

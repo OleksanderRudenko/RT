@@ -8,8 +8,8 @@ float			get_sqr_solve(float a, float b, float h)
 
 	if (h == 0)
 		return (-b / 2.0f * a);
-	x1 = (-b + (h * h)) / (2.0f * a);
-	x2 = (-b - (h * h)) / (2.0f * a);
+	x1 = (-b + sqrt(h)) / (2.0f * a);
+	x2 = (-b - sqrt(h)) / (2.0f * a);
 	if (x1 <= 1e-11)
 		return (x2);
 	if (x2 <= 1e-11)

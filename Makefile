@@ -43,26 +43,28 @@ FIGUREDIR = ./src/figure/
 LIGHTDIR = ./src/light/
 VECTORDIR = ./src/vector/
 PARSEDIR = ./src/parse/
-OPENCLDIR = ./src/opencl/
+OPENCLDIR = ./src/openCL/
 GUIDIR = ./src/gui/
+
 #	Source files
 SRCFILES = main.c do_rt.c space.c solve_cubic.c solve_quatric.c
+COLORFILES = color.c
+FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c ftor.c \
+				fcube.c
+LIGHTFILES = light.c
+VECTORFILES = vector.c vector2.c rotate.c
+PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
+				pplane.c psphere.c ptriangle.c pelipsoid.c preflection.c pvector.c \
+				ptor.c pparaboloid.c pcut_plane.c pquadrate.c pcube.c
 
 GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c\
 			button_functions.c create_text.c list_obj1.c slider.c \
 			utils1.c list_obj2.c light_list.c sphere_prop.c sdl_quit.c \
 			inf_cyl_prop.c
 
-COLORFILES = color.c
-FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c ftor.c
-LIGHTFILES = light.c
-VECTORFILES = vector.c vector2.c rotate.c
-PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
-				pplane.c psphere.c ptriangle.c pelipsoid.c preflection.c pvector.c \
-				ptor.c pparaboloid.c pcut_plane.c pquadrate.c
-OPENCLFILES = opencl_init.c
+OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c
 #	Header folder
-INCLUDE = ./includes $(LIBSDLINCLUDE)  $(TINYFD_INCLUDE)
+INCLUDE = ./includes $(LIBSDLINCLUDE) $(TINYFD_INCLUDE)
 #	Binaries folder
 BINDIR = ./obj/
 #	Binaries list
@@ -72,7 +74,8 @@ BIN = $(addprefix $(BINDIR), $(SRCFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(LIGHTFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(VECTORFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(PARSEFILES:.c=.o)) \
-		$(addprefix $(BINDIR), $(GUIFILES:.c=.o)) 		
+		$(addprefix $(BINDIR), $(OPENCLFILES:.c=.o)) \
+		$(addprefix $(BINDIR), $(GUIFILES:.c=.o))
 #	Libft
 LIBFT = ./libft/libft.a
 #	Libft header
@@ -85,14 +88,12 @@ PARSONINCLUDE = ./parson
 all: $(LIBFT) $(PARSON) $(NAME)
 
 $(NAME): $(BINDIR) $(BIN)
-	$(GCC) $(LINKLIB) -o $(NAME) $(BIN) -I $(LIBFTINCLUDE) -I $(INCLUDE) \
+	@$(GCC) $(LINKLIB) -o $(NAME) $(BIN) -I $(LIBFTINCLUDE) -I $(INCLUDE) \
 		-I $(PARSONINCLUDE)
 
 $(BINDIR):
 	@if [ ! -d "$(BINDIR)" ]; then mkdir $(BINDIR); fi
 
-# $(BINDIR)%.o: $(OPENCLDIR)%.c
-# 	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(PARSEDIR)%.c
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
@@ -113,6 +114,9 @@ $(BINDIR)%.o: $(VECTORDIR)%.c
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(GUIDIR)%.c
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+
+$(BINDIR)%.o: $(OPENCLDIR)%.c
 	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 clean:

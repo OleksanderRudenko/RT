@@ -47,8 +47,7 @@ void		parse_paraboloid(JSON_Object *paraboloid, t_view *view)
 {
 	t_figure 	*fparaboloid = NULL;
 	t_vector	vector[2];
-
-	printf("\n* PARABOLOID *\n");
+	
 	if (json_object_has_value_of_type(paraboloid, "position", JSONArray))
 		vector[0] = parse_vector(json_object_get_array(paraboloid, "position"),
 					(t_vector){0, 0, 0});

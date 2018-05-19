@@ -22,8 +22,7 @@ t_vector	count_triangle_normale(t_vector a[3])
     return (vnormalize(vmultiple(ab, bc)));
 }
 
-t_figure	*triangle_init(t_ray *ray, t_vector third_point, int color,
-		double reflection)
+t_figure	*triangle_init(t_vector point[3], int color, double reflection)
 {
 	t_figure	*new_figure;
 	t_triangle	*triangle;
@@ -31,13 +30,13 @@ t_figure	*triangle_init(t_ray *ray, t_vector third_point, int color,
 	new_figure = (t_figure*)malloc(sizeof(t_figure));
 	new_figure->type = Triangle;
 	triangle = (t_triangle*)malloc(sizeof(t_triangle));
-	triangle->points[0] = ray->o;
-	triangle->points[1] = ray->v;
-	triangle->points[2] = third_point;
+	triangle->points[0] = point[0];
+	triangle->points[1] = point[1];
+	triangle->points[2] = point[2];
 	triangle->normale = count_triangle_normale(triangle->points);
-	free(ray);
 	new_figure->color = color;
 	new_figure->reflection = reflection;
+	new_figure->figure = triangle;
 	new_figure->next = NULL;
 	return (new_figure);
 }

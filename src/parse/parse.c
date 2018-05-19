@@ -40,6 +40,8 @@ static void			parse_figure(JSON_Object *figure, t_view *view)
 		parse_paraboloid(figure, view);
 	else if (ft_strequ(type, "quadrate"))
 		parse_quadrate(figure, view);
+	else if (ft_strequ(type, "cube"))
+		parse_cube(figure, view);
 	else
 		ft_putendl_fd("Unknown figure found. Skipped", STDERR_FILENO);
 }

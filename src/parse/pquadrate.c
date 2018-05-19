@@ -29,7 +29,7 @@ t_figure 	*init_figure(t_vector vector[5])
 	return (quadr);
 }
 
-static int		check_quadr_points(t_vector vector[5])
+int		check_quadr_points(t_vector vector[5])
 {
 	int a;
 

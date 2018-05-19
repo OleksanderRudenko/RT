@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void		parse_cube(JSON_Object *cube, t_view *view)
+void				parse_cube(JSON_Object *cube, t_view *view)
 {
 	t_figure	*figure;
 	t_vector	vector[3];
@@ -35,7 +35,7 @@ void		parse_cube(JSON_Object *cube, t_view *view)
 	else
 		ft_putendl_fd("Unknown cube scale parameter. Default applied",
 				STDERR_FILENO);
-	figure = cube_init(ray_init(vector[0], vector[1]), vector[2], 0xffffff, 0);
+	figure = cube_init(vector, 0xffffff, 0);
 	parse_color_reflection(cube, figure);
 	add_figure(figure, view);
 }
