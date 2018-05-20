@@ -57,6 +57,8 @@ void		space_init(const char *filename, t_view *view)
 	if (view->space->cam == NULL)
 		view->space->cam = ray_init((t_vector){0, 0, -10},
 				(t_vector){0, 0, 0});
+	view->space->cl_figures = copy_figures(view);
+	view->space->cl_lights = copy_light(view);
 }
 
 void		cam_rotate(t_ray *ray, t_vector vector)

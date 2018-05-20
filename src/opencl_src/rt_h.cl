@@ -64,10 +64,9 @@ typedef struct			s_cl_figure
 	float3				c_points[24];
 	float3 				c_normale[6];
 	float3				scale;
-	
 	/*capses*/
-	// float 			caps1;
-	// float 			caps2;
+	// float 				caps1;
+	// float 				caps2;
 	// int 				color_c1;
 	// int 				color_c2;
 	// int 				color_f;

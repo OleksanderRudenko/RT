@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void				parse_cube(JSON_Object *cube, t_view *view)
+void		parse_cube(JSON_Object *cube, t_view *view)
 {
 	t_figure	*figure;
 	t_vector	vector[3];

@@ -27,8 +27,6 @@ static char *get_kernel(void)
   "#include \"fcylinder.cl\"\n" \
   "#include \"fplane.cl\"\n#include \"fsphere.cl\"\n" \
   "kernel void kernel_rt(     			\n" \
-  "		 unsigned int width, 			\n" \
-  "		 unsigned int height, 			\n" \
   "		 size_t figures_num, 			\n" \
   "		 size_t lights_num, 			\n" \
   "      __global t_cl_figure *figures, \n" \
@@ -36,25 +34,42 @@ static char *get_kernel(void)
   "      __global float *cam_v,   	    \n" \
   "      __global float *cam_o,  		\n" \
   "      __global unsigned int *output){\n" \
-  " unsigned int x = get_global_id(0);  \n" \
-  " unsigned int y = get_global_id(1);  \n" \
+  " size_t x = get_global_id(0);  		\n" \
+  " size_t y = get_global_id(1);        \n" \
+  " size_t w = get_global_size(0);      \n" \
+  " size_t h = get_global_size(1);      \n" \
   " unsigned int color;                 \n" \
-  " color = do_rt(x, y, width, height,  \n" \
+  " color = do_rt(x, y, w, h,  			\n" \
   "	  figures, light, cam_v, cam_o,     \n" \
   "	  figures_num, lights_num);			\n" \
-  " output[y * width + x] = color;}     \n";
+  " output[y * w + x] = color;}     \n";
   return (ft_strdup(kernel));
+}
+
+/* MAX WORK DIM : 3 */
+/* MAX COMPUTE UNITS: 12 */
+/* MAX WORK ITEMS: 256 */
+/* MAX WORK GROUP SIZE: 256 */
+/* CL_EXEC_KERNEL – The OpenCL device can execute OpenCL kernels. */
+/* DEVICE NAME: AMD Radeon R9 M380 Compute Engine */
+
+void 	get_execution_time(t_view *v)
+{
+	cl_ulong	time_start;
+	cl_ulong	time_end;
+
+	clGetEventProfilingInfo(v->cl.read_results_event, CL_PROFILING_COMMAND_START,
+										sizeof(time_start), &time_start, NULL);
+	clGetEventProfilingInfo(v->cl.read_results_event, CL_PROFILING_COMMAND_END,
+											sizeof(time_end), &time_end, NULL);
+	printf("time->%f sec\n", (float)(time_end - time_start) * 1e-9);
 }
 
 void	opencl_init2(t_view *v)
 {
-	v->cl.values_number = WIDTH * HEIGHT;
-	v->cl.buffers_size = v->cl.values_number * sizeof(unsigned int);
-
 	printf("Initialization of output data...\n");
 	v->cl.output_buffer = clCreateBuffer(v->cl.context, CL_MEM_READ_WRITE,
 						v->cl.buffers_size, NULL, &v->cl.result);
-
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while initializing output data");
 
@@ -62,25 +77,39 @@ void	opencl_init2(t_view *v)
     set_arguments(v);
 
 	printf("Execution of the kernel...\n");
-	v->cl.global_work_size = v->cl.values_number;
-	if ((v->cl.result = clGetKernelWorkGroupInfo(v->cl.kernel, v->cl.device_ids[0], CL_KERNEL_WORK_GROUP_SIZE,
-				sizeof(v->cl.local_work_size), &v->cl.local_work_size, NULL)) != CL_SUCCESS)
-		opencl_errors("Error while getting maximum work group size");
-	if (v->cl.local_work_size > v->cl.values_number)
-		v->cl.local_work_size  = v->cl.values_number;
-	if ((v->cl.result = clEnqueueNDRangeKernel(v->cl.commands, v->cl.kernel, 1, NULL, &v->cl.global_work_size,
-				&v->cl.local_work_size, 0, NULL, &v->cl.kernel_exec_event)) != CL_SUCCESS)
-		opencl_errors("Error while executing the kernel");
+	// if ((v->cl.result = clGetKernelWorkGroupInfo(v->cl.kernel, v->cl.device_ids[0], CL_KERNEL_WORK_GROUP_SIZE,
+	// 			sizeof(size_t), &v->cl.local_work_size, NULL)) != CL_SUCCESS)
+	// 	opencl_errors("Error while getting maximum work group size");
+	// printf("work size->%zu\n", v->cl.local_work_size);
+	// printf("work size->%zu %zu %zu\n", v->cl.max_work_items_size[0], v->cl.max_work_items_size[1], v->cl.max_work_items_size[2]);
+	size_t *local_work_size;
+
+	v->cl.global_work_size = (size_t*)malloc(sizeof(size_t) * (v->cl.max_work_dim - 1));
+	v->cl.global_work_size[0] = WIDTH;
+	v->cl.global_work_size[1] = HEIGHT;
+
+	local_work_size = (size_t*)malloc(sizeof(size_t) * (v->cl.max_work_dim - 1));
+	local_work_size[0] = v->cl.max_work_items_size[0];
+	local_work_size[1] = v->cl.max_work_items_size[1];
+
+	v->cl.result = clEnqueueNDRangeKernel(v->cl.commands, v->cl.kernel, v->cl.max_work_dim - 1, NULL, v->cl.global_work_size,
+				NULL, 0, 0, &v->cl.kernel_exec_event);
+
+	// if ((v->cl.result = clEnqueueNDRangeKernel(v->cl.commands, v->cl.kernel, v->cl.max_work_dim - 1, NULL, v->cl.global_work_size,
+	// 			local_work_size, 0, 0, &v->cl.kernel_exec_event)) != CL_SUCCESS)
+	// 	opencl_errors("Error while executing the kernel");
 	if ((v->cl.result = clFinish(v->cl.commands)) != CL_SUCCESS)
 		opencl_errors("Failed to finish");
 	printf("Getting back the results...\n");
 	clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, 0, v->cl.buffers_size,
 						v->buff, 0, NULL, &v->cl.read_results_event);
+	get_execution_time(v);
 }
 
 void	opencl_init(t_view *v)
 {
 	char*		kernel_bytes;
+	size_t 		ret_size;
 
 	kernel_bytes = get_kernel();
 	printf("Getting available platforms...\n");
@@ -93,13 +122,20 @@ void	opencl_init(t_view *v)
 	if ((v->cl.result = clGetDeviceIDs(v->cl.platforms[0], CL_DEVICE_TYPE_GPU, 1, v->cl.device_ids, &v->cl.num_devices)) != CL_SUCCESS)
 		opencl_errors("Error while getting available devices");
 
+	v->cl.result = clGetDeviceInfo(v->cl.device_ids[0],
+		CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS, sizeof(cl_uint), &v->cl.max_work_dim, &ret_size);
+
+	v->cl.max_work_items_size = (size_t*)malloc(sizeof(size_t) * v->cl.max_work_dim);
+	v->cl.result = clGetDeviceInfo(v->cl.device_ids[0],
+		CL_DEVICE_MAX_WORK_ITEM_SIZES, sizeof(size_t) * v->cl.max_work_dim, v->cl.max_work_items_size, &ret_size);
+
 	printf("Creation of the OpenCL context...\n");
 	v->cl.context = clCreateContext(NULL, 1, v->cl.device_ids, NULL, NULL, &v->cl.result);
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while creating the OpenCL context");
 
 	printf("Creation of the command queue...\n");
-	v->cl.commands = clCreateCommandQueue(v->cl.context, v->cl.device_ids[0], 0, &v->cl.result);
+	v->cl.commands = clCreateCommandQueue(v->cl.context, v->cl.device_ids[0], CL_QUEUE_PROFILING_ENABLE, &v->cl.result);
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while creating the command queue");
 
@@ -117,6 +153,15 @@ void	opencl_init(t_view *v)
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while creating the kernel");
 
+	v->cl.values_number = WIDTH * HEIGHT;
+	v->cl.buffers_size = v->cl.values_number * sizeof(unsigned int);
+
+	printf("Initialization of output data...\n");
+	v->cl.output_buffer = clCreateBuffer(v->cl.context, CL_MEM_READ_WRITE,
+					v->cl.buffers_size, NULL, &v->cl.result);
+	if (v->cl.result != CL_SUCCESS)
+		opencl_errors("Error while initializing output data");
+
 	opencl_init2(v);
-	cl_releasing(v);
+	// cl_releasing(v);
 }

@@ -37,7 +37,7 @@ void	init_sdl(t_view *s)
 int		poll_event(t_view *s)
 {
 	SDL_Event e;
-	
+
 	while (SDL_PollEvent(&e))
 		if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN &&
 			e.key.keysym.sym == SDLK_ESCAPE))
@@ -69,25 +69,29 @@ void	camera_move(t_view *s, SDL_Scancode key)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->o.x += 0.5;
-		do_rt(s);
+		// do_rt(s);
+		opencl_init2(s);
 	}
 	if (key ==  SDL_SCANCODE_S)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->o.x -= 0.5;
-		do_rt(s);
+		// do_rt(s);
+		opencl_init2(s);
 	}
 		if (key ==  SDL_SCANCODE_D)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->o.y += 0.5;
-		do_rt(s);
+		// do_rt(s);
+		opencl_init2(s);
 	}
 	if (key ==  SDL_SCANCODE_A)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->o.y -= 0.5;
-		do_rt(s);
+		// do_rt(s);
+		opencl_init2(s);
 	}
 }
 

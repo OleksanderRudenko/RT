@@ -35,7 +35,7 @@ TINYFD_INCLUDE = -I./lib_tinyFD
 TINY_LIB		= -lft lib_tinyFD/libtfd.a
 
 #	Libs linking
-LINKLIB = -framework OpenGL -framework AppKit -framework OpenCl -lmlx $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES) $(TINY_LIB)
+LINKLIB = -framework OpenGL -framework AppKit -framework OpenCl -O3 -OFast -lmlx $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES) $(TINY_LIB)
 #	Sources directories
 SRCDIR = ./src/
 COLORDIR = ./src/color/
@@ -62,7 +62,8 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c\
 			utils1.c list_obj2.c light_list.c sphere_prop.c sdl_quit.c \
 			inf_cyl_prop.c
 
-OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c
+OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c copy1.c \
+				copy2.c
 #	Header folder
 INCLUDE = ./includes $(LIBSDLINCLUDE) $(TINYFD_INCLUDE)
 #	Binaries folder

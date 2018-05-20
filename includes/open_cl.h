@@ -52,14 +52,13 @@ typedef struct			s_cl_figure
 	cl_float3 			c_normale[6];
 	cl_float3			scale;
 
-		/*capses*/
+	/*capses*/
 	// float 			caps1;
 	// float 			caps2;
 	// int 				color_c1;
 	// int 				color_c2;
 	// int 				color_f;
 
-	
 	float				radius;
 	float				rdistance;
 	float				radius_s;
@@ -73,6 +72,8 @@ typedef struct			s_opencl
 	cl_uint             num_platforms;		//The actual number of returned platform IDs
 	cl_device_id       *device_ids;         //List of device IDs
 	cl_uint             num_devices;        //The actual number of returned device IDs returned
+	cl_uint 			max_work_dim;
+	size_t 				*max_work_items_size;
 	cl_context 			context;
 	cl_command_queue 	commands;
 	cl_program 			program;
@@ -80,7 +81,7 @@ typedef struct			s_opencl
 	size_t 				values_number;
 	size_t 				buffers_size;
 	cl_mem 				output_buffer;
-	size_t    			global_work_size;  	//Number of values for each dimension we use
+	size_t    			*global_work_size;  	//Number of values for each dimension we use
 	size_t    			local_work_size;    //Size of a work-group in each dimension
 	cl_event  			kernel_exec_event;
 	cl_event    		read_results_event;

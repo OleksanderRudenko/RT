@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -29,7 +30,7 @@
 # include "open_cl.h"
 
 # define WIDTH 1280
-# define HEIGHT 720
+# define HEIGHT 768
 # define FOV_X 30
 # define FOV_Y 30
 # define LIGHT_TYPE_AMBIENT 0
@@ -223,6 +224,8 @@ typedef struct			s_space
 	t_figure			*figures;
 	t_light				*lights;
 	t_ray				*cam;
+	t_cl_figure 		*cl_figures;
+	t_cl_light			*cl_lights;
 }						t_space;
 
 typedef	struct			s_lrt
@@ -355,11 +358,27 @@ typedef struct		s_view
 }					t_view;
 
 /*End*/
+
+//copy1
+void 		copy_plane(t_cl_figure *figure, t_figure *tmp);
+void 		copy_sphere(t_cl_figure *figure, t_figure *tmp);
+void 		copy_cylinder(t_cl_figure *figure, t_figure *tmp);
+void 		copy_cone(t_cl_figure *figure, t_figure *tmp);
+void 		copy_cube(t_cl_figure *figure, t_figure *tmp);
+
+//copy2
+void 		copy_triangle(t_cl_figure *figure, t_figure *tmp);
+void 		copy_quadrate(t_cl_figure *figure, t_figure *tmp);
+void 		copy_elipsoid(t_cl_figure *figure, t_figure *tmp);
+void 		copy_paraboloid(t_cl_figure *figure, t_figure *tmp);
+void 		copy_tor(t_cl_figure *figure, t_figure *tmp);
+
 //main
 int						exit_x(t_view *view);
 
 //openCL/opencl_init
 void					opencl_init(t_view *v);
+void					opencl_init2(t_view *v);
 void					opencl_errors(const char *msg);
 
 //openCL/cl_wrapper
@@ -375,6 +394,7 @@ void 					set_arguments(t_view *v);
 void 					init_cam(t_view *v, float *cam_o, float *cam_v);
 t_cl_light 				*copy_light(t_view *v);
 t_cl_figure 			*copy_figures(t_view *v);
+cl_float3 				copy_vector(t_vector vector);
 
 // //button_functions
 // void					mouse_key_down(t_view *s, SDL_Event e);

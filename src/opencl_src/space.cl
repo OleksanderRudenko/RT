@@ -6,8 +6,8 @@ void	rotate_x(float3 ps, float l)
 	float ny;
 	float nz;
 
-	ny = ps.y * cos(l) + ps.z * sin(l);
-	nz = ps.z * cos(l) - ps.y * sin(l);
+	ny = ps.y * native_cos(l) + ps.z * native_sin(l);
+	nz = ps.z * native_cos(l) - ps.y * native_sin(l);
 	ps.y = ny;
 	ps.z = nz;
 }
@@ -17,8 +17,8 @@ void	rotate_y(float3 ps, float l)
 	float nx;
 	float nz;
 
-	nx = ps.x * cos(l) + ps.z * sin(l);
-	nz = ps.z * cos(l) - ps.x * sin(l);
+	nx = ps.x * native_cos(l) + ps.z * native_sin(l);
+	nz = ps.z * native_cos(l) - ps.x * native_sin(l);
 	ps.x = nx;
 	ps.z = nz;
 }
@@ -28,8 +28,8 @@ void	rotate_z(float3 ps, float l)
 	float ny;
 	float nx;
 
-	nx = ps.x * cos(l) + ps.y * sin(l);
-	ny = ps.y * cos(l) - ps.x * sin(l);
+	nx = ps.x * native_cos(l) + ps.y * native_sin(l);
+	ny = ps.y * native_cos(l) - ps.x * native_sin(l);
 	ps.x = nx;
 	ps.y = ny;
 }

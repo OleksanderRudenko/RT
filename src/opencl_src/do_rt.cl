@@ -108,8 +108,8 @@ unsigned int	rt(__global t_cl_light *lights, __global t_cl_figure *figures,
 
 unsigned int	do_rt(unsigned int x,
 					  unsigned int y,
-					  unsigned int width,
-					  unsigned int height,
+					  size_t width,
+					  size_t height,
 					  __global t_cl_figure *figures,
 					  __global t_cl_light *lights,
 					  __global float *cam_v,
@@ -128,8 +128,6 @@ unsigned int	do_rt(unsigned int x,
 	ray_origin = cam_origin;
 	ray_vector = (float3)(0.0f, 0.0f, 1.0f);
 	color = 0;
-	y = x / width;
-	x = x % width;
 	if (y < height && x < width)
 	{
 		ray_vector.x = (((x + 0.5f) / width) * 2.0f - 1.0f) * (((float)width) / height) * tan(M_PI / 360 * FOV_X);

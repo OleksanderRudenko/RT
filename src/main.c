@@ -57,6 +57,7 @@ int			main(int argc, char **argv)
 		what_to_print(&view);
 		SDL_UpdateWindowSurface(view.win[0]);
 	}
+	cl_releasing(&view);
 	// clean_staff(&view); /*TODO: make it good w/o segfault*/
 	// system("leaks RT");
 
