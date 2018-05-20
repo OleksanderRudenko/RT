@@ -56,7 +56,6 @@ static void			parse_figures(JSON_Object *root, t_view *view)
 	{
 		array = json_object_dotget_array(root, "figures");
 		i = json_array_get_count(array);
-		view->figures_num = i;
 		while (i > 0)
 		{
 			if ((figure = json_array_get_object(array, i - 1)) != NULL)
@@ -99,7 +98,6 @@ static void			parse_lights(JSON_Object *root, t_view *view)
 	{
 		array = json_object_dotget_array(root, "lights");
 		i = json_array_get_count(array);
-		view->lights_num = i;
 		while (i > 0)
 		{
 			if ((figure = json_array_get_object(array, i - 1)) != NULL)
@@ -118,6 +116,8 @@ void				parse_scene(const char *filename, t_view *view)
 	JSON_Object		*root_obj;
 
 	errno = 0;
+	view->figures_num = 1;
+	view->lights_num = 1;
 	if (!(root = json_parse_file(filename)))
 	{
 				ft_putendl_fd("Cannot parse file", STDERR_FILENO);

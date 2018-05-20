@@ -80,7 +80,7 @@ void 		printf_figures(t_view *v, t_cl_figure *figures)
 	int n;
 
 	n = 0;
-	while (n < (int)v->figures_num)
+	while (n <= (int)v->figures_num)
 	{
 		printf("type->%i\n", figures[n].type);
 		if (figures[n].type == InfinitePlane)
