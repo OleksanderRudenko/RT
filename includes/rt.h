@@ -30,7 +30,7 @@
 # include "open_cl.h"
 
 # define WIDTH 1280
-# define HEIGHT 768
+# define HEIGHT 720
 # define FOV_X 30
 # define FOV_Y 30
 # define LIGHT_TYPE_AMBIENT 0
@@ -373,6 +373,9 @@ void 		copy_elipsoid(t_cl_figure *figure, t_figure *tmp);
 void 		copy_paraboloid(t_cl_figure *figure, t_figure *tmp);
 void 		copy_tor(t_cl_figure *figure, t_figure *tmp);
 
+//effects/checkerdoard
+void 	 	checkerboard_effect(t_view *v, int color);
+
 //main
 int						exit_x(t_view *view);
 
@@ -391,7 +394,7 @@ void 					cl_set_mem_arg(t_view *v, void *arg, size_t arg_size,
 void 					set_arguments(t_view *v);
 
 //openCL/cl_copy_data
-void 					init_cam(t_view *v, float *cam_o, float *cam_v);
+void 			init_cam(t_view *v, cl_float3 *cam_o, cl_float3 *cam_v);
 t_cl_light 				*copy_light(t_view *v);
 t_cl_figure 			*copy_figures(t_view *v);
 cl_float3 				copy_vector(t_vector vector);

@@ -14,6 +14,7 @@
 
 typedef void 	(*t_copy)(t_cl_figure*, t_figure*);
 
+
 static t_copy 	*copy_array(void)
 {
 	t_copy 	*copy;
@@ -32,14 +33,14 @@ static t_copy 	*copy_array(void)
 	return (copy);
 }
 
-void 			init_cam(t_view *v, float *cam_o, float *cam_v)
+void 			init_cam(t_view *v, cl_float3 *cam_o, cl_float3 *cam_v)
 {
-	cam_o[0] = v->space->cam->o.x;
-	cam_o[1] = v->space->cam->o.y;
-	cam_o[2] = v->space->cam->o.z;
-	cam_v[0] = v->space->cam->v.x;
-	cam_v[1] = v->space->cam->v.y;
-	cam_v[2] = v->space->cam->v.z;
+	cam_o->x = v->space->cam->o.x;
+	cam_o->y = v->space->cam->o.y;
+	cam_o->z = v->space->cam->o.z;
+	cam_v->x = v->space->cam->v.x;
+	cam_v->y = v->space->cam->v.y;
+	cam_v->z = v->space->cam->v.z;
 }
 
 t_cl_light 		*copy_light(t_view *v)
@@ -80,7 +81,7 @@ void 		printf_figures(t_view *v, t_cl_figure *figures)
 	int n;
 
 	n = 0;
-	while (n <= (int)v->figures_num)
+	while (n < (int)v->figures_num)
 	{
 		printf("type->%i\n", figures[n].type);
 		if (figures[n].type == InfinitePlane)

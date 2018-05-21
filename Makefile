@@ -44,6 +44,7 @@ LIGHTDIR = ./src/light/
 VECTORDIR = ./src/vector/
 PARSEDIR = ./src/parse/
 OPENCLDIR = ./src/openCL/
+EFFECTSDIR = ./src/effects/
 GUIDIR = ./src/gui/
 
 #	Source files
@@ -64,6 +65,8 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c\
 
 OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c copy1.c \
 				copy2.c
+EFFECTSFILES = checkerboard.c
+
 #	Header folder
 INCLUDE = ./includes $(LIBSDLINCLUDE) $(TINYFD_INCLUDE)
 #	Binaries folder
@@ -76,6 +79,7 @@ BIN = $(addprefix $(BINDIR), $(SRCFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(VECTORFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(PARSEFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(OPENCLFILES:.c=.o)) \
+		$(addprefix $(BINDIR), $(EFFECTSFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(GUIFILES:.c=.o))
 #	Libft
 LIBFT = ./libft/libft.a
@@ -118,6 +122,9 @@ $(BINDIR)%.o: $(GUIDIR)%.c
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(OPENCLDIR)%.c
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+
+$(BINDIR)%.o: $(EFFECTSDIR)%.c
 	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 clean:

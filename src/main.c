@@ -52,12 +52,12 @@ int			main(int argc, char **argv)
 	{
 		if (!poll_event(&view))
 			view.exit_loop = 0;
-		button_staff(&view);
-		print_default_text(&view);
-		what_to_print(&view);
+		// button_staff(&view);
+		// print_default_text(&view);
+		// what_to_print(&view);
 		SDL_UpdateWindowSurface(view.win[0]);
 	}
-	cl_releasing(&view);
+	// cl_releasing(&view);
 	// clean_staff(&view); /*TODO: make it good w/o segfault*/
 	// system("leaks RT");
 

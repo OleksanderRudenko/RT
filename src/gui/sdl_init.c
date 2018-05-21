@@ -101,7 +101,7 @@ void	camera_rot(t_view *s, SDL_Scancode key)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->v.x += 0.5;
-		do_rt(s);
+		// do_rt(s);
 	}
 	// if (key ==  SDL_SCANCODE_S)
 	// {

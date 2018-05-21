@@ -8,8 +8,9 @@ float			get_sqr_solve(float a, float b, float h)
 
 	if (h == 0)
 		return (-b / 2.0f * a);
-	x1 = (-b + sqrt(h)) / (2.0f * a);
-	x2 = (-b - sqrt(h)) / (2.0f * a);
+	h = sqrt(h);
+	x1 = (-b + h) / (2.0f * a);
+	x2 = (-b - h) / (2.0f * a);
 	if (x1 <= 1e-11)
 		return (x2);
 	if (x2 <= 1e-11)
@@ -25,19 +26,37 @@ float			check_sphere_intersection(float3 ray_origin, float3 ray_vector, t_cl_fig
 	float		c;
 	float		h;
 
-	a = dot(ray_vector, ray_vector);
-	buf = subtraction(ray_origin, figure.center);
-	b = 2.0f * (dot(buf, ray_vector));
-	c = dot(buf, buf) - (figure.radius * figure.radius);
-	h = pow(b, 2) - (4.0f * a * c);
+	// a = dot(ray_vector, ray_vector);
+	a = ray_vector.x * ray_vector.x + ray_vector.y * ray_vector.y + ray_vector.z * ray_vector.z;
+	buf = ray_origin - figure.center;
+	b = buf.x * ray_vector.x + buf.y * ray_vector.y + buf.z * ray_vector.z;
+	b += b;
+	// b = 2.0f * (dot(buf, ray_vector));
+	// c = dot(buf, buf) - figure.radius * figure.radius;
+	c = buf.x * buf.x + buf.y * buf.y + buf.z * buf.z;
+
+	c -= figure.radius * figure.radius;
+	h = b * b - (4.0f * a * c);
 	if (h < 0.0f)
 		return (-1.0f);
-	else
-		return (get_sqr_solve(a, b, h));
-	return (0.0f);
+	// return (get_sqr_solve(a, b, h));
+
+	float x1;
+	float x2;
+
+	if (h == 0)
+		return (-b / 2.0f * a);
+	h = half_sqrt(h);
+	x1 = (-b + h) / (2.0f * a);
+	x2 = (-b - h) / (2.0f * a);
+	if (x1 <= 1e-11)
+		return (x2);
+	if (x2 <= 1e-11)
+		return (x1);
+	return (x1 <= x2 ? x1 : x2);
 }
 
 float3		get_sphere_normale(float3 p, t_cl_figure f)
 {
-	return (fast_normalize(subtraction(p, f.center)));
+	return (fast_normalize(p - f.center));
 }

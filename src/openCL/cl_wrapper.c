@@ -31,10 +31,10 @@ void 	cl_set_arg(t_view *v, void *arg, size_t arg_size, cl_uint id)
 
 void 	cl_set_mem_arg(t_view *v, void *arg, size_t arg_size, cl_uint id)
 {
-	cl_mem set_arg;
+	static cl_mem set_arg = 0;
 
-	set_arg = clCreateBuffer(v->cl.context, CL_MEM_WRITE_ONLY, arg_size,
-														NULL, &v->cl.result);
+	!set_arg ? set_arg = clCreateBuffer(v->cl.context, CL_MEM_READ_WRITE, arg_size,
+														NULL, &v->cl.result) : 0;
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while initializing argument");
 	v->cl.result = clEnqueueWriteBuffer (v->cl.commands, set_arg, CL_TRUE, 0,

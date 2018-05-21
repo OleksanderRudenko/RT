@@ -26,23 +26,7 @@ static char *get_kernel(void)
   "#include \"space.cl\"\n#include \"vector.cl\"\n" \
   "#include \"fcylinder.cl\"\n" \
   "#include \"fplane.cl\"\n#include \"fsphere.cl\"\n" \
-  "kernel void kernel_rt(     			\n" \
-  "		 size_t figures_num, 			\n" \
-  "		 size_t lights_num, 			\n" \
-  "      __global t_cl_figure *figures, \n" \
-  "      __global t_cl_light *light,    \n" \
-  "      __global float *cam_v,   	    \n" \
-  "      __global float *cam_o,  		\n" \
-  "      __global unsigned int *output){\n" \
-  " size_t x = get_global_id(0);  		\n" \
-  " size_t y = get_global_id(1);        \n" \
-  " size_t w = get_global_size(0);      \n" \
-  " size_t h = get_global_size(1);      \n" \
-  " unsigned int color;                 \n" \
-  " color = do_rt(x, y, w, h,  			\n" \
-  "	  figures, light, cam_v, cam_o,     \n" \
-  "	  figures_num, lights_num);			\n" \
-  " output[y * w + x] = color;}     \n";
+  "#include \"kernel.cl\"\n";
   return (ft_strdup(kernel));
 }
 
@@ -67,43 +51,18 @@ void 	get_execution_time(t_view *v)
 
 void	opencl_init2(t_view *v)
 {
-	printf("Initialization of output data...\n");
-	v->cl.output_buffer = clCreateBuffer(v->cl.context, CL_MEM_READ_WRITE,
-						v->cl.buffers_size, NULL, &v->cl.result);
-	if (v->cl.result != CL_SUCCESS)
-		opencl_errors("Error while initializing output data");
-
-	printf("Setting kernel arguments...\n");
     set_arguments(v);
+	if ((v->cl.result = clEnqueueNDRangeKernel(v->cl.commands, v->cl.kernel, 2, NULL, v->cl.global_work_size,
+				NULL, 0, NULL, &v->cl.kernel_exec_event)) != CL_SUCCESS)
+		opencl_errors("Error while executing kernel");
+	uint   time = SDL_GetTicks();
 
-	printf("Execution of the kernel...\n");
-	// if ((v->cl.result = clGetKernelWorkGroupInfo(v->cl.kernel, v->cl.device_ids[0], CL_KERNEL_WORK_GROUP_SIZE,
-	// 			sizeof(size_t), &v->cl.local_work_size, NULL)) != CL_SUCCESS)
-	// 	opencl_errors("Error while getting maximum work group size");
-	// printf("work size->%zu\n", v->cl.local_work_size);
-	// printf("work size->%zu %zu %zu\n", v->cl.max_work_items_size[0], v->cl.max_work_items_size[1], v->cl.max_work_items_size[2]);
-	size_t *local_work_size;
+	if ((clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, 0, v->cl.buffers_size,
+						v->buff, 0, NULL, NULL)) != CL_SUCCESS)
+		opencl_errors("Error while getting results");
 
-	v->cl.global_work_size = (size_t*)malloc(sizeof(size_t) * (v->cl.max_work_dim - 1));
-	v->cl.global_work_size[0] = WIDTH;
-	v->cl.global_work_size[1] = HEIGHT;
-
-	local_work_size = (size_t*)malloc(sizeof(size_t) * (v->cl.max_work_dim - 1));
-	local_work_size[0] = v->cl.max_work_items_size[0];
-	local_work_size[1] = v->cl.max_work_items_size[1];
-
-	v->cl.result = clEnqueueNDRangeKernel(v->cl.commands, v->cl.kernel, v->cl.max_work_dim - 1, NULL, v->cl.global_work_size,
-				NULL, 0, 0, &v->cl.kernel_exec_event);
-
-	// if ((v->cl.result = clEnqueueNDRangeKernel(v->cl.commands, v->cl.kernel, v->cl.max_work_dim - 1, NULL, v->cl.global_work_size,
-	// 			local_work_size, 0, 0, &v->cl.kernel_exec_event)) != CL_SUCCESS)
-	// 	opencl_errors("Error while executing the kernel");
-	if ((v->cl.result = clFinish(v->cl.commands)) != CL_SUCCESS)
-		opencl_errors("Failed to finish");
-	printf("Getting back the results...\n");
-	clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, 0, v->cl.buffers_size,
-						v->buff, 0, NULL, &v->cl.read_results_event);
-	get_execution_time(v);
+	printf("%.3f\n", (SDL_GetTicks() - time) / 1000.0F);
+	// get_execution_time(v);
 }
 
 void	opencl_init(t_view *v)
@@ -112,43 +71,41 @@ void	opencl_init(t_view *v)
 	size_t 		ret_size;
 
 	kernel_bytes = get_kernel();
-	printf("Getting available platforms...\n");
+	// printf("Getting available platforms...\n");
 	v->cl.platforms = (cl_platform_id*)malloc(sizeof(cl_platform_id));
 	if ((v->cl.result = clGetPlatformIDs(1, v->cl.platforms, &v->cl.num_platforms)) != CL_SUCCESS)
 		opencl_errors("Error while getting available platforms");
 
-	printf("Getting available GPU devices...\n");
+	// printf("Getting available GPU devices...\n");
 	v->cl.device_ids = (cl_device_id*)malloc(sizeof(cl_device_id));
-	if ((v->cl.result = clGetDeviceIDs(v->cl.platforms[0], CL_DEVICE_TYPE_GPU, 1, v->cl.device_ids, &v->cl.num_devices)) != CL_SUCCESS)
+	if ((v->cl.result = clGetDeviceIDs(v->cl.platforms[0], CL_DEVICE_TYPE_ALL, 1, v->cl.device_ids, &v->cl.num_devices)) != CL_SUCCESS)
 		opencl_errors("Error while getting available devices");
 
 	v->cl.result = clGetDeviceInfo(v->cl.device_ids[0],
 		CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS, sizeof(cl_uint), &v->cl.max_work_dim, &ret_size);
-
-	v->cl.max_work_items_size = (size_t*)malloc(sizeof(size_t) * v->cl.max_work_dim);
-	v->cl.result = clGetDeviceInfo(v->cl.device_ids[0],
-		CL_DEVICE_MAX_WORK_ITEM_SIZES, sizeof(size_t) * v->cl.max_work_dim, v->cl.max_work_items_size, &ret_size);
-
-	printf("Creation of the OpenCL context...\n");
+	v->cl.global_work_size[0] = WIDTH;
+	v->cl.global_work_size[1] = HEIGHT;
+	// printf("Creation of the OpenCL context...\n");
 	v->cl.context = clCreateContext(NULL, 1, v->cl.device_ids, NULL, NULL, &v->cl.result);
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while creating the OpenCL context");
 
-	printf("Creation of the command queue...\n");
+	// printf("Creation of the command queue...\n");
 	v->cl.commands = clCreateCommandQueue(v->cl.context, v->cl.device_ids[0], CL_QUEUE_PROFILING_ENABLE, &v->cl.result);
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while creating the command queue");
 
-	printf("Creation of the program...\n");
+	// printf("Creation of the program...\n");
 	v->cl.program = clCreateProgramWithSource(v->cl.context, 1, (const char**)&kernel_bytes, NULL, &v->cl.result);
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while creating the program");
 
-	printf("Compilation of the program...\n\n");
-	if ((v->cl.result = clBuildProgram(v->cl.program, 0, NULL, "-I src/opencl_src", NULL, NULL)) != CL_SUCCESS)
+	// printf("Compilation of the program...\n\n");
+	if ((v->cl.result = clBuildProgram(v->cl.program, 0, NULL,
+	"-I src/opencl_src -cl-fast-relaxed-math -cl-finite-math-only", NULL, NULL)) != CL_SUCCESS)
 		opencl_errors("Error while compiling the program");
 
-	printf("Creation of the kernel...\n");
+	// printf("Creation of the kernel...\n");
 	v->cl.kernel = clCreateKernel(v->cl.program, "kernel_rt", &v->cl.result);
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while creating the kernel");
@@ -156,12 +113,11 @@ void	opencl_init(t_view *v)
 	v->cl.values_number = WIDTH * HEIGHT;
 	v->cl.buffers_size = v->cl.values_number * sizeof(unsigned int);
 
-	printf("Initialization of output data...\n");
+	// printf("Initialization of output data...\n");
 	v->cl.output_buffer = clCreateBuffer(v->cl.context, CL_MEM_READ_WRITE,
 					v->cl.buffers_size, NULL, &v->cl.result);
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while initializing output data");
-
 	opencl_init2(v);
 	// cl_releasing(v);
 }

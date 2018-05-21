@@ -3,24 +3,26 @@
 
 float3		get_normale(float3 ray, t_cl_figure figure)
 {
+	float3 ret = (float3)(0.0f, 0.0f, 0.0f);
 	if (figure.type == Sphere)
-		return (get_sphere_normale(ray, figure));
+		ret = get_sphere_normale(ray, figure);
 	else if (figure.type == InfinitePlane)
-		return (get_plane_normale(figure));
+		ret = get_plane_normale(figure);
 	else if (figure.type == InfiniteCylinder)
-		return (get_cylinder_normale(ray, figure));
-	return ((float3)(0.0f, 0.0f, 0.0f));
+		ret = get_cylinder_normale(ray, figure);
+	return (ret);
 }
 
 float		check_intersection(float3 ray_origin, float3 ray_vector, t_cl_figure figure)
 {
+	float ret = -1;
 	if (figure.type == Sphere)
-		return (check_sphere_intersection(ray_origin, ray_vector, figure));
-	if (figure.type == InfinitePlane)
-		return (check_plane_intersection(ray_origin, ray_vector, figure));
-	if (figure.type == InfiniteCylinder)
-		return (check_cylinder_intersection(ray_origin, ray_vector, figure));
-	return (-1);
+		ret = check_sphere_intersection(ray_origin, ray_vector, figure);
+	else if (figure.type == InfinitePlane)
+		ret = check_plane_intersection(ray_origin, ray_vector, figure);
+	else if (figure.type == InfiniteCylinder)
+		ret = check_cylinder_intersection(ray_origin, ray_vector, figure);
+	return (ret);
 }
 
 int			figure_equal(t_cl_figure figure1, t_cl_figure figure2)
@@ -34,7 +36,7 @@ int			figure_equal(t_cl_figure figure1, t_cl_figure figure2)
 	return (0);
 }
 
-int			check_intersections(float3 ray_origin, float3 ray_vector, __global t_cl_figure *figures, size_t figures_num, t_cl_figure figure)
+int			check_intersections(float3 ray_origin, float3 ray_vector, __constant t_cl_figure *figures, size_t figures_num, t_cl_figure figure)
 {
 	float	k;
 	size_t 	n;

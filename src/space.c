@@ -25,7 +25,6 @@ void		add_light(t_light *light, t_view *view)
 	while (light1->next != NULL)
 		light1 = light1->next;
 	light1->next = light;
-	view->lights_num++;
 }
 
 void		add_figure(t_figure *figure, t_view *view)
@@ -41,7 +40,6 @@ void		add_figure(t_figure *figure, t_view *view)
 	while (figure1->next != NULL)
 		figure1 = figure1->next;
 	figure1->next = figure;
-	view->figures_num++;
 }
 
 t_vector	get_intersection(t_ray *ray, double k)

@@ -92,23 +92,23 @@ typedef	struct			s_lrt
 
 /* do_rt */
 unsigned int			do_rt(unsigned int x,
-					  	      unsigned int y,
-					          unsigned int width,
-					          unsigned int height,
-					          __global t_cl_figure *figures,
-					          __global t_cl_light *light,
-							  __global float *cam_v,
-							  __global float *cam_o,
-							  size_t figures_num,
-							  size_t lights_num);
+					  unsigned int y,
+					  size_t width,
+					  size_t height,
+					  __constant t_cl_figure *figures,
+					  __constant t_cl_light *lights,
+					  float3 cam_vector,
+					  float3 cam_origin,
+					  size_t figures_num,
+					  size_t lights_num);
 
-unsigned int			rt(__global t_cl_light *lights,
-						   __global t_cl_figure *figures,
+unsigned int			rt(__constant t_cl_light *lights,
+						   __constant t_cl_figure *figures,
 						   float3 ray_origin, float3 ray_vector,
 						   size_t lights_num, size_t figures_num);
 
-unsigned int			do_lightrt(__global t_cl_light *lights,
-						   __global t_cl_figure *figures,
+unsigned int			do_lightrt(__constant t_cl_light *lights,
+						   __constant t_cl_figure *figures,
 						   t_cl_figure figure,
 						   float3 ray_origin, float3 ray_vector, double k, size_t figures_num, size_t lights_num);
 
@@ -118,7 +118,7 @@ float					rt_lightr(float3 l, float3 normale, float3 view, float3 buf);
 /* figure */
 float					check_intersection(float3 ray_origin, float3 ray_vector, t_cl_figure figure);
 int						check_intersections(float3 ray_origin, float3 ray_vector,
-										__global t_cl_figure *figures, size_t figures_num, t_cl_figure figure);
+										__constant t_cl_figure *figures, size_t figures_num, t_cl_figure figure);
 float3					get_normale(float3 ray, t_cl_figure f);
 int						figure_equal(t_cl_figure figure1, t_cl_figure figure2);
 

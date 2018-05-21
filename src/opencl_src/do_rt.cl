@@ -31,8 +31,8 @@ t_lrt			tlrt_init(float3 ray_origin, float3 ray_vector, t_cl_figure figure, doub
 	return (var);
 }
 
-unsigned int	do_lightrt(__global t_cl_light *lights,
-						   __global t_cl_figure *figures,
+unsigned int	do_lightrt(__constant t_cl_light *lights,
+						   __constant t_cl_figure *figures,
 						   t_cl_figure figure,
 						   float3 ray_origin, float3 ray_vector, double k,
 						   size_t figures_num, size_t lights_num)
@@ -67,20 +67,10 @@ unsigned int	do_lightrt(__global t_cl_light *lights,
 		}
 		n++;
 	}
-	// if (v.bright >= 1)
-	// {
-	// 	printf("%f-v.bright", v.bright);
-	// 	// exit(1);
-	// }
-	// if (v.reflected >= 1)
-	// {
-	// 	printf("%f-v.reflected", v.reflected);
-	// 	// exit(1);
-	// }
 	return (set_brightness(figure.color, v.bright, v.reflected));
 }
 
-unsigned int	rt(__global t_cl_light *lights, __global t_cl_figure *figures,
+unsigned int	rt(__constant t_cl_light *lights, __constant t_cl_figure *figures,
 					float3 ray_origin, float3 ray_vector, size_t lights_num, size_t figures_num)
 {
 	t_cl_figure			closest;
@@ -110,21 +100,17 @@ unsigned int	do_rt(unsigned int x,
 					  unsigned int y,
 					  size_t width,
 					  size_t height,
-					  __global t_cl_figure *figures,
-					  __global t_cl_light *lights,
-					  __global float *cam_v,
-					  __global float *cam_o,
+					  __constant t_cl_figure *figures,
+					  __constant t_cl_light *lights,
+					  float3 cam_vector,
+					  float3 cam_origin,
 					  size_t figures_num,
 					  size_t lights_num)
 {
 	float3				ray_origin;
 	float3				ray_vector;
-	float3 				cam_vector;
-	float3 				cam_origin;
 	unsigned int 		color;
 
-	cam_vector = (float3)(cam_v[0], cam_v[1], cam_v[2]);
-	cam_origin = (float3)(cam_o[0], cam_o[1], cam_o[2]);
 	ray_origin = cam_origin;
 	ray_vector = (float3)(0.0f, 0.0f, 1.0f);
 	color = 0;
