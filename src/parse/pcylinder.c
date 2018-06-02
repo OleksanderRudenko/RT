@@ -15,19 +15,12 @@
 static void parse_cylinder2(JSON_Object *cylinder, t_figure	*fcylinder,
 															t_view *view)
 {
-	if (json_object_has_value_of_type(cylinder, "cut plane1", JSONObject))
-	{
-		((t_icylinder*)fcylinder->figure)->caps1 = init_cut_plane();
-		parse_cut_plane(((t_icylinder*)fcylinder->figure)->caps1->plane,
-		((t_icylinder*)fcylinder->figure)->caps1, cylinder, "cut plane1");
-
-	}
-	if (json_object_has_value_of_type(cylinder, "cut plane2", JSONObject))
-	{
-		((t_icylinder*)fcylinder->figure)->caps2 = init_cut_plane();
-		parse_cut_plane(((t_icylinder*)fcylinder->figure)->caps2->plane,
-		((t_icylinder*)fcylinder->figure)->caps2, cylinder, "cut plane2");
-	}
+	if (json_object_has_value_of_type(cylinder, "cut plane1", JSONNumber))
+		((t_icylinder*)fcylinder->figure)->c_distances[0] =
+					json_object_get_number(cylinder, "cut plane1");
+	if (json_object_has_value_of_type(cylinder, "cut plane2", JSONNumber))
+		((t_icylinder*)fcylinder->figure)->c_distances[1] =
+					json_object_get_number(cylinder, "cut plane2");
 	parse_color_reflection(cylinder, fcylinder);
 	add_figure(fcylinder, view);
 }

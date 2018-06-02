@@ -115,6 +115,9 @@ typedef struct   		s_parabaloid 							/* PARABOLOID */
  	t_vector  			position;
  	t_vector  			rotation;
  	double   			radius;
+	t_vector 			capses[1];
+	double 				c_distances[1];
+	int 				c_color[1];
 
 	t_capses  			*caps;
 }      					t_parabaloid;
@@ -130,9 +133,9 @@ typedef struct			s_icone										  /* CONE */
 	t_vector			vertex;
 	t_vector			vector;
 	double				radius;
-
-	t_capses  			*caps1;
-  	t_capses  			*caps2;
+	t_vector 			capses[2];
+	double 				c_distances[2];
+	int 				c_color[2];
 }						t_icone;
 
 typedef struct			s_icylinder							      /* CYLINDER */
@@ -140,9 +143,9 @@ typedef struct			s_icylinder							      /* CYLINDER */
 	t_vector			start;
 	t_vector			vector;
 	double				radius;
-
-	t_capses  			*caps1;
-  	t_capses  			*caps2;
+	t_vector 			capses[2];
+	double 				c_distances[2];
+	int 				c_color[2];
 }						t_icylinder;
 
 typedef struct			s_triangle				 				  /* TRIANGLE */
@@ -153,8 +156,15 @@ typedef struct			s_triangle				 				  /* TRIANGLE */
 
 typedef struct			s_squard						 		  /* QUADRATE */
 {
-	t_vector			points[4];
-	t_vector			normale;
+	 // t_vector   points[4];
+ // t_vector   normale;
+
+ 	t_vector   position; // !!!
+ 	t_vector   rotation; // !!!
+
+ 	double    scale[2];
+ 	t_vector   points[4];
+ 	t_vector   normale;
 }						t_squard;
 
 typedef struct			s_cube					    	  			  /* CUBE */
@@ -226,6 +236,10 @@ typedef struct			s_space
 	t_ray				*cam;
 	t_cl_figure 		*cl_figures;
 	t_cl_light			*cl_lights;
+	/* effects */
+	int 				antialiasing;
+	int 				sepia;
+	/* end */
 }						t_space;
 
 typedef	struct			s_lrt
@@ -376,15 +390,22 @@ void 		copy_tor(t_cl_figure *figure, t_figure *tmp);
 //effects/checkerdoard
 void 	 	checkerboard_effect(t_view *v, int color);
 
+//effects/perlin_noise
+unsigned int 		*perlin_noise(t_view *view);
+
+//effects/normal_disruption
+unsigned int 		*normal_disruption(t_view *view);
+
 //main
 int						exit_x(t_view *view);
 
 //openCL/opencl_init
 void					opencl_init(t_view *v);
 void					opencl_init2(t_view *v);
-void					opencl_errors(const char *msg);
+void					opencl_errors(cl_uint result, const char *msg);
 
 //openCL/cl_wrapper
+void 					cl_info(t_view *v);
 void					cl_releasing(t_view *v);
 void 					cl_set_arg(t_view *v, void *arg, size_t arg_size,
 																cl_uint id);
@@ -393,8 +414,9 @@ void 					cl_set_mem_arg(t_view *v, void *arg, size_t arg_size,
 //openCL/cl_set_args
 void 					set_arguments(t_view *v);
 
+
 //openCL/cl_copy_data
-void 			init_cam(t_view *v, cl_float3 *cam_o, cl_float3 *cam_v);
+void 					init_cam(t_view *v, cl_float3 *cam_o, cl_float3 *cam_v);
 t_cl_light 				*copy_light(t_view *v);
 t_cl_figure 			*copy_figures(t_view *v);
 cl_float3 				copy_vector(t_vector vector);
@@ -539,6 +561,11 @@ t_vector				parse_vector(JSON_Array *vector, t_vector def);
 //parse/preflection
 void					parse_color_reflection(JSON_Object *sphere,
 															t_figure *figure);
+
+//parse//parse_effects
+void 					parse_effects(JSON_Object *root, t_view *view);
+
+void 					check_parse(JSON_Object *figure, t_view * view, char *type);
 
 //light/light
 t_light					*light_init(char type, t_vector o, double inten);

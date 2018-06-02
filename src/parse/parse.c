@@ -22,28 +22,7 @@ static void			parse_figure(JSON_Object *figure, t_view *view)
 		return ;
 	}
 	type = (char*)json_object_get_string(figure, "type");
-	if (ft_strequ(type, "sphere"))
-		parse_sphere(figure, view);
-	else if (ft_strequ(type, "plane"))
-		parse_plane(figure, view);
-	else if (ft_strequ(type, "cylinder"))
-		parse_cylinder(figure, view);
-	else if (ft_strequ(type, "cone"))
-		parse_cone(figure, view);
-	else if (ft_strequ(type, "triangle"))
-		parse_triangle(figure, view);
-	else if (ft_strequ(type, "elipsoid"))
-		parse_elipsoid(figure, view);
-	else if (ft_strequ(type, "tor"))
-		parse_tor(figure, view);
-	else if (ft_strequ(type, "paraboloid"))
-		parse_paraboloid(figure, view);
-	else if (ft_strequ(type, "quadrate"))
-		parse_quadrate(figure, view);
-	else if (ft_strequ(type, "cube"))
-		parse_cube(figure, view);
-	else
-		ft_putendl_fd("Unknown figure found. Skipped", STDERR_FILENO);
+	check_parse(figure, view, type);
 }
 
 static void			parse_figures(JSON_Object *root, t_view *view)
@@ -56,7 +35,6 @@ static void			parse_figures(JSON_Object *root, t_view *view)
 	{
 		array = json_object_dotget_array(root, "figures");
 		i = json_array_get_count(array);
-		view->figures_num = i;
 		while (i > 0)
 		{
 			if ((figure = json_array_get_object(array, i - 1)) != NULL)
@@ -99,7 +77,6 @@ static void			parse_lights(JSON_Object *root, t_view *view)
 	{
 		array = json_object_dotget_array(root, "lights");
 		i = json_array_get_count(array);
-		view->lights_num = i;
 		while (i > 0)
 		{
 			if ((figure = json_array_get_object(array, i - 1)) != NULL)
@@ -130,5 +107,6 @@ void				parse_scene(const char *filename, t_view *view)
 	parse_figures(root_obj, view);
 	parse_lights(root_obj, view);
 	parse_cam(root_obj, view);
+	parse_effects(root_obj, view);
 	json_value_free(root);
 }

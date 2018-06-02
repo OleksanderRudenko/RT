@@ -44,6 +44,9 @@ void 		copy_elipsoid(t_cl_figure *figure, t_figure *tmp)
 
 void 		copy_paraboloid(t_cl_figure *figure, t_figure *tmp)
 {
+	figure->t_points[0] = copy_vector(((t_parabaloid*)tmp->figure)->capses[0]);
+	figure->caps1 = ((t_parabaloid*)tmp->figure)->c_distances[0];
+	figure->color_c1 = ((t_parabaloid*)tmp->figure)->c_color[0];
 	figure->position = copy_vector(((t_parabaloid*)tmp->figure)->position);
 	figure->rotation = copy_vector(((t_parabaloid*)tmp->figure)->rotation);
 	figure->radius = ((t_parabaloid*)tmp->figure)->radius;

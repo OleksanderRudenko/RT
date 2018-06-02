@@ -98,11 +98,11 @@ void 		printf_figures(t_view *v, t_cl_figure *figures)
 			printf("Cube : ");
 		if (figures[n].type == Quadrate)
 			printf("Quadrate : ");
-		if (figures[n].type == Quadrate)
+		if (figures[n].type == Elipsoid)
 			printf("Elipsoid : ");
-		if (figures[n].type == Quadrate)
+		if (figures[n].type == Parabaloid)
 			printf("Parabaloid : ");
-		if (figures[n].type == Quadrate)
+		if (figures[n].type == Tor)
 			printf("Tor : ");
 		printf("color -> %#x reflection ->%f \n", figures[n].color, figures[n].reflection);
 		n++;

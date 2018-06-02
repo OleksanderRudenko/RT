@@ -17,9 +17,10 @@ static t_figure* init_figure(t_figure* fparaboloid, t_vector v1, t_vector v2)
 {
 	fparaboloid = (t_figure*)malloc(sizeof(t_figure));
 	fparaboloid->figure = (t_parabaloid*)malloc(sizeof(t_parabaloid));
+	fparaboloid->type = Parabaloid;
+	fparaboloid->next = NULL;
 	((t_parabaloid*)fparaboloid->figure)->position = v1;
 	((t_parabaloid*)fparaboloid->figure)->rotation = v2;
-	((t_parabaloid*)fparaboloid->figure)->caps = NULL;
 	return (fparaboloid);
 }
 /* END */
@@ -33,12 +34,9 @@ static void	parse_paraboloid2(JSON_Object *paraboloid, t_figure *fparaboloid,
 	else
 		ft_putendl_fd("Unknown or invalid paraboloid radius. Default applied",
 					STDERR_FILENO);
-	if (json_object_has_value_of_type(paraboloid, "cut plane", JSONObject))
-	{
-		((t_parabaloid*)fparaboloid->figure)->caps = init_cut_plane();
-		parse_cut_plane(((t_parabaloid*)fparaboloid->figure)->caps->plane,
-		((t_parabaloid*)fparaboloid->figure)->caps, paraboloid, "cut plane");
-	}
+	if (json_object_has_value_of_type(paraboloid, "cut plane1", JSONNumber))
+		((t_parabaloid*)fparaboloid->figure)->c_distances[0] =
+							json_object_get_number(paraboloid, "cut plane1");
 	parse_color_reflection(paraboloid, fparaboloid);
 	add_figure(fparaboloid, view);
 }
@@ -47,7 +45,7 @@ void		parse_paraboloid(JSON_Object *paraboloid, t_view *view)
 {
 	t_figure 	*fparaboloid = NULL;
 	t_vector	vector[2];
-	
+
 	if (json_object_has_value_of_type(paraboloid, "position", JSONArray))
 		vector[0] = parse_vector(json_object_get_array(paraboloid, "position"),
 					(t_vector){0, 0, 0});

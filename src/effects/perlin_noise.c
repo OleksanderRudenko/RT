@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   opencl_init.c                                      :+:      :+:    :+:   */
+/*   perlin_noise.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,51 +10,78 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "rt.h"
+#include "effects.h"
 
-float 		interpolate(float a, float b, float x)
+double  perlin(t_perlin *p, double x, double y, double z)
 {
-	return (a * (1 - x) + b * x);
+	static int 	*permutation = NULL;
+
+	if (!(permutation))
+	{
+		permutation = (int*)malloc(sizeof(int) * 512);
+		int i = -1;
+		while (++i < 512)
+			permutation[i] = rand() % 256;
+	}
+	p->unit[0] = (int)x & 255;
+	p->unit[1] = (int)y & 255;
+	p->unit[2] = (int)z & 255;
+	p->location[0] = x - (int)x;
+	p->location[1] = y - (int)y;
+	p->location[2] = z - (int)z;
+	p->faded[0] = fade(p->location[0]);
+	p->faded[1] = fade(p->location[1]);
+	p->faded[2] = fade(p->location[2]);
+	hash(permutation, p->unit, p->hashed);
+	return (perlin2(p->hashed, p->faded, p->location));
 }
 
-float 		noise(int x)
+double octave_perlin(t_perlin *p, double x, double y, double z)
 {
-	x = pow((x << 13), x);
-	return (1.0 - (x * (x * x * 15731 + 789221) + 1376312589) & 7fffffff) / 1073741824.0);
-}
-
-float 		smoothed_noise(float x)
-{
-	return (noise(x) / 2 + noise(x - 1) / 4 + noise(x + 1) / 4);
-}
-
-float 		interpolated_noise(float x)
-{
-	int 	integer_x = (int)x;
-	float 	fractional_x = x - integer_x;
-
-	float v1 = smoothed_noise(integer_x);
-	float v2 = smoothed_noise(integer_x + 1);
-	return interpolate(v1, v2, fractional_x);
-}
-
-float 		perlin_noise(float x)
-{
-	float 	total;
-	float 	persistence;
-	float 	frequency;
-	float 	amplitude;
-	int 	n;
+	double 	total;
+	double 	maxValue;
 	int 	i;
 
+	p->persistence = 1;
+	p->octaves = 4;
+	p->frequency = 8;
+	p->amplitude = 128;
 	total = 0;
-	persistence = 1/4;
-	n = 10;
-	i = 0;
-	while (i < n) {
-		frequency = pow(2, i);
-		amplitude = pow(persistence, i);
-		total = total + interpolated_noise(x, * frequency) * amplitude;
+	maxValue = 0;
+	i = -1;
+	while (++i < p->octaves)
+	{
+		total += perlin(p, x * p->frequency, y * p->frequency,
+							z * p->frequency) * p->amplitude;
+		maxValue += p->amplitude;
+	    p->amplitude *= p->persistence;
+	    p->frequency *= 2;
 	}
-	return (total);
+	return (total / maxValue);
+}
+
+unsigned int *perlin_noise(t_view *view)
+{
+	t_perlin 		p;
+	int	 			y;
+	int 			x;
+
+	y = -1;
+	p.perlin_texture = (unsigned int*)malloc(sizeof(unsigned int) * (500 * 500));
+	while (++y < 500)
+	{
+		x = -1;
+		while (++x < 500)
+		{
+			p.p[X] += (double)x / 500.0;
+			p.color_t.color = view->buff[y * WIDTH + x];
+			p.p_factor = 20 * octave_perlin(&p, p.p[X], p.p[Y], 0.8);
+			p.color_t.spectrum.red = (255 * p.p_factor);
+			p.color_t.spectrum.green = (255 * p.p_factor);
+			p.color_t.spectrum.blue = (255 * p.p_factor);
+			p.perlin_texture[y * 500 + x] = p.color_t.color;
+		}
+		p.p[Y] += (double)y / 500.0;
+	}
+	return (p.perlin_texture);
 }

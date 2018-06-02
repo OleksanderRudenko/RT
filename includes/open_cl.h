@@ -13,15 +13,6 @@
 #ifndef OPEN_CL_H
 # define OPEN_CL_H
 
-// #ifdef cl_khr_byte_addressable_store
-// 	#pragma OPENCL EXTENSION cl_khr_byte_addressable_store : enable
-// #endif
-// #ifdef cl_khr_fp64
-// 	#pragma OPENCL EXTENSION cl_khr_fp64 : enable
-// #elif defined(cl_amd_fp64)
-// 	#pragma OPENCL EXTENSION cl_amd_fp64 : enable
-// #endif
-
 typedef struct			s_cl_light
 {
 	int					type;
@@ -43,7 +34,7 @@ typedef struct			s_cl_figure
 	cl_float3  			position;
 	cl_float3  			rotation;
 	cl_float3  			vertex;
-	/*triangle*/
+	/*triangle / capses points */
 	cl_float3			t_points[3];
 	/*quadrate*/
 	cl_float3			q_points[4];
@@ -53,11 +44,11 @@ typedef struct			s_cl_figure
 	cl_float3			scale;
 
 	/*capses*/
-	// float 			caps1;
-	// float 			caps2;
-	// int 				color_c1;
-	// int 				color_c2;
-	// int 				color_f;
+	float 				caps1;
+	float 				caps2;
+	int 				color_c1;
+	int 				color_c2;
+	int 				color_f;
 
 	float				radius;
 	float				rdistance;
@@ -67,10 +58,11 @@ typedef struct			s_cl_figure
 
 typedef struct			s_opencl
 {
+	char 				*kernel_bytes;
 	cl_int 				result;
-	cl_platform_id     *platforms;          //List of platforms IDs
+	cl_platform_id      platforms[1];          //List of platforms IDs
 	cl_uint             num_platforms;		//The actual number of returned platform IDs
-	cl_device_id       *device_ids;         //List of device IDs
+	cl_device_id        device_ids[1];         //List of device IDs
 	cl_uint             num_devices;        //The actual number of returned device IDs returned
 	cl_uint 			max_work_dim;
 	size_t 				max_work_items_size[2];
@@ -78,9 +70,9 @@ typedef struct			s_opencl
 	cl_command_queue 	commands;
 	cl_program 			program;
 	cl_kernel 			kernel;
-	size_t 				values_number;
-	size_t 				buffers_size;
+	size_t 				buffer_size;
 	cl_mem 				output_buffer;
+	cl_mem 				set_arg[3];
 	size_t    			global_work_size[2];  	//Number of values for each dimension we use
 	size_t    			local_work_size[2];    //Size of a work-group in each dimension
 	cl_event  			kernel_exec_event;

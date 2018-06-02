@@ -26,6 +26,16 @@ void 		copy_sphere(t_cl_figure *figure, t_figure *tmp)
 
 void 		copy_cylinder(t_cl_figure *figure, t_figure *tmp)
 {
+	int i;
+
+	i = -1;
+	while (++i < 2)
+		figure->t_points[i] =
+				copy_vector(((t_icylinder*)tmp->figure)->capses[i]);
+	figure->caps1 = ((t_icylinder*)tmp->figure)->c_distances[0];
+	figure->caps2 = ((t_icylinder*)tmp->figure)->c_distances[1];
+	figure->color_c1 = ((t_icylinder*)tmp->figure)->c_color[0];
+	figure->color_c2 = ((t_icylinder*)tmp->figure)->c_color[1];
 	figure->start = copy_vector(((t_icylinder*)tmp->figure)->start);
 	figure->vector = copy_vector(((t_icylinder*)tmp->figure)->vector);
 	figure->radius = ((t_icylinder*)tmp->figure)->radius;
@@ -33,6 +43,16 @@ void 		copy_cylinder(t_cl_figure *figure, t_figure *tmp)
 
 void 		copy_cone(t_cl_figure *figure, t_figure *tmp)
 {
+	int i;
+
+	i = -1;
+	while (++i < 2)
+		figure->t_points[i] = copy_vector(((t_icone*)tmp->figure)->capses[i]);
+	figure->caps1 = ((t_icone*)tmp->figure)->c_distances[0];
+	figure->caps2 = ((t_icone*)tmp->figure)->c_distances[1];
+	figure->color_c1 = ((t_icone*)tmp->figure)->c_color[0];
+	figure->color_c2 = ((t_icone*)tmp->figure)->c_color[1];
+	figure->color_f = figure->color;
 	figure->vertex = copy_vector(((t_icone*)tmp->figure)->vertex);
 	figure->vector = copy_vector(((t_icone*)tmp->figure)->vector);
 	figure->radius = ((t_icone*)tmp->figure)->radius;
@@ -52,7 +72,7 @@ void 		copy_cube(t_cl_figure *figure, t_figure *tmp)
 		i = (i == 4) ? (i = 0) : i;
 	}
 	i = -1;
-	while (++i < 4)
+	while (++i < 6)
 		figure->c_normale[i] =
 			copy_vector(((t_cube*)tmp->figure)->planes[i].normale);
 	figure->position = copy_vector(((t_cube*)tmp->figure)->position);
