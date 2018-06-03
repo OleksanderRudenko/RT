@@ -38,3 +38,20 @@ int			vis_equal(t_vector vector1, t_vector vector2)
 			vector1.y == vector2.y &&
 			vector1.z == vector2.z);
 }
+
+t_vector	get_default_vector(char ch)
+{
+	if (ch == 'z')
+		return ((t_vector){0, 0, 1});
+	if (ch == 'y')
+		return ((t_vector){0, 1, 0});
+	if (ch == 'x')
+		return ((t_vector){1, 0, 0});
+	//DELETE AFTER DEBUG
+	ft_putstr("ERROR: file vector.c; function get_default_vector, because numer ch = ");
+	ft_putnbr(ch);
+	write(1, "\n", 1);
+	exit(0);
+	//END DELETE
+	return ((t_vector){0, 0, 0});
+}

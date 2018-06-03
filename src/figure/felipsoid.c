@@ -22,7 +22,7 @@ t_figure  *elipsoid_init(t_vector position, t_vector rotation, int color, double
   elips = (t_elipsoid*)malloc(sizeof(t_elipsoid));
 	new_figure->figure = elips;
 	elips->position = position;
-  elips->rotation = rotation;
+  elips->rotation = vnormalize(rotation);
   elips->radius = 1;
   elips->rdistance = 1;
 	new_figure->color = color;

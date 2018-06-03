@@ -14,7 +14,12 @@
 
 t_vector	vmultiple(t_vector a, t_vector b)
 {
-    return ((t_vector){a.x * b.x, a.y * b.y, a.z * b.z});
+  t_vector rez;
+
+  rez.x = (a.z * b.y) - (a.y * b.z);
+  rez.y = (a.x * b.z) - (a.z * b.x);
+  rez.z = (a.y * b.x) - (a.x * b.y);
+  return (rez);
 }
 
 t_vector	vsum(t_vector a, t_vector b)

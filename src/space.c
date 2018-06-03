@@ -16,6 +16,7 @@ void		add_light(t_light *light, t_view *view)
 {
 	t_light *light1;
 
+	view->lights_num++;
 	if (view->space->lights == NULL)
 	{
 		view->space->lights = light;
@@ -31,6 +32,7 @@ void		add_figure(t_figure *figure, t_view *view)
 {
 	t_figure *figure1;
 
+	view->figures_num++;
 	if (view->space->figures == NULL)
 	{
 		view->space->figures = figure;
@@ -53,10 +55,14 @@ void		space_init(const char *filename, t_view *view)
 	view->space->cam = NULL;
 	view->space->figures = NULL;
 	view->space->lights = NULL;
-	parse_scene(filename, view); 																/*  PARSE  */
+	view->figures_num = 0;
+	view->lights_num = 0;
+	parse_scene(filename, view);
 	if (view->space->cam == NULL)
 		view->space->cam = ray_init((t_vector){0, 0, -10},
 				(t_vector){0, 0, 0});
+	view->space->cl_figures = copy_figures(view);
+	view->space->cl_lights = copy_light(view);
 }
 
 void		cam_rotate(t_ray *ray, t_vector vector)

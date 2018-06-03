@@ -139,7 +139,7 @@
       "reflection": 10
     },
 	{
-		"type": "triangle",
+		"type": "//triangle",
 		"points":
 				[
 					[0, 0, 0],

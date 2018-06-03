@@ -1,3 +1,4 @@
+
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -12,6 +13,7 @@
 
 #ifndef RT_H
 # define RT_H
+
 # include "libft.h"
 # include "get_next_line.h"
 # include "parson.h"
@@ -25,6 +27,8 @@
 # include "SDL_ttf.h"
 # include "OpenCL/opencl.h"
 # include "tinyfiledialogs.h"
+# include "open_cl.h"
+
 # define WIDTH 1280
 # define HEIGHT 720
 # define FOV_X 30
@@ -34,19 +38,7 @@
 # define NUM_BUTTONS 4
 # define NUM_SPH_PROP 5
 # define MAX_TEXT_LEN 100
-
-# define PLANE 0
-# define SPHERE 1
-# define CYLINDER 2
 // # define NUM_PROP 3
-// #ifdef cl_khr_byte_addressable_store
-// 	#pragma OPENCL EXTENSION cl_khr_byte_addressable_store : enable
-// #endif
-// #ifdef cl_khr_fp64
-// 	#pragma OPENCL EXTENSION cl_khr_fp64 : enable
-// #elif defined(cl_amd_fp64)
-// 	#pragma OPENCL EXTENSION cl_amd_fp64 : enable
-// #endif
 
 typedef union			u_color
 {
@@ -68,7 +60,9 @@ typedef enum			e_figure_type
 	InfiniteCone,
 	Triangle,
 	Cube,
+	Quadrate,
 	Elipsoid,
+	Parabaloid,
 	Tor
 }						t_figure_type;
 
@@ -86,66 +80,6 @@ typedef struct			s_light
 	t_vector			o;
 	struct s_light		*next;
 }						t_light;
-
-//structure for OPenCL
-typedef struct			s_cl_light
-{
-	int					type;
-	float				inten;
-	cl_float3			origin;
-}						t_cl_light;
-
-typedef struct			s_cl_figure
-{
-	int					color;
-	float				reflection;
-	cl_float3			start;
-	cl_float3			vector;
-	cl_float3			normale;
-	cl_float3			point;
-	cl_float3			center;
-	float				radius;
-	int					type;
-}						t_cl_figure;
-
-typedef struct			s_cl_icylinder
-{
-	cl_float3			start;
-	cl_float3			vector;
-	float				radius;
-}						t_cl_icylinder;
-
-typedef struct			s_cl_iplane
-{
-	cl_float3			normale;
-	cl_float3			point;
-}						t_cl_iplane;
-
-typedef struct			s_cl_sphere
-{
-	cl_float3			center;
-	float				radius;
-}						t_cl_sphere;
-															/* OPEN CL STRUCT */
-typedef struct			s_opencl
-{
-	cl_int 				result;
-	cl_platform_id     *platforms;          //List of platforms IDs
-	cl_uint             num_platforms;		//The actual number of returned platform IDs
-	cl_device_id       *device_ids;         //List of device IDs
-	cl_uint             num_devices;        //The actual number of returned device IDs returned
-	cl_context 			context;
-	cl_command_queue 	commands;
-	cl_program 			program;
-	cl_kernel 			kernel;
-	size_t 				values_number;
-	size_t 				buffers_size;
-	cl_mem 				output_buffer;
-	size_t    			global_work_size;  	//Number of values for each dimension we use
-	size_t    			local_work_size;    //Size of a work-group in each dimension
-	cl_event  			kernel_exec_event;
-	cl_event    		read_results_event;
-}						t_opencl;
 
 /*
 **	t_ray type represents origin of ray and his vector. Also for camera obj
@@ -181,7 +115,11 @@ typedef struct   		s_parabaloid 							/* PARABOLOID */
  	t_vector  			position;
  	t_vector  			rotation;
  	double   			radius;
- 	t_capses  			*caps;
+	t_vector 			capses[1];
+	double 				c_distances[1];
+	int 				c_color[1];
+
+	t_capses  			*caps;
 }      					t_parabaloid;
 
 typedef struct			s_sphere									/* SPHERE */
@@ -195,8 +133,9 @@ typedef struct			s_icone										  /* CONE */
 	t_vector			vertex;
 	t_vector			vector;
 	double				radius;
-	t_capses  			*caps1;
-  	t_capses  			*caps2;
+	t_vector 			capses[2];
+	double 				c_distances[2];
+	int 				c_color[2];
 }						t_icone;
 
 typedef struct			s_icylinder							      /* CYLINDER */
@@ -204,8 +143,9 @@ typedef struct			s_icylinder							      /* CYLINDER */
 	t_vector			start;
 	t_vector			vector;
 	double				radius;
-  	t_capses  			*caps1;
-  	t_capses  			*caps2;
+	t_vector 			capses[2];
+	double 				c_distances[2];
+	int 				c_color[2];
 }						t_icylinder;
 
 typedef struct			s_triangle				 				  /* TRIANGLE */
@@ -216,8 +156,15 @@ typedef struct			s_triangle				 				  /* TRIANGLE */
 
 typedef struct			s_squard						 		  /* QUADRATE */
 {
-	t_vector			points[4];
-	t_vector			normale;
+	 // t_vector   points[4];
+ // t_vector   normale;
+
+ 	t_vector   position; // !!!
+ 	t_vector   rotation; // !!!
+
+ 	double    scale[2];
+ 	t_vector   points[4];
+ 	t_vector   normale;
 }						t_squard;
 
 typedef struct			s_cube					    	  			  /* CUBE */
@@ -244,6 +191,7 @@ typedef struct 			s_itor					                       /* TOR */
 }						t_itor;
 
 /* END */
+
 
 typedef struct			s_cubic
 {
@@ -286,6 +234,12 @@ typedef struct			s_space
 	t_figure			*figures;
 	t_light				*lights;
 	t_ray				*cam;
+	t_cl_figure 		*cl_figures;
+	t_cl_light			*cl_lights;
+	/* effects */
+	int 				antialiasing;
+	int 				sepia;
+	/* end */
 }						t_space;
 
 typedef	struct			s_lrt
@@ -384,7 +338,7 @@ typedef struct		s_gui
 	SDL_Texture		**but_off;
 	int				*flag;
 	Uint32			select_flag;
-	t_num		fl;
+	t_num			fl;
 	// t_num		fl2;
 }					t_gui;
 
@@ -418,11 +372,55 @@ typedef struct		s_view
 }					t_view;
 
 /*End*/
+
+//copy1
+void 		copy_plane(t_cl_figure *figure, t_figure *tmp);
+void 		copy_sphere(t_cl_figure *figure, t_figure *tmp);
+void 		copy_cylinder(t_cl_figure *figure, t_figure *tmp);
+void 		copy_cone(t_cl_figure *figure, t_figure *tmp);
+void 		copy_cube(t_cl_figure *figure, t_figure *tmp);
+
+//copy2
+void 		copy_triangle(t_cl_figure *figure, t_figure *tmp);
+void 		copy_quadrate(t_cl_figure *figure, t_figure *tmp);
+void 		copy_elipsoid(t_cl_figure *figure, t_figure *tmp);
+void 		copy_paraboloid(t_cl_figure *figure, t_figure *tmp);
+void 		copy_tor(t_cl_figure *figure, t_figure *tmp);
+
+//effects/checkerdoard
+void 	 	checkerboard_effect(t_view *v, int color);
+
+//effects/perlin_noise
+unsigned int 		*perlin_noise(t_view *view);
+
+//effects/normal_disruption
+unsigned int 		*normal_disruption(t_view *view);
+
 //main
 int						exit_x(t_view *view);
 
-//opencl_init
+//openCL/opencl_init
 void					opencl_init(t_view *v);
+void					opencl_init2(t_view *v);
+void					opencl_errors(const char *msg);
+// void					opencl_errors(cl_uint result, const char *msg);
+
+//openCL/cl_wrapper
+void 					cl_info(t_view *v);
+void					cl_releasing(t_view *v);
+void 					cl_set_arg(t_view *v, void *arg, size_t arg_size,
+																cl_uint id);
+void 					cl_set_mem_arg(t_view *v, void *arg, size_t arg_size,
+																cl_uint id);
+//openCL/cl_set_args
+void 					set_arguments(t_view *v);
+
+
+//openCL/cl_copy_data
+void 					init_cam(t_view *v, cl_float3 *cam_o, cl_float3 *cam_v);
+t_cl_light 				*copy_light(t_view *v);
+t_cl_figure 			*copy_figures(t_view *v);
+cl_float3 				copy_vector(t_vector vector);
 
 // //button_functions
 // void					mouse_key_down(t_view *s, SDL_Event e);
@@ -494,6 +492,7 @@ t_vector				vector_init(double x, double y, double z);
 double					vscalar_multiple(t_vector a, t_vector b);
 t_vector				vk_multiple(t_vector vector, double k);
 int						vis_equal(t_vector vector1, t_vector vector2);
+t_vector				get_default_vector(char ch);
 
 //vector/vector2
 t_vector				vmultiple(t_vector a, t_vector b);
@@ -549,6 +548,7 @@ t_capses 				*init_cut_plane(void);
 
 //parse/pquadrate
 void 					parse_quadrate(JSON_Object *quadrate, t_view *view);
+int						check_quadr_points(t_vector vector[5]);
 
 //parse/perror
 void					root_parse_error(t_view *view);
@@ -564,6 +564,11 @@ t_vector				parse_vector(JSON_Array *vector, t_vector def);
 void					parse_color_reflection(JSON_Object *sphere,
 															t_figure *figure);
 
+//parse//parse_effects
+void 					parse_effects(JSON_Object *root, t_view *view);
+
+void 					check_parse(JSON_Object *figure, t_view * view, char *type);
+
 //light/light
 t_light					*light_init(char type, t_vector o, double inten);
 
@@ -574,13 +579,16 @@ t_figure				*cone_init(t_ray *axis, double k, int color,
 															double reflection);
 
 //figure/fcube
-t_figure				*cube_init(t_ray *pnr, t_vector scale, int color,
+t_figure				*cube_init(t_vector vector[3], int color,
 															double reflection);
+
+t_figure 	*quadrate_init(t_vector rotation, t_vector position, double scale[2]);
+
 
 //figure/ftor
 t_figure				*tor_init(t_vector center, const double radiuses[2],
 												int color, double reflection);
-double			check_tor_intersection(t_ray *ray, t_itor *tor);
+double					check_tor_intersection(t_ray *ray, t_itor *tor);
 
 //figure/fcylinder
 double					check_cylinder_intersection(t_ray *ray,
@@ -610,8 +618,8 @@ t_figure				*sphere_init(t_vector center, double r, int color,
 
 //figure/ftriangle
 t_vector				count_triangle_normale(t_vector a[3]);
-t_figure				*triangle_init(t_ray *ray, t_vector third_point,
-												 int color, double reflection);
+t_figure				*triangle_init(t_vector point[3], int color,
+															double reflection);
 
 //figure/felipsoid
 t_figure				*elipsoid_init(t_vector position, t_vector rotation,
@@ -646,7 +654,7 @@ void			obj_highlight(t_view *s, SDL_Event e, SDL_Rect *rect);
 SDL_Rect		make_rect(int x, int y, int w, int h);
 int				text_width(TTF_Font *f, char *str);
 
-void	print_prop(t_view *s);
+void			print_prop(t_view *s);
 void			sphere_prop(t_view *s);/*sphere prop*/
 
 int				num_figures(t_view *s);
@@ -677,23 +685,23 @@ void			clean_light(t_view *s);
 
 // void			init_red_slider(t_view *s);
 // void			init_green_slider(t_view *s);
-void	init_slider(t_view *s);
+void			init_slider(t_view *s);
 void			display_colored_rect(t_view *s);
 void			slider_click_event(SDL_Keycode key, t_view *s, SDL_Event e);
 void			slider_motion_event(t_view *s, SDL_Event e);
 void			init_sphere_prop(t_view *s, t_sphere *f, t_figure *fig);
-int		color_unite(int r, int g, int b);
+int				color_unite(int r, int g, int b);
 void			ok_button_init(t_view *s);
 void			ok_button_function(t_view *s, SDL_Event e);
 void			open_scene(t_view *s);
 /*16.05.18*/
 double			par_input();
 void			xxx(int num, t_view *s);
-t_figure	*detect_figure(t_view *s);
-t_col		col_parse(int col);
+t_figure		*detect_figure(t_view *s);
+t_col			col_parse(int col);
 void			data_init(t_view *s);
-void	init_incyl_prop(t_view *s, t_icylinder *cyl, t_figure *fig);
-void	p_sp_prop(t_view *s, int num, SDL_Texture **t, SDL_Rect *r);
+void			init_incyl_prop(t_view *s, t_icylinder *cyl, t_figure *fig);
+void			p_sp_prop(t_view *s, int num, SDL_Texture **t, SDL_Rect *r);
 /*END*/
 
 #endif

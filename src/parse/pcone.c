@@ -14,18 +14,12 @@
 
 static void	parse_cone2(JSON_Object *cone, t_figure	*fcone, t_view *view)
 {
-	if (json_object_has_value_of_type(cone, "cut plane1", JSONObject))
-	{
-		((t_icone*)fcone->figure)->caps1 = init_cut_plane();
-		parse_cut_plane(((t_icone*)fcone->figure)->caps1->plane,
-		((t_icone*)fcone->figure)->caps1, cone, "cut plane1");
-	}
-	if (json_object_has_value_of_type(cone, "cut plane2", JSONObject))
-	{
-		((t_icone*)fcone->figure)->caps2 = init_cut_plane();
-		parse_cut_plane(((t_icone*)fcone->figure)->caps2->plane,
-		((t_icone*)fcone->figure)->caps2, cone, "cut plane2");
-	}
+	if (json_object_has_value_of_type(cone, "cut plane1", JSONNumber))
+		((t_icone*)fcone->figure)->c_distances[0] =
+						json_object_get_number(cone, "cut plane1");
+	if (json_object_has_value_of_type(cone, "cut plane1", JSONNumber))
+		((t_icone*)fcone->figure)->c_distances[1] =
+						json_object_get_number(cone, "cut plane2");
 	parse_color_reflection(cone, fcone);
 	add_figure(fcone, view);
 }

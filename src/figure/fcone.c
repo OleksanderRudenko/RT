@@ -56,13 +56,13 @@ t_figure		*cone_init(t_ray *axis, double k, int color,
 	new_figure = (t_figure*)malloc(sizeof(t_figure));
 	new_figure->type = InfiniteCone;
 	cone = (t_icone*)malloc(sizeof(t_icone));
-	new_figure->figure = cone;
 	cone->vertex = axis->o;
 	cone->radius = k;
 	new_figure->color = color;
 	new_figure->reflection = reflection;
 	cone->vector = vnormalize(axis->v);
 	free(axis);
+	new_figure->figure = cone;
 	new_figure->next = NULL;
 	return (new_figure);
 }

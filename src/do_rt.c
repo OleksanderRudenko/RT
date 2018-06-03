@@ -121,5 +121,6 @@ void		do_rt(t_view *view)
 			view->buff[y * WIDTH + x] = rt(view->space, ray);
 		}
 	}
+	// checkerboard_effect(view, 0);
 	free(ray);
 }

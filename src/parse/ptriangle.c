@@ -50,16 +50,13 @@ void		parse_triangle(JSON_Object *triangle, t_view *view)
 		ft_putendl_fd("Triangle have no points array or this array is broken. "
 				"Figure skipped",
 				STDERR_FILENO);
-	i = 3;
-	while (i > 0)
-	{
-		v[i - 1] = parse_vector(json_array_get_array(points, i - 1),
+	i = -1;
+	while (++i < 3)
+		v[i] = parse_vector(json_array_get_array(points, i),
 				(t_vector){0, 0, 0});
-		i--;
-	}
 	if (check_triangle_points(v))
 		return ;
-	figure = triangle_init(ray_init(v[0],v[1]), v[2], 0xffffff, 0);
+	figure = triangle_init(v, 0xffffff, 0);
 	parse_color_reflection(triangle, figure);
 	add_figure(figure, view);
 }
