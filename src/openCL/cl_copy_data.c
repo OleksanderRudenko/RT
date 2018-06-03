@@ -58,6 +58,7 @@ t_cl_light 		*copy_light(t_view *v)
 		light[n].origin.y = tmp->o.y;
 		light[n].origin.z = tmp->o.z;
 		light[n].inten = tmp->inten;
+		light[n].direction = copy_vector(tmp->d);
 		light[n].type = tmp->type;
 		tmp = tmp->next;
 		n++;

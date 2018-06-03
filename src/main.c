@@ -12,31 +12,29 @@
 
 #include "rt.h"
 
-static void	view_init(t_view *view, const char *filename)
+void	view_init(t_view *view, const char *filename)
 {
-	printf("A\n");
 	space_init(filename, view);
-	printf("B\n");
 	init_rect(&view->rr);
-	printf("C\n");
 	set_things_up(view);
-	printf("D\n");
 	object_init(view);
-	printf("E\n");
 	init_slider(view);
-	printf("F\n");
 	sphere_prop(view);
-	printf("G\n");
+	ic_prop(view);
+	plane_prop(view);
+	triangle_prop(view);
+	cone_prop(view);
+	cube_prop(view);
+	quadraate_prop(view);
+	elips_prop(view);
+	parab_prop(view);
+	light_properties(view);
+	light_am_properties(view);
+	light_dir_properties(view);
 	object_default_init(view);
-	printf("H\n");
 	select_init(view);
-	printf("I\n");
 	light_list_init(view);
-	printf("J\n");
 	ok_button_init(view);
-	printf("K\n");
-	// data_init(view);
-	// do_rt(view);
 }
 
 
@@ -63,9 +61,8 @@ int			main(int argc, char **argv)
 	{
 		if (!poll_event(&view))
 			view.exit_loop = 0;
-		// button_staff(&view);
-		// print_default_text(&view);
-		// what_to_print(&view);
+		button_staff(&view);
+		what_to_print(&view);
 		SDL_UpdateWindowSurface(view.win[0]);
 	}
 	cl_releasing(&view);

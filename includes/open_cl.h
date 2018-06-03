@@ -27,6 +27,7 @@ typedef struct			s_cl_light
 	int					type;
 	float				inten;
 	cl_float3			origin;
+	cl_float3			direction;
 }						t_cl_light;
 
 typedef struct			s_cl_figure

@@ -16,7 +16,7 @@ SDL_Texture	*create_text(t_view *s, char *name, int i, int font_size)
 {
 	t_text t;
 
-	t.font = TTF_OpenFont("Roboto-Black.ttf", font_size);
+	t.font = TTF_OpenFont("Roboto-Regular.ttf", font_size);
 	if (t.font == NULL)
 	{
 		sdl_ttf_err();
@@ -53,12 +53,12 @@ SDL_Texture *get_tex(char *file, SDL_Renderer *ren_tar)
 	return (texture);
 }
 
-SDL_Texture	*create_text_ftoa(t_view *s, float num, int i, int font_size)
+SDL_Texture	*tf(t_view *s, float num, int i, int font_size)
 {
 	t_text	t;
 	char	*arr;
 
-	t.font = TTF_OpenFont("Roboto-Black.ttf", font_size);
+	t.font = TTF_OpenFont("Roboto-Regular.ttf", font_size);
 	if (t.font == NULL)
 	{
 		sdl_ttf_err();

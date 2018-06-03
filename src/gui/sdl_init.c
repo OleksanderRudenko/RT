@@ -31,7 +31,7 @@ void	init_sdl(t_view *s)
 	s->exit_loop = 1;
 	s->flag = 0;
 	s->rr.select_flag = 0;
-	s->rr.fl = (t_num){0, -1, 0, -1};
+	s->rr.fl = (t_num){0, -1, 0, -1, -1, -1};
 }
 
 int		poll_event(t_view *s)
@@ -49,7 +49,7 @@ int		poll_event(t_view *s)
 			mouse_key_down(s, e);
 		}
 		else if (e.type == SDL_MOUSEMOTION && e.window.windowID == 3)
-			slider_motion_event(s, e);
+			slider_motion_event(e.button.button, s, e);
 		else if (e.type == SDL_MOUSEBUTTONUP && e.window.windowID == 4)
 			mouse_key_up(s);
 		else if (e.window.windowID == 2)
@@ -69,28 +69,24 @@ void	camera_move(t_view *s, SDL_Scancode key)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->o.x += 0.5;
-		// do_rt(s);
 		opencl_init2(s);
 	}
 	if (key ==  SDL_SCANCODE_S)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->o.x -= 0.5;
-		// do_rt(s);
 		opencl_init2(s);
 	}
 		if (key ==  SDL_SCANCODE_D)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->o.y += 0.5;
-		// do_rt(s);
 		opencl_init2(s);
 	}
 	if (key ==  SDL_SCANCODE_A)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->o.y -= 0.5;
-		// do_rt(s);
 		opencl_init2(s);
 	}
 }
@@ -101,7 +97,7 @@ void	camera_rot(t_view *s, SDL_Scancode key)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->v.x += 0.5;
-		// do_rt(s);
+		do_rt(s);
 	}
 	// if (key ==  SDL_SCANCODE_S)
 	// {

@@ -8,6 +8,7 @@
 # define FOV_Y 30
 # define LIGHT_TYPE_AMBIENT 0
 # define LIGHT_TYPE_POINT 1
+# define LIGHT_TYPE_DIRECT 2
 
 typedef union			u_color
 {
@@ -38,6 +39,7 @@ typedef struct			s_cl_light
 	int					type;
 	float				inten;
 	float3				origin;
+	float3				direction;
 }						t_cl_light;
 
 

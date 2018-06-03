@@ -51,7 +51,8 @@ void			light_list_highlight(t_view *s, SDL_Event e, SDL_Rect *rect)
 	int			num;
 
 	id = -1;
-	num = num_lights(s);
+	num = s->lights_num;
+	// printf("num Lights: %d\n", num);
 	SDL_RenderClear(s->rr.rend[1]);
 	while (++id < num && s->flag == 1)
 	{
@@ -79,7 +80,7 @@ void			light_list_init(t_view *s)
 	if (!(font = TTF_OpenFont("Roboto-Black.ttf", 32)))
 		sdl_ttf_err();
 	light = s->space->lights;
-	num = num_lights(s);
+	num = s->lights_num;
 	i = 0;
 	y = 50;
 	s->l_light.light_tex = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * num);
@@ -101,7 +102,7 @@ void	clean_light(t_view *s)
 	int		i;
 
 	i = 0;
-	num = num_lights(s);
+	num = s->lights_num;
 	while (i < num)
 	{
 		SDL_DestroyTexture(s->l_light.light_tex[i]);
@@ -113,3 +114,4 @@ void	clean_light(t_view *s)
 	SDL_DestroyTexture(s->select.sel_tex_on[1]);
 	SDL_DestroyTexture(s->select.sel_tex_off[1]);
 }
+

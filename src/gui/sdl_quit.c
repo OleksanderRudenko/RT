@@ -15,9 +15,21 @@
 void	clean_staff(t_view *s)
 {
 	SDL_FreeSurface(s->win_surface);
-	clean_sphere_prop(s);
 	clean_buttons(s);
 	clean_list_obj(s);
+
+	clean_sphere_prop(s);
+	clean_ic_prop(s);
+	clean_plane_prop(s);
+	clean_triangle_prop(s);
+	clean_cone_prop(s);
+	clean_cube_prop(s);
+	clean_quadraate_prop(s);
+	clean_elips_prop(s);
+	clean_parab_prop(s);
+	clean_light_prop(s);
+	clean_am_light_prop(s);
+	clean_dir_light_prop(s);;
 	SDL_DestroyRenderer(s->rr.rend[0]);
 	SDL_DestroyRenderer(s->rr.rend[1]);
 	SDL_DestroyRenderer(s->rr.rend[2]);

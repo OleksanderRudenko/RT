@@ -20,22 +20,35 @@ void	ok_button_init(t_view *s)
 	s->ok->ok_rect = make_rect(100, 800, 100, 50);
 }
 
-void		xxx(int num, t_view *s)
+t_read_prop *read_apply_prop()
 {
-	// t_figure	*fig;
+	static t_read_prop	*rd = NULL;
+	static char one = 0;
 
-	// fig = detect_figure(s);
-	// num == 0 ? fig->center.x = par_input(s) : 0;
-	// num == 1 ? fig->center.y = par_input(s) : 0;
-	// num == 2 ? fig->center.z = par_input(s) : 0;
-	// init_sphere_prop(s, fig->figure, fig);
+	if (one)
+		return (rd);
+	one++;
+	rd = (t_read_prop*)malloc(sizeof(t_read_prop) * 4);/*INCREASE THIS!!!!!!*/
+	rd[Sphere] = &save_sphere;
+	rd[Triangle] = &save_triangle;
+	rd[InfiniteCylinder] = &save_cylinder;
+	rd[InfinitePlane] = &save_plane;
+	return (rd);
+	/*memory leak!!!*/
 }
 
-static void	apply_params_sphere(t_view *s, t_figure *fig, t_sphere *sphere)
+void		xxx(int num, t_view *s)
 {
-	fig->color = color_unite(s->sl[0]->clr.red, s->sl[1]->clr.green, s->sl[2]->clr.blue);
-	// sphere->center.x = s->data->center.x;
-	// sphere->center.y = s->data->center.y;
+	t_read_prop	*rd;
+	int type;
+	
+	if (num == -1)
+		return ;
+	type = s->space->cl_figures[s->rr.fl.y].type;
+	rd = read_apply_prop();
+	rd[type](s, num);
+	s->space->cl_figures[(int)s->rr.fl.y].color = color_unite(s->sl[0]->clr.red, s->sl[1]->clr.green, s->sl[2]->clr.blue);
+	get_init_prop(s);
 }
 
 double		par_input()
@@ -44,37 +57,21 @@ double		par_input()
 	float		num;
 
 	input = tinyfd_inputBox("", "Click something", "0");
+	if (input == NULL)
+		return (0.0);
 	num = atof(input);
-	printf("input num: %f\n", num);
+	printf("input num: %f\n", num);/*for debug*/
 	return (num);
 }
 
 void	ok_button_function(t_view *s, SDL_Event e)
 {
-	t_figure	*fig;
-
 	if (is_in_rect(s->ok->ok_rect, e))
 	{
-		fig = detect_figure(s);
-		if (fig->type == Sphere)
-			apply_params_sphere(s, fig, fig->figure);
-		// else if ()
+		if (s->flag == 0)
+			s->space->cl_figures[s->rr.fl.y].color = color_unite(s->sl[0]->clr.red, s->sl[1]->clr.green, s->sl[2]->clr.blue);
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		do_rt(s);
+		opencl_init2(s);
 		ft_putendl("here");
 	}
-}
-
-t_figure	*detect_figure(t_view *s)
-{
-	t_figure	*fig;
-	int			i;
-
-	fig = s->space->figures;
-	if (fig == NULL)
-		return (NULL);
-	i = -1;
-	while (++i < s->rr.fl.y)
-			fig = fig->next;
-	return (fig);
 }

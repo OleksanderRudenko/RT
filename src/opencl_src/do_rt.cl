@@ -135,15 +135,14 @@ unsigned int	do_lightrt(__constant t_cl_light *lights,
 	{
 		if (lights[n].type == LIGHT_TYPE_AMBIENT)
 			v.bright += lights[n].inten;
-		else
+		else 
 		{
-			// v.vlight = subtraction(lights[n].origin, v.intersection);
-			v.vlight = lights[n].origin - v.intersection;
-			// v.buf_origin = (float3)(v.intersection.x, v.intersection.y, v.intersection.z);
+			if (lights[n].type == LIGHT_TYPE_POINT)
+				v.vlight = lights[n].origin - v.intersection;
+			else
+				v.vlight = lights[n].direction * -1;
 			v.buf_origin = v.intersection;
-			// v.buf_origin = lights[n].origin;
 			v.buf_vector = (float3)(v.vlight.x, v.vlight.y, v.vlight.z);
-			// v.buf_vector = v.vlight * -1;
 
 			// v.vlight = v.intersection - lights[n].origin;
 			if (!(check_intersections(v.buf_origin, v.buf_vector, figures, figures_num, figure)))

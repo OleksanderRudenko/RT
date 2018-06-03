@@ -20,10 +20,11 @@ void			object_init(t_view *s)
 	t_figure	*fig;
 	TTF_Font	*font;
 
-	if (!(font = TTF_OpenFont("Roboto-Black.ttf", 32)))
+	if (!(font = TTF_OpenFont("Roboto-Regular.ttf", 32)))
 		sdl_ttf_err();
 	fig = s->space->figures;
-	num = num_figures(s);
+	num = s->figures_num;
+	// printf("%d - NUM\n", num);
 	i = 0;
 	y = 50;
 	s->l_obj.obj_tex = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * num);
@@ -45,8 +46,10 @@ void			obj_highlight(t_view *s, SDL_Event e, SDL_Rect *rect)
 	int			num;
 
 	id = -1;
-	num = num_figures(s);
+	
+	num = s->figures_num;
 	SDL_RenderClear(s->rr.rend[1]);
+	
 	while (++id < num && s->flag == 0)
 	{
 		if (is_in_rect(rect[id], e))
@@ -65,12 +68,15 @@ int				select_figure(SDL_Rect *rect, SDL_Event e, int num)
 	int			id;
 
 	id = -1;
-	while (++id < num)
+	if (rect != NULL && num != -1)
 	{
-		if (is_in_rect(rect[id], e))
+		while (++id < num)
 		{
-			if (e.button.button == SDL_BUTTON_LEFT)
-				return (id);
+			if (is_in_rect(rect[id], e))
+			{
+				if (e.button.button == SDL_BUTTON_LEFT)
+					return (id);
+			}
 		}
 	}
 	return (-1);
@@ -79,16 +85,18 @@ int				select_figure(SDL_Rect *rect, SDL_Event e, int num)
 void	clean_list_obj(t_view *s)
 {
 	int			num;
-	t_figure	*fig;
 	int			i;
 
 	i = 0;
-	fig = s->space->figures;
-	num = num_figures(s);
+	num = s->figures_num;
 	while (i < num)
 	{
-		SDL_DestroyTexture(s->l_obj.obj_tex[i]);
-		s->l_obj.obj_tex[i] = NULL;
+		if (s->l_obj.obj_tex[i] != NULL)
+		{
+			SDL_DestroyTexture(s->l_obj.obj_tex[i]);
+			s->l_obj.obj_tex[i] = NULL;
+		}
 		i++;
 	}
+	free(s->l_obj.obj_rect);
 }

@@ -15,43 +15,75 @@
 static void	button_handler(t_view *s)
 {
 	(int)s->rr.fl.x == 3 ? open_scene(s) : 0;
+	(int)s->rr.fl.x == 1 ? default_sphere_init(s) : 0;
+	(int)s->rr.fl.x == 2 ? default_cylinder_init(s) : 0;
+	(int)s->rr.fl.x == 0 ? default_plane_init(s) : 0;
 }
 
-static void	window_handler(t_view *s, int num, SDL_Event e)
+static void	window_handler(t_view *s, int num, SDL_Event e, int numl)
 {
-		s->rr.fl.y = select_figure(s->l_obj.obj_rect, e, num);//a
+		s->rr.fl.y = s->flag == 0 ? select_figure(s->l_obj.obj_rect, e, num) : -1;//a
 		s->rr.fl.z = select_figure(s->select.sel_rect, e, 2);//b
+		s->rr.fl.b = select_figure(s->l_light.light_rect, e, numl);
 		if (s->rr.fl.z == 0)
+		{
 			s->flag = 0;
+		}
 		else if (s->rr.fl.z == 1)
+		{
 			s->flag = 1;
+		}
 		else if (s->rr.fl.z == -1)
 			s->rr.fl.z = s->flag;
-		printf("id win2: %D\n",s->rr.fl.y);/*for debug*/
 }
 
 void		mouse_key_down(t_view *s, SDL_Event e)
 {
-	int	num;
-
-	num = num_figures(s);
 	if (e.window.windowID == 4)
 	{
 		s->rr.fl.x = button_off_on(s->rr.but_rect, s->rr.flag, NUM_BUTTONS, e);
-		printf("id win 4: %D\n",s->rr.fl.x); /*for debug*/
 		button_handler(s);
 	}
-	else if (e.window.windowID == 2)
+	if (e.window.windowID == 2)
 	{
-		window_handler(s, num, e);
+		window_handler(s, (int)s->figures_num, e, (int)s->lights_num);
 	}
-	else if (e.window.windowID == 3)
+	if (e.window.windowID == 3)
 	{
-		s->rr.fl.a = select_figure(s->prop.pr_rect, e, NUM_SPH_PROP);
+		s->rr.fl.a = select_figure(select_rect(s), e, select_num(s));
+		s->rr.fl.c  = select_figure(select_rect_light(s), e, select_li_num(s));
 		xxx(s->rr.fl.a, s);
-		ok_button_function(s, e);
-		printf("sphere prop: %d\n",s->rr.fl.a);
+		xxx_light(s->rr.fl.c, s);
+		ok_button_function(s, e);		
+		if (s->rr.fl.y == -1)
+			s->rr.fl.a = -1;
+		// printf("%d\n", e.window.windowID);
+		// printf("win2 flag-a: %d\n",s->rr.fl.a);
+		// ft_putnbr(s->rr.fl.c);
 	}
+	// if (e.window.windowID == 1)
+	// {
+	// 	int i;
+
+	// 	i = rt_figure(s, e.button.x, e.button.y);
+	// 	if (i != -1)
+	// 	{
+	// 		s->rr.fl.y = i;
+	// 		s->rr.fl.a = select_figure(select_rect(s), e, select_num(s));
+	// 		xxx(s->rr.fl.a, s);
+	// 	}
+	// 	ft_putnbr(i);
+	// 	ft_putendl("");
+
+	// }
+		// printf("win2 flag-z: %d\n",s->rr.fl.z);/*for debug*/
+		// printf("win2 flag: %d\n",s->flag);/*for debug*/
+		// printf("win2 flag-b: %d\n",s->rr.fl.b);/*for debug*/
+		// printf("win2 flag-y: %d\n",s->rr.fl.y);/*for debug*/
+		// printf("win2 flag-a: %d\n",s->rr.fl.a);/*for debug*/
+		// printf("win2 flag-c: %d\n",s->rr.fl.c);/*for debug*/
+		// ft_putendl("");
+		// https://forum.processing.org/one/topic/3d-fractal-generation-mandelbulb.html
 }
 
 void	mouse_key_up(t_view *s)

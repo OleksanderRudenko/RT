@@ -63,6 +63,8 @@ static void			parse_light(JSON_Object *light, t_view *view)
 		parse_ambient(light, view);
 	else if (ft_strequ(type, "point"))
 		parse_point(light, view);
+	else if (ft_strequ(type, "direction"))
+		parse_directional(light, view);
 	else
 		ft_putendl_fd("Unknown light found. Skipped", STDERR_FILENO);
 }

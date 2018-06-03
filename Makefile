@@ -61,8 +61,11 @@ PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
 GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c\
 			button_functions.c create_text.c list_obj1.c slider.c \
 			utils1.c list_obj2.c light_list.c sphere_prop.c sdl_quit.c \
-			inf_cyl_prop.c
-
+			inf_cyl_prop.c get_prop.c plane_prop.c cone_prop.c triangle_prop.c \
+			cube_prop.c quadrate_prop.c elipsoid_prop.c parabaloid_prop.c tor_prop.c\
+			input.c input2.c light_point_prop.c amb_light.c light_direct.c \
+			default.c \
+			
 OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c copy1.c \
 				copy2.c
 EFFECTSFILES = normal_disruption.c perlin_noise.c perlin_noise.c
