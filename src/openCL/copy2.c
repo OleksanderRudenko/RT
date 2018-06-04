@@ -32,6 +32,7 @@ void 		copy_quadrate(t_cl_figure *figure, t_figure *tmp)
 		figure->q_points[i] =
 						copy_vector(((t_squard*)tmp->figure)->points[i]);
 	figure->normale = copy_vector(((t_squard*)tmp->figure)->normale);
+	figure->position = copy_vector(((t_squard*)tmp->figure)->position);
 }
 
 void 		copy_elipsoid(t_cl_figure *figure, t_figure *tmp)

@@ -14,14 +14,30 @@
 
 void		default_helper_figures(t_view *view, t_figure *figure)
 {
+	size_t	i;
+
+	i = 0;
+	while (i < view->figures_num)
+	{
+		view->space->cl_figtmp[i] = view->space->cl_figures[i];
+		i++;
+	}
 	clean_list_obj(view);
 	add_figure (figure, view);
-	/*free stuff*/
+	/*free stuff, maybe look for view->space->cl_figures == NULL; return ; ????*/
 	if (view->space->cl_figures)
 	{
 		free(view->space->cl_figures);
 	}
 	view->space->cl_figures = copy_figures(view);
+	i = 0;
+	while (i < (view->figures_num - 1))
+	{
+		view->space->cl_figures[i] = view->space->cl_figtmp[i];
+		i++;
+	}
+	free(view->space->cl_figtmp);
+	view->space->cl_figtmp = copy_figures(view);
 	object_init(view);
 	opencl_init2(view);
 }

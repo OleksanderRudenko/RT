@@ -28,20 +28,24 @@ t_read_prop *read_apply_prop()
 	if (one)
 		return (rd);
 	one++;
-	rd = (t_read_prop*)malloc(sizeof(t_read_prop) * 4);/*INCREASE THIS!!!!!!*/
+	rd = (t_read_prop*)malloc(sizeof(t_read_prop) * 9);/*INCREASE THIS!!!!!!*/
 	rd[Sphere] = &save_sphere;
 	rd[Triangle] = &save_triangle;
 	rd[InfiniteCylinder] = &save_cylinder;
 	rd[InfinitePlane] = &save_plane;
+	rd[Cube] = &save_cube;
+	rd[InfiniteCone] = &save_cone;
+	rd[Parabaloid] = &save_parab;
+	rd[Quadrate] = &save_quadr;
+	rd[Elipsoid] = &save_elips;
 	return (rd);
-	/*memory leak!!!*/
 }
 
 void		xxx(int num, t_view *s)
 {
 	t_read_prop	*rd;
 	int type;
-	
+
 	if (num == -1)
 		return ;
 	type = s->space->cl_figures[s->rr.fl.y].type;

@@ -143,7 +143,7 @@ typedef struct		s_elips_prop
 	SDL_Texture		**el_tex;
 	SDL_Rect		*el_rect;
 	SDL_Texture		**el_prop;
-	SDL_Rect		*el_pr_rect;	
+	SDL_Rect		*el_pr_rect;
 }					t_elips_prop;
 
 /*Parabaloid*/
@@ -152,7 +152,7 @@ typedef struct		s_par_prop
 	SDL_Texture		**pr_tex;
 	SDL_Rect		*pr_rect;
 	SDL_Texture		**pr_prop;
-	SDL_Rect		*pr_pr_rect;	
+	SDL_Rect		*pr_pr_rect;
 }					t_par_prop;
 
 /*light */
@@ -332,6 +332,11 @@ t_read_prop		*read_apply_prop();
 void			save_triangle(t_view *s, int num);
 void	save_cylinder(t_view *s, int num);
 void	save_plane(t_view *s, int num);
+void	save_cube(t_view *s, int num);
+void	save_cone(t_view *s, int num);
+void	save_parab(t_view *s, int num);
+void	save_quadr(t_view *s, int num);
+void	save_elips(t_view *s, int num);
 int			rt_figure(t_view *s, int x, int y);
 void	light_properties(t_view *s);
 void	init_light_prop(t_view *s);

@@ -63,14 +63,14 @@ int			figure_equal(t_cl_figure figure1, t_cl_figure figure2)
 
 int			check_intersections(float3 ray_origin, float3 ray_vector, __global t_cl_figure *figures, size_t figures_num, t_cl_figure figure)
 {
-	float	k;
+	float		k;
 	size_t 	n;
-	float min;
+	float 	min;
 	float3	normale;
 
-	min = 0;
+	min = 0.01;
 	n = 0;
-	return (0);
+	// return (0);
 	while (n < figures_num)
 	{
 		k = check_intersection(ray_origin, ray_vector, (t_cl_figure*)&figures[n], min, &normale);
@@ -79,7 +79,7 @@ int			check_intersections(float3 ray_origin, float3 ray_vector, __global t_cl_fi
 		// 	n++;
 		// 	continue;
 		// }
-		if (k < 1 && k >= min)
+		if (k < 1 && k > min)
 			return (1);
 		n++;
 	}

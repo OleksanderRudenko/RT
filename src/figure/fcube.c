@@ -75,18 +75,12 @@ void		count_planes(t_cube *cube)
 	cube->rotation = vk_multiple(cube->rotation, 3.14f / 180);
 	rotate_cube(cube);
 	add_other_dots(cube);
-	// i = 0;
-	// while (i < 6)
-	// {
-	// 		cube->planes[i].normale = count_triangle_normale(cube->planes[i].points);
-	// 		printf("CUBE sq number:%d\n", i);
-	// 		printf("%f, %f, %f-0\n", cube->planes[i].points[0].x, cube->planes[i].points[0].y, cube->planes[i].points[0].z);
-	// 		printf("%f, %f, %f-1\n", cube->planes[i].points[1].x, cube->planes[i].points[1].y, cube->planes[i].points[1].z);
-	// 		printf("%f, %f, %f-2\n", cube->planes[i].points[2].x, cube->planes[i].points[2].y, cube->planes[i].points[2].z);
-	// 		printf("%f, %f, %f-3\n", cube->planes[i].points[3].x, cube->planes[i].points[3].y, cube->planes[i].points[3].z);
-	// 		printf("%f, %f, %f-Normale\n", cube->planes[i].normale.x, cube->planes[i].normale.y, cube->planes[i].normale.z);
-	// 		++i;
-	// }
+	i = 0;
+	while (i < 6)
+	{
+			cube->planes[i].normale = count_triangle_normale(cube->planes[i].points);
+			++i;
+	}
 }
 
 t_figure	*cube_init(t_vector vector[3], int color, double reflection)

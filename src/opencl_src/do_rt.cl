@@ -2,7 +2,7 @@
 #include "rt_h.cl"
 
 #define RAYS_PER_PIXEL 1 // antialising
-#define MAX_MIRROR_ITERS 0 // MIRROR
+#define MAX_MIRROR_ITERS 5 // MIRROR
 
 
 /*
@@ -116,6 +116,36 @@ t_lrt			tlrt_init(float3 ray_origin, float3 ray_vector, t_cl_figure figure, doub
 	var.reflected = 0.05;
 	return (var);
 }
+//
+// int			do_lightrt(t_space *space, t_ray *ray, t_figure *figure, double k)
+// {
+// 	t_lrt	v;
+//
+// 	v = tlrt_init(space, ray, figure, k);
+// 	while (v.light != NULL)
+// 	{
+// 		if (v.light->type == LIGHT_TYPE_AMBIENT)
+// 			v.bright += v.light->inten;
+// 		else
+// 		{
+// 			v.vlight = vsub(v.light->o, v.intersection);
+// 			v.buf = ray_init(v.intersection, v.vlight);
+// 			if (!check_intersections(v.buf, space->figures))
+// 			{
+// 				if ((v.nl_s = vscalar_multiple(v.normale, v.vlight)) > 0)
+// 					v.bright += v.light->inten * v.nl_s / vlen(v.vlight);
+// 				if (v.nl_s > 0 && figure->reflection > 0)
+// 					v.reflected += rt_lightr(v.vlight, v.normale,
+// 							vk_multiple(ray->v, -1),
+// 					vector_init(v.light->inten, figure->reflection, 0));
+// 			}
+// 			free(v.buf);
+// 		}
+// 		v.light = v.light->next;
+// 	}
+// 	return (set_brightness(figure->color, v.bright, v.reflected));
+// }
+
 
 unsigned int	do_lightrt(__constant t_cl_light *lights,
 						   __global t_cl_figure *figures,
@@ -128,26 +158,24 @@ unsigned int	do_lightrt(__constant t_cl_light *lights,
 	float3 	buf;
 	float3 	view;
 
-	// return (figure.color);
 	n = 0;
 	v = tlrt_init(ray_origin, ray_vector, figure, k, normale);
 	while (n < lights_num)
 	{
 		if (lights[n].type == LIGHT_TYPE_AMBIENT)
 			v.bright += lights[n].inten;
-		else 
+		else
 		{
 			if (lights[n].type == LIGHT_TYPE_POINT)
 				v.vlight = lights[n].origin - v.intersection;
 			else
 				v.vlight = lights[n].direction * -1;
 			v.buf_origin = v.intersection;
-			v.buf_vector = (float3)(v.vlight.x, v.vlight.y, v.vlight.z);
-
-			// v.vlight = v.intersection - lights[n].origin;
+			// v.buf_vector = (float3){v.vlight.x, v.vlight.y, v.vlight.z};
+			v.buf_vector = v.vlight * 1;
 			if (!(check_intersections(v.buf_origin, v.buf_vector, figures, figures_num, figure)))
 			{
-				if ((v.nl_s = dot(v.normale, v.vlight)) > 0.0f)
+				if ((v.nl_s = dot_my(v.normale, v.vlight)) > 0.0f)
 					v.bright += lights[n].inten * v.nl_s / fast_length(v.vlight * 1);
 				if (v.nl_s >= 0.0f && figure.reflection > 0.0f)
 				{
@@ -159,17 +187,12 @@ unsigned int	do_lightrt(__constant t_cl_light *lights,
 		}
 		n++;
 	}
-	// if (iters <= 0)
+	if (iters <= 0 || figure.mirror == 0)
 		return (set_brightness(figure.color, v.bright, v.reflected));
-	// ray_origin = v.intersection;
-	// ray_vector = calc_reflect_ray(ray_vector, v.normale, v.intersection);
-	// unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1);
-	// return (add_colors(buf_color, set_brightness(figure.color, v.bright, v.reflected)));
-	// space->reflect_count--;
-	// t_ray new_ray = calc_reflect_ray(ray, v.intersection, v.normale);
-	// return (add_colors(buf_color, rt(space, &new_ray)));
-
-	//rt(...iters - 1);
+	ray_origin = v.intersection;
+	ray_vector = calc_reflect_ray(ray_vector, v.normale, v.intersection);
+	unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1);
+	return (add_colors(buf_color, set_brightness(figure.color, v.bright, v.reflected)));
 }
 
 unsigned int	rt(__constant t_cl_light *lights, __global t_cl_figure *figures,
@@ -221,7 +244,7 @@ unsigned int	rt(__constant t_cl_light *lights, __global t_cl_figure *figures,
 //     return (col);
 // }
 
-unsigned int		calc_middle_color(unsigned int *colors)
+unsigned int		calc_middle_color(unsigned int *colors, int antialising)
 {
 	int 		i;
 	t_color		rez;
@@ -232,7 +255,7 @@ unsigned int		calc_middle_color(unsigned int *colors)
 	spectrs.y = 0;
 	spectrs.z = 0;
 
-	while (i < RAYS_PER_PIXEL)
+	while (i < antialising)
 	{
 		rez.color = colors[i];
 		spectrs.x += rez.chanel[1];
@@ -240,13 +263,9 @@ unsigned int		calc_middle_color(unsigned int *colors)
 		spectrs.z += rez.chanel[3];
 		++i;
 	}
-	rez.chanel[1] = (unsigned char)(spectrs.x / (double)RAYS_PER_PIXEL);
-	rez.chanel[2] = (unsigned char)(spectrs.y / (double)RAYS_PER_PIXEL);
-	rez.chanel[3] = (unsigned char)(spectrs.z / (double)RAYS_PER_PIXEL);
-
-	// rez.chanel[1] = find_cartoon(rez.chanel[1]);
-	// rez.chanel[2] = find_cartoon(rez.chanel[2]);
-	// rez.chanel[3] = find_cartoon(rez.chanel[3]);
+	rez.chanel[1] = (unsigned char)(spectrs.x / (float)antialising);
+	rez.chanel[2] = (unsigned char)(spectrs.y / (float)antialising);
+	rez.chanel[3] = (unsigned char)(spectrs.z / (float)antialising);
 	return(rez.color);
 }
 
@@ -264,93 +283,27 @@ unsigned int	do_rt(unsigned int x,
 					  float3 cam_vector,
 					  float3 cam_origin,
 					  size_t figures_num,
-					  size_t lights_num)
+					  size_t lights_num,
+						int antialising)
 {
 	float3				ray_origin;
 	float3				ray_vector;
 	unsigned int 		color;
 	int						i;
 
-	unsigned int	colors[RAYS_PER_PIXEL];
+	unsigned int	colors[antialising * antialising];
 	float					step_x;
 	float					step_y;
 	float					size_x;
 	float					size_y;
 	float					buf;
 
-	buf = (int)q_rsqrt((float)RAYS_PER_PIXEL);
-	buf = 1;
-	if (x == 1 && y == 0)
-	{
-	// 	t_cl_figure buf = figures[16];
-  //
-	// 	printf("%0x-COLOR\n", buf.color);
-	// 	// printf ("CL\n");
-	// 	// printf("%f, %f, %f-cam_o\n", cam_origin.x, cam_origin.y, cam_origin.z);
-	// 	// printf("%f, %f, %f-cam_v\n", cam_vector.x, cam_vector.y, cam_vector.z);
-	// }
+	// if (x != 0 || y != 0)
+		// return (0);
 
-
-		size_t n;
-  // //
-		printf("START!!!\n");
-
-		n = 0;
-		while (n < figures_num)
-		{
-
-			// size_t i;
-      //
-			// i = 0;
-			// while (i < 6)
-			// {
-			// 		// figures[i].normale = count_triangle_normale(figures[i].points);
-			// 		printf("CUBE sq number:CL:%d\n", i);
-			// 		printf("%f, %f, %f-0\n", figures[n].c_points[i * 4 + 0].x, figures[n].c_points[i * 4 + 0].y, figures[n].c_points[i * 4 + 0].z);
-			// 		printf("%f, %f, %f-1\n", figures[n].c_points[i * 4 + 1].x, figures[n].c_points[i * 4 + 1].y, figures[n].c_points[i * 4 + 1].z);
-			// 		printf("%f, %f, %f-2\n", figures[n].c_points[i * 4 + 2].x, figures[n].c_points[i * 4 + 2].y, figures[n].c_points[i * 4 + 2].z);
-			// 		printf("%f, %f, %f-3\n", figures[n].c_points[i * 4 + 3].x, figures[n].c_points[i * 4 + 3].y, figures[n].c_points[i * 4 + 3].z);
-			// 		printf("%f, %f, %f-Normale\n", figures[n].c_normale[i].x, figures[n].c_normale[i].y, figures[n].c_normale[i].z);
-			// 		++i;
-			// }
-			// printf("%d\n", figures[n].color)
-			// printf("%f, %f, %f-q_points0\n", figures[n].q_points[0].x, figures[n].q_points[0].y, figures[n].q_points[0].z);
-			// printf("%f, %f, %f-q_points1\n", figures[n].q_points[1].x, figures[n].q_points[1].y, figures[n].q_points[1].z);
-			// printf("%f, %f, %f-q_points2\n", figures[n].q_points[2].x, figures[n].q_points[2].y, figures[n].q_points[2].z);
-			// printf("%f, %f, %f-q_points2\n", figures[n].q_points[3].x, figures[n].q_points[3].y, figures[n].q_points[3].z);
-			// printf("%f, %f, %f-normale\n", figures[n].normale.x, figures[n].normale.y, figures[n].normale.z);
-      //
-			// printf("%f-radius\n", figures[n].radius);
-			// printf("%d-TYPE!!\n\n", figures[n].type);
-			printf("%0x-COLOR!!\n\n", figures[n].color);
-			// printf("%0x-COLOR_F!!\n\n", figures[n].color_f);
-			// printf("%0x-COLOR_c1!!\n\n", figures[n].color_c1);
-			// printf("%0x-COLOR_c2!!\n\n", figures[n].color_c2);
-			// printf("%f-REFLECTION!!\n\n", figures[n].reflection);
-
-
-			// printf("%f, %f, %f-vertex\n", figures[n].vertex.x, figures[n].vertex.y, figures[n].vertex.z);
-			// printf("%f, %f, %f-vector\n", figures[n].vector.x, figures[n].vector.y, figures[n].vector.z);
-			// printf("%f-radius\n", figures[n].radius);
-			// printf("%d-TYPE!!\n\n", figures[n].type);
-			// printf("%0x-COLOR!!\n\n", figures[n].color);
-			// printf("%0x-COLOR_F!!\n\n", figures[n].color_f);
-			// printf("%0x-COLOR_c1!!\n\n", figures[n].color_c1);
-			// printf("%0x-COLOR_c2!!\n\n", figures[n].color_c2);
-			// printf("%f-REFLECTION!!\n\n", figures[n].reflection);
-			n++;
-		}
-	}
-	// // 	// t_figure_type ttt = InfiniteCone;
-  // //   //
-	// // 	// printf("%d-ggg\n\n\n", ttt);
-	// }
-
-	// if (x != WIDTH / 2 || y != HEIGHT / 2)
-	// 	return (0);
-
-	// if (buf <= 0)
-		// buf = 1;
+	// buf = (int)q_rsqrt((float)antialising);
+	buf = antialising;
+	antialising *= antialising;
 	size_x = buf;
 	size_y = buf;
 	step_x = 1 / (float)size_x;
@@ -361,7 +314,7 @@ unsigned int	do_rt(unsigned int x,
 	color = 0;
 	if (y < height && x < width)
 	{
-		while (i < RAYS_PER_PIXEL)
+		while (i < antialising)
 		{
 			ray_vector.x = (((x + 0.5f + (step_x * (i % (int)size_x))) / width) * 2.0f - 1.0f) * (((float)width) / height) * tan(M_PI / 360 * FOV_X);
 			ray_vector.y = (1.0f - 2.0f * ((y + 0.5f + (step_y * (i / size_x))) / height)) * tan(3.14 / 360 * FOV_Y);
@@ -370,48 +323,8 @@ unsigned int	do_rt(unsigned int x,
 			colors[i] = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, MAX_MIRROR_ITERS);
 			i++;
 		}
-		color = calc_middle_color(colors);
-		// t_color test_col;
-    //
-		// test_col.color = color;
-		// test_col.spectrum.blue = find_cartoon(color.spectrum.blue);
-		// test_col.spectrum.green = find_cartoon(color.spectrum.green);
-		// test_col.spectrum.red = find_cartoon(color.spectrum.red);
-		// color = test_col.color;
-		// color =
+		color = calc_middle_color(colors, antialising);
 	}
-
-
-
-	// if (x == WIDTH / 2 && y == HEIGHT / 2 )
-	// {
-	// 	printf("START CAMERA!!!\n");
-  //
-	// 	printf("%f, %f, %f-VECTOR\n", ray_vector.x, ray_vector.y, ray_vector.z);
-	// 	// size_t n;
-  //   //
-	// 	// n = 0;
-	// 	// while (n < figures_num)
-	// 	// {
-	// 	// 	printf("%f, %f, %f-vertex\n", figures[n].vertex.x, figures[n].vertex.y, figures[n].vertex.z);
-	// 	// 	printf("%f, %f, %f-vector\n", figures[n].vector.x, figures[n].vector.y, figures[n].vector.z);
-	// 	// 	printf("%f, %f, %f-normale\n", figures[n].normale.x, figures[n].normale.y, figures[n].normale.z);
-	// 	// 	printf("%f-radius\n", figures[n].radius);
-	// 	// 	printf("%d-TYPE!!\n\n", figures[n].type);
-	// 	// 	printf("%0x-COLOR!!\n\n", figures[n].color);
-	// 	// 	printf("%0x-COLOR_F!!\n\n", figures[n].color_f);
-	// 	// 	printf("%0x-COLOR_c1!!\n\n", figures[n].color_c1);
-	// 	// 	printf("%0x-COLOR_c2!!\n\n", figures[n].color_c2);
-	// 	// 	printf("%f-REFLECTION!!\n\n", figures[n].reflection);
-	// 	// 	n++;
-	// 	}
-
-	// 	// t_figure_type ttt = InfiniteCone;
-  //   //
-	// 	// printf("%d-ggg\n\n\n", ttt);
-	// }
-
-
 	return (color);
 }
 

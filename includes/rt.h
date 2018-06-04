@@ -41,7 +41,7 @@
 # define NUM_SP_PR 5
 # define NUM_IC_PR 8
 # define NUM_PL_PR 7
-# define NUM_TR_PR 4
+# define NUM_TR_PR 10
 # define NUM_CN_PR 8
 # define NUM_CU_PR 10
 # define NUM_QUA_PR 4
@@ -238,6 +238,7 @@ typedef struct			s_figure
 	void				*figure;
 	int					color;
 	float				reflection;
+	int					mirror;
 	t_figure_type		type;
 	struct s_figure		*next;
 }						t_figure;
@@ -249,6 +250,9 @@ typedef struct			s_space
 	t_ray				*cam;
 	t_cl_figure 		*cl_figures;
 	t_cl_light			*cl_lights;
+
+	t_cl_figure         *cl_figtmp;
+    t_cl_light            *cl_ligtmp;
 	/* effects */
 	int 				antialiasing;
 	int 				sepia;
@@ -559,6 +563,8 @@ t_figure				*elipsoid_init(t_vector position, t_vector rotation,
 //color/color
 int						set_brightness(int color, double brightness,
 														double bbrightness);
+
+
 
 /*SDL FUNCTIONS (and other by arudenko)*/
 // void			sdl_init_err(void);

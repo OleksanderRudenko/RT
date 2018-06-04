@@ -33,7 +33,8 @@ void 	cl_set_mem_arg(t_view *v, void *arg, size_t arg_size, cl_uint id)
 {
 	cl_mem set_arg;
 
-	set_arg = clCreateBuffer(v->cl.context, CL_MEM_WRITE_ONLY, arg_size,
+	printf("size->%zu id->%i\n", arg_size, id);
+	set_arg = clCreateBuffer(v->cl.context, CL_MEM_READ_WRITE, arg_size,
 														NULL, &v->cl.result);
 	if (v->cl.result != CL_SUCCESS)
 		opencl_errors("Error while initializing argument");

@@ -127,6 +127,7 @@ t_cl_figure *copy_figures(t_view *v)
 		figures[n].type = tmp->type;
 		figures[n].color = tmp->color;
 		figures[n].reflection = tmp->reflection;
+		figures[n].mirror = tmp->mirror;
 		copy_figure[tmp->type](&figures[n], tmp);
 		tmp = tmp->next;
 		n++;

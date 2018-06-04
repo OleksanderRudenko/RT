@@ -32,11 +32,17 @@ char *figure_type(t_figure_type num)
 	else if (num == 2)
 		return ("Infinite Cylinder");
 	else if (num == 3)
-		return ("Infinite Cylinder");
+		return ("Infinite Cone");
 	else if (num == 4)
 		return ("Triangle");
 	else if (num == 5)
 		return ("Cube");
+	else if (num == 6)
+		return ("Quadrate");
+	else if (num == 7)
+		return ("Elipsoid");
+	else if (num == 8)
+		return ("Parabaloid");
 	return ("LOL WAT");
 }
 
@@ -71,14 +77,14 @@ void	open_scene(t_view *s)
 			ft_putendl("U dont choose anything");
 			return ;
 		}
-		
+
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		delete_init_cl(s);
 		del_list(s);
 		space_init(name, s);
 		object_init(s);
 		// view_init(s, name);
-		
+
 		// opencl_init(s);
 		opencl_init2(s);
 		// get_init_prop(s);
@@ -127,7 +133,7 @@ int		color_unite(int r, int g, int b)
 SDL_Rect	*select_rect(t_view *s)
 {
 	int			type;
-	
+
 	type = s->space->cl_figures[s->rr.fl.y].type;
 	if (type == InfinitePlane)
 		return(s->pl.pl_pr_rect);
@@ -153,7 +159,7 @@ SDL_Rect	*select_rect(t_view *s)
 int			select_num(t_view *s)
 {
 	int			type;
-	
+
 	type = s->space->cl_figures[s->rr.fl.y].type;
 	if (type == InfinitePlane)
 		return(NUM_PL_PR);

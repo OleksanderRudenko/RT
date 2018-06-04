@@ -68,36 +68,54 @@ void	camera_move(t_view *s, SDL_Scancode key)
 	if (key ==  SDL_SCANCODE_W)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->o.x += 0.5;
+		s->space->cam->o.y += 0.5;
 		opencl_init2(s);
 	}
-	if (key ==  SDL_SCANCODE_S)
+	else if (key ==  SDL_SCANCODE_S)
+	{
+		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
+		s->space->cam->o.y -= 0.5;
+		opencl_init2(s);
+	}
+	else if (key ==  SDL_SCANCODE_D)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->o.x -= 0.5;
 		opencl_init2(s);
 	}
-		if (key ==  SDL_SCANCODE_D)
+	else if (key ==  SDL_SCANCODE_A)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->o.y += 0.5;
-		opencl_init2(s);
-	}
-	if (key ==  SDL_SCANCODE_A)
-	{
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->o.y -= 0.5;
+		s->space->cam->o.x += 0.5;
 		opencl_init2(s);
 	}
 }
 
 void	camera_rot(t_view *s, SDL_Scancode key)
 {
-		if (key ==  SDL_SCANCODE_UP)
+	if (key ==  SDL_SCANCODE_UP)
+	{
+		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
+		s->space->cam->v.y += 0.5;
+		opencl_init2(s);
+	}
+	else if (key ==  SDL_SCANCODE_DOWN)
+	{
+		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
+		s->space->cam->v.y -= 0.5;
+		opencl_init2(s);
+	}
+	else if (key ==  SDL_SCANCODE_RIGHT)
 	{
 		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
 		s->space->cam->v.x += 0.5;
-		do_rt(s);
+		opencl_init2(s);
+	}
+	else if (key ==  SDL_SCANCODE_LEFT)
+	{
+		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
+		s->space->cam->v.x -= 0.5;
+		opencl_init2(s);
 	}
 	// if (key ==  SDL_SCANCODE_S)
 	// {

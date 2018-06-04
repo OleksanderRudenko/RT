@@ -49,7 +49,7 @@ void		parse_elipsoid(JSON_Object *elipsoid, t_view *view)
       ft_putendl_fd("Unknown elipsoid rotation parameter. Default applied",
       			STDERR_FILENO);
   /* init elipsoid */
-//  felipsoid = elipsoid_init(vector[0], vector[1], 0xffffff, 0);
+ felipsoid = elipsoid_init(vector[0], vector[1], 0xffffff, 0);
   check_radius_and_distance(elipsoid, felipsoid);
   parse_color_reflection(elipsoid, felipsoid);
   add_figure(felipsoid, view);

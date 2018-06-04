@@ -34,6 +34,7 @@ typedef struct			s_cl_figure
 {
 	int					type;
 	int					color;
+	int					mirror;
 	float				reflection;
 
 	cl_float3			start;
@@ -87,5 +88,9 @@ typedef struct			s_opencl
 	cl_event  			kernel_exec_event;
 	cl_event    		read_results_event;
 }						t_opencl;
+
+void 					rotate_figures(t_cl_figure *figure, float angle, int id);
+void  				change_pos(t_cl_figure *figure, float new_value, int id);
+void  				new_normal_triangle(t_cl_figure *figure);
 
 #endif

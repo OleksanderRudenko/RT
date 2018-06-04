@@ -63,6 +63,8 @@ void		space_init(const char *filename, t_view *view)
 				(t_vector){0, 0, 0});
 	view->space->cl_figures = copy_figures(view);
 	view->space->cl_lights = copy_light(view);
+	view->space->cl_figtmp = copy_figures(view);
+    view->space->cl_ligtmp = copy_light(view);
 }
 
 void		cam_rotate(t_ray *ray, t_vector vector)

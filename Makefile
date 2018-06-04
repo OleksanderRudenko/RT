@@ -51,7 +51,7 @@ GUIDIR = ./src/gui/
 SRCFILES = main.c do_rt.c space.c solve_cubic.c solve_quatric.c
 COLORFILES = color.c
 FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c ftor.c \
-				fcube.c fquadrate.c fparaboloid.c felipsoid.c
+				fcube.c fquadrate.c fparaboloid.c felipsoid.c rotate_figure.c f_pos.c
 LIGHTFILES = light.c
 VECTORFILES = vector.c vector2.c rotate.c
 PARSEFILES = pcam.c pcone.c pcylinder.c perror.c ft_hexatoi.c plight.c parse.c \
@@ -65,7 +65,7 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c\
 			cube_prop.c quadrate_prop.c elipsoid_prop.c parabaloid_prop.c tor_prop.c\
 			input.c input2.c light_point_prop.c amb_light.c light_direct.c \
 			default.c \
-			
+
 OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c copy1.c \
 				copy2.c
 EFFECTSFILES = normal_disruption.c perlin_noise.c perlin_noise.c

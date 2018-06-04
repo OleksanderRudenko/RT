@@ -20,7 +20,8 @@
       "normale": [0.0, 0.0, 1.0],
       "point": [0, 0, 20],
       "color": "0x00000aa",
-      "reflection": 0
+      "reflection": 0,
+      "mirror": 1
     },
     {
       "type": "plane",

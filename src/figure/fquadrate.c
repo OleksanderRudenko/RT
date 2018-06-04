@@ -19,7 +19,6 @@ t_squard *find_q_dots(t_squard *q)
 	t_vector	tmp_y;
 	t_vector	tmp_z;
 
-	// tmp_x = vk_multiple(get_default_vector('x'), k_x * cube->scale.x);
   tmp_x = (t_vector){0, 0, 0};
 	tmp_y = vsum(tmp_x, vk_multiple(get_default_vector('y'), q->scale[0]));
 	tmp_z = vsum(tmp_y, vk_multiple(get_default_vector('z'), q->scale[1]));

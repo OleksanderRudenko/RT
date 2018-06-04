@@ -39,6 +39,7 @@ static char *get_kernel(void)
   "      __constant t_cl_light *light,    \n" \
   "      float3 cam_v,   	    \n" \
   "      float3 cam_o,  		\n" \
+	  "    int antialaising,  		\n" \
   "      __global unsigned int *output){\n" \
   " size_t x = get_global_id(0);  		\n" \
   " size_t y = get_global_id(1);        \n" \
@@ -47,7 +48,7 @@ static char *get_kernel(void)
   " unsigned int color;                 \n" \
   " color = do_rt(x, y, w, h,  			\n" \
   "	  figures, light, cam_v, cam_o,     \n" \
-  "	  figures_num, lights_num);			\n" \
+  "	  figures_num, lights_num, antialaising);			\n" \
   " output[y * w + x] = color;}     	\n";
   return (ft_strdup(kernel));
 }

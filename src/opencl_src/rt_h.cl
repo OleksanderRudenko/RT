@@ -48,6 +48,7 @@ typedef struct			s_cl_figure
 {
 	int					type;
 	int					color;
+	int					mirror;
 	float				reflection;
 
 	float3				start;
@@ -102,7 +103,8 @@ unsigned int			do_rt(unsigned int x,
 					  float3 cam_vector,
 					  float3 cam_origin,
 					  size_t figures_num,
-					  size_t lights_num);
+					  size_t lights_num,
+						int antialaising);
 
 unsigned int			rt(__constant t_cl_light *lights,
 						   __global t_cl_figure *figures,
@@ -174,7 +176,7 @@ float					get_sqr_solve(float a, float b, float d, float min);
 float 				q_rsqrt( float number );
 char	     		inside_squad(float3 *c_points, float3 p);
 
-unsigned int		calc_middle_color(unsigned int *colors);
+unsigned int		calc_middle_color(unsigned int *colors, int antialising);
 float3					calc_reflect_ray(float3 ray_vector, float3 normale, float3 p);
 unsigned	int		add_colors(unsigned	int	color1, unsigned	int	color2);
 
