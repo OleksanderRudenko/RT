@@ -38,7 +38,7 @@
   		"reflection": 10
   	},
     {
-         "type": "cube",
+         "type": "//cube",
        "position": [0, 0, 0],
        "rotation": [0, 0, 0],
        "scale": [1, 1, 1],
@@ -46,7 +46,7 @@
          "reflection": 100
     },
     {
-         "type": "//quadrate",
+         "type": "quadrate",
        "position": [0, 0, 10],
        "rotation": [0, 90, 0],
        "scale": [1, 1],

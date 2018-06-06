@@ -64,7 +64,7 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c\
 			inf_cyl_prop.c get_prop.c plane_prop.c cone_prop.c triangle_prop.c \
 			cube_prop.c quadrate_prop.c elipsoid_prop.c parabaloid_prop.c tor_prop.c\
 			input.c input2.c light_point_prop.c amb_light.c light_direct.c \
-			default.c \
+			default.c default2.c input_functions.c utils2.c utils3.c\
 
 OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c copy1.c \
 				copy2.c

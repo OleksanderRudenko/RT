@@ -33,14 +33,13 @@ void	print_am_light_prop(t_view *s)
 {
 	int i;
 
-	i = 0;
+	i = -1;
 	SDL_RenderClear(s->rr.rend[2]);
-	while (i < NUM_AM_PR && s->flag == 1)
+	while (++i < NUM_AM_PR && s->flag == 1)
 	{
 		SDL_RenderCopy(s->rr.rend[2], s->am.aml_tex[i], NULL, &s->am.aml_rect[i]);
 		SDL_RenderCopy(s->rr.rend[2], s->am.aml_prop[i], NULL, &s->am.aml_pr_rect[i]);
 		SDL_RenderCopy(s->rr.rend[2], s->ok->b_ok, NULL, &s->ok->ok_rect);
-		i++;
 	}
 	SDL_RenderPresent(s->rr.rend[2]);
 }

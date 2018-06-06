@@ -132,6 +132,6 @@ t_cl_figure *copy_figures(t_view *v)
 		tmp = tmp->next;
 		n++;
 	}
-	// printf_figures(v, figures);
+	printf_figures(v, figures);
 	return (figures);
 }

@@ -34,9 +34,11 @@ void	clean_staff(t_view *s)
 	SDL_DestroyRenderer(s->rr.rend[1]);
 	SDL_DestroyRenderer(s->rr.rend[2]);
 	SDL_DestroyTexture(s->l_obj.def_tex);
-	clean_light(s);
+	clean_light(s); 
+	clean_buttons(s);
 	TTF_Quit();
 	SDL_Quit();
 	// ft_putendl("cleaned");
+	//export MallocStackLogging=1
 	/*delete textures and so on*/
 }

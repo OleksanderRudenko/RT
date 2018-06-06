@@ -367,5 +367,29 @@ void		default_sphere_init(t_view *view);
 void		default_plane_init(t_view *view);
 void		default_cylinder_init(t_view *view);
 void		default_helper_figures(t_view *view, t_figure *figure);
+void		default_cone_init(t_view *view);
+void	default_elipsoid_init(t_view *view);
+void	default_paraboloid_init(t_view *view);
+
+/*6.05.18*/
+int		mirror_val();
 /*END*/
+
+/*what were added
+1)default.c 
+-function: void	default_cone_init(t_view *view)
+
+2)button_functions.c
+-in function button_handler: changes for cone
+
+3)file default2.c
+
+4)file input_functions.c
+
+????????? SCALE FOR CUBE!!
+????????? COLOR FOR CONE!!
+end added*/
+
+
+/**/
 #endif

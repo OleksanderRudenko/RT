@@ -26,17 +26,17 @@ t_pr	*get_print(void)
 	luck[Quadrate] = &print_quadraate_prop;
 	luck[Elipsoid] = &print_elips_prop;
 	luck[Parabaloid] = &print_parab_prop;
-	// luck[Tor] = &; ????????????
 	return (luck);
 }
 
 void	get_properties(t_view *s)
 {
-	t_pr *func;
+	static t_pr *func = NULL;
 	int type;
 	
 	type = s->space->cl_figures[s->rr.fl.y].type;
-	func = get_print();
+	if (!func)
+		func = get_print();
 	func[type](s);
 }
 
@@ -59,10 +59,11 @@ t_init	*get_init(void)
 
 void	get_init_prop(t_view *s)
 {
-	t_init	*init;
+	static	t_init	*init = NULL;
 	int		type;
 
 	type = s->space->cl_figures[s->rr.fl.y].type;
-	init = get_init();
+	if (!init)
+		init = get_init();
 	init[type](s);
 }

@@ -14,39 +14,39 @@
 
 static inline void	plane_prop2(t_view *s)
 {
-	s->pl.pl_rect[4] = make_rect(10, 400, 100, 32);
-	s->pl.pl_tex[4] = create_text(s, "Point-X", 2, 32);
+	s->pl.pl_rect[4] = make_rect(80, 400, 80, 32);
+	s->pl.pl_tex[4] = create_text(s, "Rotate-X", 2, 32);
 	s->pl.pl_pr_rect[4] = make_rect(120, 400, 60, 32);
-	s->pl.pl_prop[4] =  tf(s, 0, 2, 32);
-
-	s->pl.pl_rect[5] = make_rect(10, 450, 100, 32);
-	s->pl.pl_tex[5] = create_text(s, "Point-Y", 2, 32);
+	s->pl.pl_prop[4] =  NULL;
+	s->pl.pl_rect[5] = make_rect(80, 450, 80, 32);
+	s->pl.pl_tex[5] = create_text(s, "Rotate-Y", 2, 32);
 	s->pl.pl_pr_rect[5] = make_rect(120, 450, 60, 32);
-	s->pl.pl_prop[5] =  tf(s, 0, 2, 32);
-
-	s->pl.pl_rect[6] = make_rect(10, 500, 100, 32);
-	s->pl.pl_tex[6] = create_text(s, "Point-Z", 2, 32);
+	s->pl.pl_prop[5] =  NULL;
+	s->pl.pl_rect[6] = make_rect(80, 500, 80, 32);
+	s->pl.pl_tex[6] = create_text(s, "Rotate-Z", 2, 32);
 	s->pl.pl_pr_rect[6] = make_rect(120, 500, 60, 32);
-	s->pl.pl_prop[6] =  tf(s, 0, 2, 32);
+	s->pl.pl_prop[6] =  NULL;
+	s->pl.pl_rect[7] = make_rect(10, 550, 60, 32);
+	s->pl.pl_tex[7] = create_text(s, "Mirror", 2, 32);
+	s->pl.pl_pr_rect[7] = make_rect(120, 550, 60, 32);
+	s->pl.pl_prop[7] =  tf(s, 0, 2, 32);
 }
 
 void	plane_prop(t_view *s)
 {
-	// s->pl = *(t_pl_prop*)malloc(sizeof(t_pl_prop));
-
-	s->pl.pl_tex = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * NUM_PL_PR);
-	s->pl.pl_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_PL_PR);
-	s->pl.pl_pr_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_PL_PR);
-	s->pl.pl_prop = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * NUM_PL_PR);
-	s->pl.pl_rect[0] = make_rect(10, 200, 100, 32);
+	s->pl.pl_tex = (SDL_Texture **)ft_memalloc(sizeof(SDL_Texture*) * NUM_PL_PR);
+	s->pl.pl_rect = (SDL_Rect *)ft_memalloc(sizeof(SDL_Rect) * NUM_PL_PR);
+	s->pl.pl_pr_rect = (SDL_Rect *)ft_memalloc(sizeof(SDL_Rect) * NUM_PL_PR);
+	s->pl.pl_prop = (SDL_Texture **)ft_memalloc(sizeof(SDL_Texture*) * NUM_PL_PR);
+	s->pl.pl_rect[0] = make_rect(10, 200, 80, 32);
 	s->pl.pl_tex[0] = create_text(s, "Normal-X", 2, 32);
 	s->pl.pl_pr_rect[0] = make_rect(120, 200, 60, 32);
 	s->pl.pl_prop[0] =  tf(s, 0, 2, 32);
-	s->pl.pl_rect[1] = make_rect(10, 250, 100, 32);
+	s->pl.pl_rect[1] = make_rect(10, 250, 80, 32);
 	s->pl.pl_tex[1] = create_text(s, "Normal-Y", 2, 32);
 	s->pl.pl_pr_rect[1] = make_rect(120, 250, 60, 32);
 	s->pl.pl_prop[1] =  tf(s, 0, 2, 32);
-	s->pl.pl_rect[2] = make_rect(10, 300, 100, 32);
+	s->pl.pl_rect[2] = make_rect(10, 300, 80, 32);
 	s->pl.pl_tex[2] = create_text(s, "Normal-Z", 2, 32);
 	s->pl.pl_pr_rect[2] = make_rect(120, 300, 60, 32);
 	s->pl.pl_prop[2] =  tf(s, 0, 2, 32);
@@ -72,9 +72,10 @@ void	init_plane_prop(t_view *s)
 	s->pl.pl_prop[1] = tf(s, s->space->cl_figures[s->rr.fl.y].normale.y, 2, 32);
 	s->pl.pl_prop[2] = tf(s, s->space->cl_figures[s->rr.fl.y].normale.z, 2, 32);
 	s->pl.pl_prop[3] = tf(s, s->space->cl_figures[s->rr.fl.y].reflection, 2, 32);
-	s->pl.pl_prop[4] = tf(s, s->space->cl_figures[s->rr.fl.y].point.x, 2, 32);
-	s->pl.pl_prop[5] = tf(s, s->space->cl_figures[s->rr.fl.y].point.y, 2, 32);
-	s->pl.pl_prop[6] = tf(s, s->space->cl_figures[s->rr.fl.y].point.z, 2, 32);
+	s->pl.pl_prop[4] = NULL;
+	s->pl.pl_prop[5] = NULL;
+	s->pl.pl_prop[6] = NULL;
+	s->pl.pl_prop[7] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
 }
 
 void	print_pl_prop(t_view *s)

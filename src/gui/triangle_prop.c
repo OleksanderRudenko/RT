@@ -14,10 +14,6 @@
 
 static inline void	tr_prop2(t_view *s)
 {
-	s->tri.tri_rect[4] = make_rect(10, 400, 100, 32);
-	s->tri.tri_tex[4] = create_text(s, "Point2-Y", 2, 32);
-	s->tri.tri_pr_rect[4] = make_rect(120, 400, 60, 32);
-	s->tri.tri_prop[4] =  tf(s, 0, 2, 32);
 	s->tri.tri_rect[5] = make_rect(10, 450, 100, 32);
 	s->tri.tri_tex[5] = create_text(s, "Point2-Z", 2, 32);
 	s->tri.tri_pr_rect[5] = make_rect(120, 450, 60, 32);
@@ -26,7 +22,6 @@ static inline void	tr_prop2(t_view *s)
 	s->tri.tri_tex[6] = create_text(s, "Point3-X", 2, 32);
 	s->tri.tri_pr_rect[6] = make_rect(120, 500, 60, 32);
 	s->tri.tri_prop[6] =  tf(s, 0, 2, 32);
-
 	s->tri.tri_rect[7] = make_rect(10, 550, 100, 32);
 	s->tri.tri_tex[7] = create_text(s, "Point3-Y", 2, 32);
 	s->tri.tri_pr_rect[7] = make_rect(120, 550, 60, 32);
@@ -39,15 +34,18 @@ static inline void	tr_prop2(t_view *s)
 	s->tri.tri_tex[9] = create_text(s, "Reflection", 2, 32);
 	s->tri.tri_pr_rect[9] = make_rect(120, 650, 60, 32);
 	s->tri.tri_prop[9] =  tf(s, 0, 2, 32);
+	s->tri.tri_rect[10] = make_rect(10, 700, 60, 32);
+	s->tri.tri_tex[10] = create_text(s, "Mirror", 2, 32);
+	s->tri.tri_pr_rect[10] = make_rect(120, 700, 60, 32);
+	s->tri.tri_prop[10] =  tf(s, 0, 2, 32);
 }
 
 void	triangle_prop(t_view *s)
 {
-	// s->tri = *(t_trial_prop*)malloc(sizeof(t_trial_prop));
-	s->tri.tri_tex = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * NUM_TR_PR);
-	s->tri.tri_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_TR_PR);
-	s->tri.tri_pr_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_TR_PR);
-	s->tri.tri_prop = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * NUM_TR_PR);
+	s->tri.tri_tex = (SDL_Texture **)ft_memalloc(sizeof(SDL_Texture*) * NUM_TR_PR);
+	s->tri.tri_rect = (SDL_Rect *)ft_memalloc(sizeof(SDL_Rect) * NUM_TR_PR);
+	s->tri.tri_pr_rect = (SDL_Rect *)ft_memalloc(sizeof(SDL_Rect) * NUM_TR_PR);
+	s->tri.tri_prop = (SDL_Texture **)ft_memalloc(sizeof(SDL_Texture*) * NUM_TR_PR);
 	s->tri.tri_rect[0] = make_rect(10, 200, 100, 32);
 	s->tri.tri_tex[0] = create_text(s, "Point1-X", 2, 32);
 	s->tri.tri_pr_rect[0] = make_rect(120, 200, 60, 32);
@@ -64,6 +62,10 @@ void	triangle_prop(t_view *s)
 	s->tri.tri_tex[3] = create_text(s, "Point2-X", 2, 32);
 	s->tri.tri_pr_rect[3] = make_rect(120, 350, 60, 32);
 	s->tri.tri_prop[3] =  tf(s, 0, 2, 32);
+	s->tri.tri_rect[4] = make_rect(10, 400, 100, 32);
+	s->tri.tri_tex[4] = create_text(s, "Point2-Y", 2, 32);
+	s->tri.tri_pr_rect[4] = make_rect(120, 400, 60, 32);
+	s->tri.tri_prop[4] =  tf(s, 0, 2, 32);
 	tr_prop2(s);
 }
 
@@ -88,6 +90,7 @@ void	triangle_init_prop(t_view *s)
 	s->tri.tri_prop[7] = tf(s, s->space->cl_figures[s->rr.fl.y].t_points[2].y, 2, 32);
 	s->tri.tri_prop[8] = tf(s, s->space->cl_figures[s->rr.fl.y].t_points[2].z, 2, 32);
 	s->tri.tri_prop[9] = tf(s, s->space->cl_figures[s->rr.fl.y].reflection, 2, 32);
+	s->tri.tri_prop[9] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
 }
 void	print_triangle_prop(t_view *s)
 {

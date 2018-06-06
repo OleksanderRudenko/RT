@@ -40,14 +40,12 @@ SDL_Texture *get_tex(char *file, SDL_Renderer *ren_tar)
 	{
 		ft_putendl(SDL_GetError());
 		exit(0);
-		/*Maybe need to clear everything, dunno*/
 	}
 	texture = SDL_CreateTextureFromSurface(ren_tar, surface);
 	if (texture == NULL)
 	{
 		ft_putendl(SDL_GetError());
 		exit(0);
-		/*Maybe need to clear everything as well, dunno*/
 	}
 	SDL_FreeSurface(surface);
 	return (texture);
@@ -76,14 +74,13 @@ SDL_Texture	*tf(t_view *s, float num, int i, int font_size)
 
 int				text_width(TTF_Font *f, char *str)
 {
-	/*function which estimates a rect width for a text*/
 	char		*buf;
 	int			width;
 	int			len;
 
 	len = ft_strlen(str);
 	if (len > MAX_TEXT_LEN)
-		len = 99;
+		len = 149;
 	buf = ft_strnew(MAX_TEXT_LEN);
 	ft_strncpy(buf, str, len);
 	TTF_SizeUTF8(f, buf, &width, NULL);

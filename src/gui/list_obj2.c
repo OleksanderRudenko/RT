@@ -14,18 +14,18 @@
 
 void			object_default_init(t_view *s)
 {
-	s->l_obj.def_rect = make_rect(20, 10, 250, 40);
-	s->l_obj.def_tex = create_text(s, "Please, select figure", 2, 20);
+	s->l_obj.def_rect = make_rect(20, 10, 250, 30);
+	s->l_obj.def_tex = create_text(s, "Please, select figure", 2, 42);
 }
 
 void			print_default_text(t_view *s)
 {
-	if (s->rr.fl.y == -1)
-	{
-		SDL_RenderClear(s->rr.rend[2]);
-		SDL_RenderCopy(s->rr.rend[2], s->l_obj.def_tex, NULL, &s->l_obj.def_rect);
-		SDL_RenderPresent(s->rr.rend[2]);
-	}
+	// if (s->l_obj.def_tex)
+	// 	SDL_DestroyTexture(s->l_obj.def_tex);
+	SDL_RenderClear(s->rr.rend[2]);
+	SDL_RenderCopy(s->rr.rend[2], s->l_obj.def_tex, NULL, &s->l_obj.def_rect);
+	SDL_SetRenderDrawColor(s->rr.rend[2], 10, 20, 40, 255);
+	SDL_RenderPresent(s->rr.rend[2]);
 }
 
 void			what_to_print(t_view *s)

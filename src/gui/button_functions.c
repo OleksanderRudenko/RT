@@ -14,10 +14,14 @@
 
 static void	button_handler(t_view *s)
 {
-	(int)s->rr.fl.x == 3 ? open_scene(s) : 0;
+	(int)s->rr.fl.x == 6 ? open_scene(s) : 0;
 	(int)s->rr.fl.x == 1 ? default_sphere_init(s) : 0;
 	(int)s->rr.fl.x == 2 ? default_cylinder_init(s) : 0;
+	(int)s->rr.fl.x == 3 ? default_cone_init(s) : 0;
+	(int)s->rr.fl.x == 4 ? default_elipsoid_init(s) : 0;
+	(int)s->rr.fl.x == 5 ? default_paraboloid_init(s) : 0;
 	(int)s->rr.fl.x == 0 ? default_plane_init(s) : 0;
+
 }
 
 static void	window_handler(t_view *s, int num, SDL_Event e, int numl)

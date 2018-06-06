@@ -20,6 +20,9 @@ void	init_rect(t_gui *r)
 	r->but_rect[1] = make_rect(75, 0, 75, 75);
 	r->but_rect[2] = make_rect(150, 0, 75, 75);
 	r->but_rect[3] = make_rect(225, 0, 75, 75);
+	r->but_rect[4] = make_rect(300, 0, 75, 75);
+	r->but_rect[5] = make_rect(375, 0, 75, 75);
+	r->but_rect[6] = make_rect(450, 0, 75, 75);
 }
 
 void	init_buttons(t_view *s)
@@ -30,8 +33,14 @@ void	init_buttons(t_view *s)
 	s->rr.but_off[1] = get_tex("img/sphere_off.bmp", s->rr.rend[0]);
 	s->rr.but_on[2] = get_tex("img/cylinder_on.bmp", s->rr.rend[0]);
 	s->rr.but_off[2] = get_tex("img/cylinder_off.bmp", s->rr.rend[0]);
-	s->rr.but_on[3] = get_tex("img/fold.bmp", s->rr.rend[0]);
-	s->rr.but_off[3] = get_tex("img/fold.bmp", s->rr.rend[0]);
+	s->rr.but_on[3] = get_tex("img/cone_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[3] = get_tex("img/cone_off.bmp", s->rr.rend[0]);
+	s->rr.but_on[4] = get_tex("img/elips_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[4] = get_tex("img/elips_off.bmp", s->rr.rend[0]);
+	s->rr.but_on[5] = get_tex("img/parab_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[5] = get_tex("img/parab_off.bmp", s->rr.rend[0]);
+	s->rr.but_on[6] = get_tex("img/fold.bmp", s->rr.rend[0]);
+	s->rr.but_off[6] = get_tex("img/fold.bmp", s->rr.rend[0]);
 }
 
 void	set_things_up(t_view *s)
@@ -64,6 +73,7 @@ void	button_staff(t_view *s)
 			SDL_RenderCopy(s->rr.rend[0], s->rr.but_off[i],NULL, &s->rr.but_rect[i]);
 		i++;
 	}
+	SDL_SetRenderDrawColor(s->rr.rend[0], 10, 20, 40, 255);
 	SDL_RenderPresent(s->rr.rend[0]);
 }
 

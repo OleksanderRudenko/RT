@@ -57,7 +57,7 @@ void			obj_highlight(t_view *s, SDL_Event e, SDL_Rect *rect)
 		SDL_RenderFillRect(s->rr.rend[1], &s->l_obj.obj_rect[id]);
 		SDL_RenderDrawRect(s->rr.rend[1], &s->l_obj.obj_rect[id]);
 		SDL_RenderCopy(s->rr.rend[1], s->l_obj.obj_tex[id], NULL, &s->l_obj.obj_rect[id]);
-		SDL_SetRenderDrawColor(s->rr.rend[1], 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(s->rr.rend[1], 10, 20, 40, 255);
 	}
 	draw_select_button(s);
 	SDL_RenderPresent(s->rr.rend[1]);

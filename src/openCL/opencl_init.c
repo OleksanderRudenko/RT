@@ -159,5 +159,6 @@ void	opencl_init(t_view *v)
 		opencl_errors("Error while initializing output data");
 
 	opencl_init2(v);
+	// free(kernel_bytes);
 	// cl_releasing(v);
 }

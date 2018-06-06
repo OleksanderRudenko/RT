@@ -14,22 +14,26 @@
 
 static inline void	cone_prop2(t_view *s)
 {
-	s->con.cn_rect[4] = make_rect(10, 400, ft_strlen("Vector-X") * 10, 32);
-	s->con.cn_tex[4] = create_text(s, "Vector-X", 2, 32);
+	s->con.cn_rect[4] = make_rect(80, 400, 100, 32);
+	s->con.cn_tex[4] = create_text(s, "Rotate-X", 2, 32);
 	s->con.cn_pr_rect[4] = make_rect(120, 400, 60, 32);
-	s->con.cn_prop[4] =  tf(s, 0, 2, 32);
-	s->con.cn_rect[5] = make_rect(10, 450, ft_strlen("Vector-X") * 10, 32);
-	s->con.cn_tex[5] = create_text(s, "Vector-Y", 2, 32);
+	s->con.cn_prop[4] =  NULL;
+	s->con.cn_rect[5] = make_rect(80, 450, 100, 32);
+	s->con.cn_tex[5] = create_text(s, "Rotate-Y", 2, 32);
 	s->con.cn_pr_rect[5] = make_rect(120, 450, 60, 32);
-	s->con.cn_prop[5] =  tf(s, 0, 2, 32);
-	s->con.cn_rect[6] = make_rect(10, 500, ft_strlen("Vector-X") * 10, 32);
-	s->con.cn_tex[6] = create_text(s, "Vector-Z", 2, 32);
+	s->con.cn_prop[5] =  NULL;
+	s->con.cn_rect[6] = make_rect(80, 500, 100, 32);
+	s->con.cn_tex[6] = create_text(s, "Rotate-Z", 2, 32);
 	s->con.cn_pr_rect[6] = make_rect(120, 500, 60, 32);
-	s->con.cn_prop[6] =  tf(s, 0, 2, 32);
-	s->con.cn_rect[7] = make_rect(10, 550, ft_strlen("Radius") * 10, 32);
+	s->con.cn_prop[6] =  NULL;
+	s->con.cn_rect[7] = make_rect(10, 550, 60, 32);
 	s->con.cn_tex[7] = create_text(s, "Radius", 2, 32);
 	s->con.cn_pr_rect[7] = make_rect(120, 550, 60, 32);
 	s->con.cn_prop[7] =  tf(s, 0, 2, 32);
+	s->con.cn_rect[8] = make_rect(10, 600, 60, 32);
+	s->con.cn_tex[8] = create_text(s, "Mirror", 2, 32);
+	s->con.cn_pr_rect[8] = make_rect(120, 600, 60, 32);
+	s->con.cn_prop[8] =  tf(s, 0, 2, 32);
 }
 
 void	cone_prop(t_view *s)
@@ -72,10 +76,11 @@ void	init_cone_prop(t_view *s)
 	s->con.cn_prop[1] = tf(s, s->space->cl_figures[s->rr.fl.y].vertex.y, 2, 32);
 	s->con.cn_prop[2] = tf(s, s->space->cl_figures[s->rr.fl.y].vertex.z, 2, 32);
 	s->con.cn_prop[3] = tf(s, s->space->cl_figures[s->rr.fl.y].reflection, 2, 32);
-	s->con.cn_prop[4] = tf(s, s->space->cl_figures[s->rr.fl.y].vertex.x, 2, 32);
-	s->con.cn_prop[5] = tf(s, s->space->cl_figures[s->rr.fl.y].vertex.y, 2, 32);
-	s->con.cn_prop[6] = tf(s, s->space->cl_figures[s->rr.fl.y].vertex.z, 2, 32);
+	s->con.cn_prop[4] = NULL;
+	s->con.cn_prop[5] = NULL;
+	s->con.cn_prop[6] = NULL;
 	s->con.cn_prop[7] = tf(s, s->space->cl_figures[s->rr.fl.y].radius, 2, 32);
+	s->con.cn_prop[8] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
 }
 
 void	print_cone_prop(t_view *s)

@@ -66,8 +66,8 @@ int			main(int argc, char **argv)
 		SDL_UpdateWindowSurface(view.win[0]);
 	}
 	cl_releasing(&view);
-	// clean_staff(&view); /*TODO: make it good w/o segfault*/
-	// system("leaks RT");
+	clean_staff(&view); /*TODO: make it good w/o segfault*/
+	system("leaks RT");
 
 	/*destroy texture..., cleaning staff HERE*/
 	return (0);

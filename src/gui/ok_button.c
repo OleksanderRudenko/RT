@@ -55,19 +55,6 @@ void		xxx(int num, t_view *s)
 	get_init_prop(s);
 }
 
-double		par_input()
-{
-	const char	*input;
-	float		num;
-
-	input = tinyfd_inputBox("", "Click something", "0");
-	if (input == NULL)
-		return (0.0);
-	num = atof(input);
-	printf("input num: %f\n", num);/*for debug*/
-	return (num);
-}
-
 void	ok_button_function(t_view *s, SDL_Event e)
 {
 	if (is_in_rect(s->ok->ok_rect, e))

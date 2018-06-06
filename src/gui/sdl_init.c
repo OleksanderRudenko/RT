@@ -47,6 +47,7 @@ int		poll_event(t_view *s)
 			slider_click_event(e.button.button, s, e);
 			select_button_up(s, e, 2);
 			mouse_key_down(s, e);
+			// what_to_print(s);
 		}
 		else if (e.type == SDL_MOUSEMOTION && e.window.windowID == 3)
 			slider_motion_event(e.button.button, s, e);
@@ -117,22 +118,4 @@ void	camera_rot(t_view *s, SDL_Scancode key)
 		s->space->cam->v.x -= 0.5;
 		opencl_init2(s);
 	}
-	// if (key ==  SDL_SCANCODE_S)
-	// {
-	// 	ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-	// 	s->space->cam->v.x -= 0.5;
-	// 	do_rt(s);
-	// }
-	// 	if (key ==  SDL_SCANCODE_D)
-	// {
-	// 	ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-	// 	s->space->cam->v.y += 0.5;
-	// 	do_rt(s);
-	// }
-	// if (key ==  SDL_SCANCODE_A)
-	// {
-	// 	ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-	// 	s->space->cam->v.y -= 0.5;
-	// 	do_rt(s);
-	// }
 }

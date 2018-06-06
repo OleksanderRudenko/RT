@@ -14,8 +14,6 @@
 
 void	select_init(t_view *s)
 {
-	// int	id;
-
 	s->select.sel_tex_on = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * 2);
 	s->select.sel_tex_off = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * 2);
 	s->select.sel_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * 2);
@@ -24,8 +22,8 @@ void	select_init(t_view *s)
 	s->select.sel_tex_off[0] = get_tex("img/obj_off.bmp", s->rr.rend[1]);
 	s->select.sel_tex_on[1] = get_tex("img/light_on.bmp", s->rr.rend[1]);
 	s->select.sel_tex_off[1] = get_tex("img/light_off.bmp", s->rr.rend[1]);
-	s->select.sel_rect[0] = make_rect(0, 0, 100, 50);
-	s->select.sel_rect[1] = make_rect(100, 0, 100, 50);
+	s->select.sel_rect[0] = make_rect(50, 0, 100, 50);
+	s->select.sel_rect[1] = make_rect(150, 0, 100, 50);
 	s->select.s_flag[0] = 0;
 	s->select.s_flag[1] = 1;
 }
@@ -52,18 +50,15 @@ void			light_list_highlight(t_view *s, SDL_Event e, SDL_Rect *rect)
 
 	id = -1;
 	num = s->lights_num;
-	// printf("num Lights: %d\n", num);
 	SDL_RenderClear(s->rr.rend[1]);
 	while (++id < num && s->flag == 1)
 	{
 		if (is_in_rect(rect[id], e))
 			SDL_SetRenderDrawColor(s->rr.rend[1], 255, 255, 255, 255);
-		else
-			SDL_SetRenderDrawColor(s->rr.rend[1], 0, 0, 0, 255);
 		SDL_RenderFillRect(s->rr.rend[1], &s->l_light.light_rect[id]);
 		SDL_RenderDrawRect(s->rr.rend[1], &s->l_light.light_rect[id]);
 		SDL_RenderCopy(s->rr.rend[1], s->l_light.light_tex[id], NULL, &s->l_light.light_rect[id]);
-		SDL_SetRenderDrawColor(s->rr.rend[1], 0, 0, 0, 255);
+		SDL_SetRenderDrawColor(s->rr.rend[1], 10, 20, 40, 255);
 	}
 	draw_select_button(s);
 	SDL_RenderPresent(s->rr.rend[1]);

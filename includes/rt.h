@@ -37,20 +37,20 @@
 # define LIGHT_TYPE_AMBIENT 0
 # define LIGHT_TYPE_POINT 1
 # define LIGHT_TYPE_DIRECT 2
-# define NUM_BUTTONS 4
-# define NUM_SP_PR 5
-# define NUM_IC_PR 8
-# define NUM_PL_PR 7
-# define NUM_TR_PR 10
-# define NUM_CN_PR 8
-# define NUM_CU_PR 10
-# define NUM_QUA_PR 4
-# define NUM_EL_PR 9
-# define NUM_PR_PR 8
+# define NUM_BUTTONS 7
+# define NUM_SP_PR 6
+# define NUM_IC_PR 9
+# define NUM_PL_PR 8
+# define NUM_TR_PR 11
+# define NUM_CN_PR 9
+# define NUM_CU_PR 11
+# define NUM_QUA_PR 5
+# define NUM_EL_PR 10
+# define NUM_PR_PR 9
 # define NUM_LI_PR 4
 # define NUM_AM_PR 1
 # define NUM_DIR_PR 7
-# define MAX_TEXT_LEN 100
+# define MAX_TEXT_LEN 150
 
 typedef union			u_color
 {
