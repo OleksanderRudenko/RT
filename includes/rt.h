@@ -37,7 +37,7 @@
 # define LIGHT_TYPE_AMBIENT 0
 # define LIGHT_TYPE_POINT 1
 # define LIGHT_TYPE_DIRECT 2
-# define NUM_BUTTONS 7
+# define NUM_BUTTONS 13
 # define NUM_SP_PR 6
 # define NUM_IC_PR 9
 # define NUM_PL_PR 8
@@ -172,12 +172,12 @@ typedef struct			s_squard						 		  /* QUADRATE */
 	 // t_vector   points[4];
  // t_vector   normale;
 
- 	t_vector   position; // !!!
- 	t_vector   rotation; // !!!
+ 	t_vector			position; // !!!
+ 	t_vector			rotation; // !!!
 
- 	double    scale[2];
- 	t_vector   points[4];
- 	t_vector   normale;
+ 	double				scale[2];
+ 	t_vector			points[4];
+ 	t_vector			normale;
 }						t_squard;
 
 typedef struct			s_cube					    	  			  /* CUBE */
@@ -251,8 +251,8 @@ typedef struct			s_space
 	t_cl_figure 		*cl_figures;
 	t_cl_light			*cl_lights;
 
-	t_cl_figure         *cl_figtmp;
-    t_cl_light            *cl_ligtmp;
+	t_cl_figure			*cl_figtmp;
+	t_cl_light			*cl_ligtmp;
 	/* effects */
 	int 				antialiasing;
 	int 				sepia;
@@ -466,6 +466,7 @@ int						check_array(JSON_Array *array, JSON_Value_Type type,
 int						check_triangle_points(t_vector vector[3]);
 void					parse_triangle(JSON_Object *triangle, t_view *view);
 
+
 //parse/pelipsoid
 void					parse_elipsoid(JSON_Object *elipsoid, t_view *view);
 
@@ -483,6 +484,7 @@ t_capses 				*init_cut_plane(void);
 //parse/pquadrate
 void 					parse_quadrate(JSON_Object *quadrate, t_view *view);
 int						check_quadr_points(t_vector vector[5]);
+t_squard				*calc_quadrate_params(t_squard *q);
 
 //parse/perror
 void					root_parse_error(t_view *view);
@@ -518,7 +520,7 @@ t_figure				*cube_init(t_vector vector[3], int color,
 															double reflection);
 
 t_figure 	*quadrate_init(t_vector rotation, t_vector position, double scale[2]);
-
+void		count_planes(t_cube *cube);
 
 //figure/ftor
 t_figure				*tor_init(t_vector center, const double radiuses[2],

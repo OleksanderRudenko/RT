@@ -34,14 +34,19 @@ static inline void	cone_prop2(t_view *s)
 	s->con.cn_tex[8] = create_text(s, "Mirror", 2, 32);
 	s->con.cn_pr_rect[8] = make_rect(120, 600, 60, 32);
 	s->con.cn_prop[8] =  tf(s, 0, 2, 32);
+
+	// s->con.cn_rect[9] = make_rect(10, 650, 90, 32);
+	// s->con.cn_tex[9] = create_text(s, "Texture-id", 2, 32);
+	// s->con.cn_pr_rect[9] = make_rect(120, 650, 60, 32);
+	// s->con.cn_prop[9] =  tf(s, 0, 2, 32);
 }
 
 void	cone_prop(t_view *s)
 {
-	s->con.cn_tex = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * NUM_CN_PR);
-	s->con.cn_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_CN_PR);
-	s->con.cn_pr_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_CN_PR);
-	s->con.cn_prop = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * NUM_CN_PR);
+	s->con.cn_tex = (SDL_Texture **)ft_memalloc(sizeof(SDL_Texture*) * NUM_CN_PR);
+	s->con.cn_rect = (SDL_Rect *)ft_memalloc(sizeof(SDL_Rect) * NUM_CN_PR);
+	s->con.cn_pr_rect = (SDL_Rect *)ft_memalloc(sizeof(SDL_Rect) * NUM_CN_PR);
+	s->con.cn_prop = (SDL_Texture **)ft_memalloc(sizeof(SDL_Texture*) * NUM_CN_PR);
 	s->con.cn_rect[0] = make_rect(10, 200, ft_strlen("Vertex-X") * 10, 32);
 	s->con.cn_tex[0] = create_text(s, "Vertex-X", 2, 32);
 	s->con.cn_pr_rect[0] = make_rect(120, 200, 60, 32);
@@ -81,6 +86,7 @@ void	init_cone_prop(t_view *s)
 	s->con.cn_prop[6] = NULL;
 	s->con.cn_prop[7] = tf(s, s->space->cl_figures[s->rr.fl.y].radius, 2, 32);
 	s->con.cn_prop[8] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
+	// s->con.cn_prop[9] = tf(s, s->space->cl_figures[s->rr.fl.y].texture, 2, 32);
 }
 
 void	print_cone_prop(t_view *s)

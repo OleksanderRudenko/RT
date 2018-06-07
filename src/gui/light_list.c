@@ -104,9 +104,5 @@ void	clean_light(t_view *s)
 		s->l_light.light_tex[i] = NULL;
 		i++;
 	}
-	SDL_DestroyTexture(s->select.sel_tex_on[0]);
-	SDL_DestroyTexture(s->select.sel_tex_off[0]);
-	SDL_DestroyTexture(s->select.sel_tex_on[1]);
-	SDL_DestroyTexture(s->select.sel_tex_off[1]);
 }
 

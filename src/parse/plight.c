@@ -16,7 +16,7 @@ void	parse_ambient(JSON_Object *light, t_view *view)
 {
 	t_light *llight;
 
-	llight = light_init(LIGHT_TYPE_DIRECT, vector_init(0, 0, 0), vector_init(0, 0, 0), 0);
+	llight = light_init(LIGHT_TYPE_AMBIENT, vector_init(0, 0, 0), vector_init(0, 0, 0), 0);
 	if (json_object_has_value_of_type(light, "intensity", JSONNumber))
 		llight->inten = json_object_get_number(light, "intensity");
 	else

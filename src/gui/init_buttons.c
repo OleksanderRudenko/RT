@@ -23,6 +23,13 @@ void	init_rect(t_gui *r)
 	r->but_rect[4] = make_rect(300, 0, 75, 75);
 	r->but_rect[5] = make_rect(375, 0, 75, 75);
 	r->but_rect[6] = make_rect(450, 0, 75, 75);
+	r->but_rect[10] = make_rect(525, 0, 75, 75);
+	r->but_rect[11] = make_rect(600, 0, 75, 75);
+	r->but_rect[12] = make_rect(675, 0, 75, 75);
+	/*New line*/
+	r->but_rect[7] = make_rect(0, 85, 75, 75);
+	r->but_rect[8] = make_rect(75, 85, 75, 75);
+	r->but_rect[9] = make_rect(150, 85, 75, 75);
 }
 
 void	init_buttons(t_view *s)
@@ -41,6 +48,18 @@ void	init_buttons(t_view *s)
 	s->rr.but_off[5] = get_tex("img/parab_off.bmp", s->rr.rend[0]);
 	s->rr.but_on[6] = get_tex("img/fold.bmp", s->rr.rend[0]);
 	s->rr.but_off[6] = get_tex("img/fold.bmp", s->rr.rend[0]);
+	s->rr.but_on[7] = get_tex("img/amb_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[7] = get_tex("img/amb_off.bmp", s->rr.rend[0]);
+	s->rr.but_on[8] = get_tex("img/point_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[8] = get_tex("img/point_off.bmp", s->rr.rend[0]);
+	s->rr.but_on[9] = get_tex("img/dir_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[9] = get_tex("img/dir_off.bmp", s->rr.rend[0]);
+	s->rr.but_on[10] = get_tex("img/cube_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[10] = get_tex("img/cube_off.bmp", s->rr.rend[0]);
+	s->rr.but_on[11] = get_tex("img/quad_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[11] = get_tex("img/quad_off.bmp", s->rr.rend[0]);
+	s->rr.but_on[12] = get_tex("img/tri_on.bmp", s->rr.rend[0]);
+	s->rr.but_off[12] = get_tex("img/tri_off.bmp", s->rr.rend[0]);
 }
 
 void	set_things_up(t_view *s)

@@ -49,3 +49,8 @@
 // 	pixel += ((Uint32)y * (Uint32)texture->pitch) + ((Uint32)x * texture->format->BytesPerPixel);
 // 	return (*((Uint32*)pixel));
 // }
+
+// static float3 negative(float3 col)
+// {
+// 	return ((float3)(1,1,1) - cbrt(col));
+// }

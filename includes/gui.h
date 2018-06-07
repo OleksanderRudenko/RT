@@ -15,8 +15,9 @@
 
 #include "rt.h"
 
-typedef struct s_figure t_figure;
-typedef struct s_view   t_view;
+typedef struct s_figure	t_figure;
+typedef struct s_light	t_light;
+typedef struct s_view	t_view;
 typedef enum	e_figure_type t_figure_type;
 typedef void (*t_pr)(t_view *s);
 typedef void (*t_init)(t_view *s);
@@ -368,11 +369,19 @@ void		default_plane_init(t_view *view);
 void		default_cylinder_init(t_view *view);
 void		default_helper_figures(t_view *view, t_figure *figure);
 void		default_cone_init(t_view *view);
-void	default_elipsoid_init(t_view *view);
-void	default_paraboloid_init(t_view *view);
+void		default_elipsoid_init(t_view *view);
+void		default_paraboloid_init(t_view *view);
+void		default_cube_init(t_view *view);
+void		default_quadrate_init(t_view *view);
+void		default_triangle_init(t_view *view);
 
 /*6.05.18*/
 int		mirror_val();
+void		default_helper_lights(t_view *view, t_light *light);
+void		default_am_light(t_view *view);
+void		default_point_light(t_view *view);
+void		default_dir_light(t_view *view);
+
 /*END*/
 
 /*what were added

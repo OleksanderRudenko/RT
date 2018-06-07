@@ -48,3 +48,61 @@ void	default_paraboloid_init(t_view *view)
 	new_figure->next = NULL;
 	default_helper_figures(view, new_figure);
 }
+
+void	default_cube_init(t_view *view)
+{
+	t_figure *new_figure;
+	t_cube *cube;
+
+	new_figure = (t_figure *)malloc(sizeof(t_figure));
+	cube = (t_cube *)malloc(sizeof(t_cube));
+	new_figure->type = Cube;
+	new_figure->figure = cube;
+	cube->position = (t_vector){0.0, 0.0, 0.0};
+	cube->rotation = (t_vector){0.0, 0.0, 0.0};
+	cube->scale = (t_vector){1.0, 1.0, 1.0};
+	count_planes(cube);
+	new_figure->color = 0xff;
+	new_figure->reflection = 10;
+	new_figure->next = NULL;
+	default_helper_figures(view, new_figure);
+}
+
+void	default_quadrate_init(t_view *view)
+{
+	t_figure *quadr;
+	t_squard *q;
+
+	quadr = (t_figure *)malloc(sizeof(t_figure));
+	q = (t_squard *)malloc(sizeof(t_squard));
+	q->rotation = (t_vector){0.0, 90.0, 0.0};
+	q->position = (t_vector){0.0, 0.0, 0.0};
+	q->scale[0] = 1;
+	q->scale[1] = 1;
+	q = calc_quadrate_params(q);
+	quadr->figure = q;
+	quadr->color = 0xff;
+	quadr->reflection = 50;
+	quadr->type = Quadrate;
+	quadr->next = NULL;
+	default_helper_figures(view, quadr);
+}
+
+void	default_triangle_init(t_view *view)
+{
+	t_figure *new_figure;
+	t_triangle *triangle;
+
+	new_figure = (t_figure *)malloc(sizeof(t_figure));
+	new_figure->type = Triangle;
+	triangle = (t_triangle *)malloc(sizeof(t_triangle));
+	triangle->points[0] = (t_vector){1.0, 0.0, 0.0};
+	triangle->points[1] =(t_vector){-1.0, 1.0, 0.0};
+	triangle->points[2] = (t_vector){-1.0, 0.0, 0.0};
+	triangle->normale = count_triangle_normale(triangle->points);
+	new_figure->color = 0xff;
+	new_figure->reflection = 35;
+	new_figure->figure = triangle;
+	new_figure->next = NULL;
+	default_helper_figures(view, new_figure);
+}

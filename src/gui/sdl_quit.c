@@ -36,6 +36,12 @@ void	clean_staff(t_view *s)
 	SDL_DestroyTexture(s->l_obj.def_tex);
 	clean_light(s); 
 	clean_buttons(s);
+	/*DELETE IN FUNCTION*/
+	SDL_DestroyTexture(s->select.sel_tex_on[0]);
+	SDL_DestroyTexture(s->select.sel_tex_off[0]);
+	SDL_DestroyTexture(s->select.sel_tex_on[1]);
+	SDL_DestroyTexture(s->select.sel_tex_off[1]);
+	/**/
 	TTF_Quit();
 	SDL_Quit();
 	// ft_putendl("cleaned");

@@ -35,6 +35,7 @@ typedef struct			s_cl_figure
 	int					type;
 	int					color;
 	int					mirror;
+	int					texture;
 	float				reflection;
 
 	cl_float3			start;

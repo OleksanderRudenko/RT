@@ -20,8 +20,13 @@ static void	button_handler(t_view *s)
 	(int)s->rr.fl.x == 3 ? default_cone_init(s) : 0;
 	(int)s->rr.fl.x == 4 ? default_elipsoid_init(s) : 0;
 	(int)s->rr.fl.x == 5 ? default_paraboloid_init(s) : 0;
+	(int)s->rr.fl.x == 7 ? default_am_light(s) : 0;
+	(int)s->rr.fl.x == 8 ? default_point_light(s) : 0;
+	(int)s->rr.fl.x == 9 ? default_dir_light(s) : 0;
+	(int)s->rr.fl.x == 10 ? default_cube_init(s) : 0;
+	(int)s->rr.fl.x == 11 ? default_quadrate_init(s) : 0;
+	(int)s->rr.fl.x == 12 ? default_triangle_init(s) : 0;
 	(int)s->rr.fl.x == 0 ? default_plane_init(s) : 0;
-
 }
 
 static void	window_handler(t_view *s, int num, SDL_Event e, int numl)

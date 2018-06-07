@@ -49,6 +49,7 @@ typedef struct			s_cl_figure
 	int					type;
 	int					color;
 	int					mirror;
+	int					texture;
 	float				reflection;
 
 	float3				start;
