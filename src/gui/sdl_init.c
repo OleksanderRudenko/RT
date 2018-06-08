@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 13:37:15 by arudenko          #+#    #+#             */
-/*   Updated: 2018/06/08 02:31:16 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/08 18:54:34 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ int		poll_event(t_view *s)
 		{
 			camera_move(s, e.key.keysym.scancode);
 			camera_rot(s, e.key.keysym.scancode);
+			if (s->server_client == Client)
+				client_send_get_info(s);
 		}
 	if (s->server_client != Normal)//Fix Sasha plz
 	{

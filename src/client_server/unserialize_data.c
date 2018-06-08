@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 00:35:59 by vvinogra          #+#    #+#             */
-/*   Updated: 2018/06/06 00:36:33 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/08 22:16:20 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,7 @@ char			deserialize_char(unsigned char **buffer)
 double			deserialize_double(unsigned char **buffer)
 {
 	int			i;
-	int			value;	
-	u_double	u;
+	t_double	u;
 
 	i = 0;
 	while (i < 8)
@@ -43,7 +42,6 @@ double			deserialize_double(unsigned char **buffer)
 		u.bytes[i] = (*buffer)[i];
 		i++;
 	}
-	value = u.value;
 	*buffer += 8;
 	return (u.value);
 }

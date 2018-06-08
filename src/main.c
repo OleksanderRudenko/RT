@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 01:11:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/08 03:37:20 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/08 19:04:45 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ int			main(int argc, char **argv)
 	init_sdl(&view);
 	view_init(&view, argv[1]);
 	opencl_init(&view);
-	initing_mode(&view);
+	initing_mode(&view, argv[1]);
+	choose_mode(&view);
 
 	/*destroy texture..., cleaning staff HERE*/
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/08 03:52:25 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/08 22:46:45 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 # define MAX_TEXT_LEN 150
 
 # define PORT 50000
-# define SERIALIZE_SIZE 48
+# define SER_SIZE 48
 
 typedef union			u_color
 {
@@ -71,9 +71,15 @@ typedef union			u_color
 
 typedef union			u_double
 {
-	double         value;
-	unsigned char  bytes[sizeof(double)];
-}						u_double;
+	double			value;
+	unsigned char	bytes[sizeof(double)];
+}						t_double;
+
+typedef union			u_size_t
+{
+	size_t			value;
+	unsigned char	bytes[sizeof(size_t)];
+}						t_size_t;
 
 typedef enum			e_figure_type
 {
@@ -615,14 +621,15 @@ char					deserialize_char(unsigned char **buffer);
 int						deserialize_int(unsigned char **buffer);
 double					deserialize_double(unsigned char **buffer);
 
-char					*get_file_contet(const char * const filename);
-void					check_server(t_view *view, const char * const filename);
-void					check_client(t_view *view, const char * const filename);
+char					*get_file_content(const char *const filename);
+void					check_server(t_view *view, const char *const filename);
+void					check_client(t_view *view, const char *const filename);
 
 //server_client_part
 
 void					usage(t_view *view, int argc, char **argv);
-void					initing_mode(t_view *view);
+void					initing_mode(t_view *view, const char *const filename);
+void					choose_mode(t_view *view);
 
 
 /*SDL FUNCTIONS (and other by arudenko)*/

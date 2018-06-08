@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/03 16:50:46 by vvinogra          #+#    #+#             */
-/*   Updated: 2018/06/08 03:37:59 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/08 22:46:55 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 bool			recv_all(int socket, void *buffer, size_t length)
 {
-	int		size_of_message;
-	char	*ptr;
+	int			size_of_message;
+	char		*ptr;
 
 	ptr = (char *)buffer;
 	while (length > 0)
@@ -33,8 +33,8 @@ bool			recv_all(int socket, void *buffer, size_t length)
 
 bool			send_all(int socket, void *buffer, size_t length)
 {
-	int		size_of_message;
-	char	*ptr;
+	int			size_of_message;
+	char		*ptr;
 
 	ptr = (char *)buffer;
 	while (length > 0)
@@ -56,8 +56,8 @@ void			pack(unsigned char *buff, t_view *view)
 	serialize_double(&buff, view->space->cam->o.y);
 	serialize_double(&buff, view->space->cam->o.z);
 	serialize_double(&buff, view->space->cam->v.x);
-	serialize_double(&buff, view->space->cam->v.x);
-	serialize_double(&buff, view->space->cam->v.x);
+	serialize_double(&buff, view->space->cam->v.y);
+	serialize_double(&buff, view->space->cam->v.z);
 }
 
 void			unpack(unsigned char *buff, t_view *view)
@@ -66,8 +66,8 @@ void			unpack(unsigned char *buff, t_view *view)
 	view->space->cam->o.y = deserialize_double(&buff);
 	view->space->cam->o.z = deserialize_double(&buff);
 	view->space->cam->v.x = deserialize_double(&buff);
-	view->space->cam->v.x = deserialize_double(&buff);
-	view->space->cam->v.x = deserialize_double(&buff);
+	view->space->cam->v.y = deserialize_double(&buff);
+	view->space->cam->v.z = deserialize_double(&buff);
 }
 
 void			fill_half_scr(unsigned int *half_scr, t_view *view)
@@ -90,4 +90,3 @@ void			fill_half_scr(unsigned int *half_scr, t_view *view)
 		y++;
 	}
 }
-

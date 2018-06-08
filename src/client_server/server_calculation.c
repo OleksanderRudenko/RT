@@ -6,13 +6,13 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/30 21:08:49 by vvinogra          #+#    #+#             */
-/*   Updated: 2018/06/08 03:08:03 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/08 22:46:09 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void		server_init_help(t_view	*view)
+static void		server_init_help(t_view *view)
 {
 	bool tmp;
 
@@ -20,25 +20,26 @@ static void		server_init_help(t_view	*view)
 	if (setsockopt(view->socket, SOL_SOCKET,
 		SO_REUSEADDR, &tmp, sizeof(int)) < 0)
 	{
-		 perror("Setsockopt");
-		 exit(EXIT_FAILURE);
+		perror("Setsockopt");
+		exit(EXIT_FAILURE);
 	}
 	signal(SIGINT, exit);
 	if ((view->sock_for_connect = accept(view->socket,
 		(struct sockaddr *)0, 0)) < 0)
 	{
+		close(view->socket);
 		write(1, "Could not open a socket to accept data\n", 21);
 		exit(EXIT_FAILURE);
 	}
 	if (setsockopt(view->sock_for_connect, SOL_SOCKET,
 		SO_REUSEADDR, &tmp, sizeof(int)) < 0)
 	{
-		 perror("Setsockopt");
-		 exit(EXIT_FAILURE);
+		perror("Setsockopt");
+		exit(EXIT_FAILURE);
 	}
 }
 
-void			server_init(t_view	*view)
+void			server_init(t_view *view)
 {
 	memset(&view->addr, 0, sizeof(view->addr));
 	view->addr.sin_family = AF_INET;
@@ -67,13 +68,13 @@ void			server_send_get_info(t_view *view)
 {
 	unsigned char	*serialize;
 
-	serialize = malloc(sizeof(unsigned char) * SERIALIZE_SIZE);
+	serialize = malloc(sizeof(unsigned char) * SER_SIZE);
 	while (view->exit_loop)
 	{
 		if (!poll_event(view))
 			view->exit_loop = 0;
 		SDL_UpdateWindowSurface(view->win[0]);
-		if (recv_all(view->sock_for_connect, serialize, SERIALIZE_SIZE) == false)
+		if (recv_all(view->sock_for_connect, serialize, SER_SIZE) == false)
 		{
 			write(1, "No connection from client "
 			"when receving data. Exiting...\n", 61);
@@ -81,7 +82,8 @@ void			server_send_get_info(t_view *view)
 		}
 		unpack(serialize, view);
 		opencl_init2(view);
-		if (send_all(view->sock_for_connect, view->buff, view->cl.buffers_size) == false)
+		if (send_all(view->sock_for_connect, view->buff,
+			view->cl.buffers_size) == false)
 		{
 			write(1, "No connection from client "
 			"when sending data. Exiting...\n", 60);
@@ -89,5 +91,4 @@ void			server_send_get_info(t_view *view)
 		}
 	}
 	free(serialize);
-	close(view->socket);
 }

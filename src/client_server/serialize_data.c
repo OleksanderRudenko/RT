@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 12:45:15 by vvinogra          #+#    #+#             */
-/*   Updated: 2018/06/06 00:36:38 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/08 22:16:36 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void			serialize_char(unsigned char **buffer, char value)
 void			serialize_double(unsigned char **buffer, double value)
 {
 	int			i;
-	u_double	u;
+	t_double	u;
 
 	i = 0;
 	u.value = value;

@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/05 23:21:56 by vvinogra          #+#    #+#             */
-/*   Updated: 2018/06/08 03:08:07 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/08 22:46:36 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ static void		client_init_help(t_view *view)
 		exit(EXIT_FAILURE);
 	}
 	tmp = true;
-	if (setsockopt(view->socket, SOL_SOCKET, SO_REUSEADDR, &tmp, sizeof(int)) < 0)
+	if (setsockopt(view->socket, SOL_SOCKET,
+		SO_REUSEADDR, &tmp, sizeof(int)) < 0)
 	{
 		perror("Setsockopt");
 		exit(EXIT_FAILURE);
@@ -54,15 +55,15 @@ void			client_send_get_info(t_view *view)
 	unsigned char	*serialize;
 	unsigned int	*half_scr;
 
-	serialize = malloc(sizeof(unsigned char) * SERIALIZE_SIZE);
+	serialize = malloc(sizeof(unsigned char) * SER_SIZE);
 	pack(serialize, view);
-	if (send_all(view->socket, serialize, SERIALIZE_SIZE) == false)
+	if (send_all(view->socket, serialize, SER_SIZE) == false)
 	{
 		write(1, "No connection from server "
 			"when sending data. Exiting...\n", 60);
 		exit(EXIT_FAILURE);
 	}
-	half_scr = malloc(sizeof(unsigned int) * view->cl.buffers_size);
+	half_scr = malloc(view->cl.buffers_size);
 	if (recv_all(view->socket, half_scr, view->cl.buffers_size) == false)
 	{
 		write(1, "No connection from server "
