@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cl_set_args.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 14:45:18 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/05/19 14:45:20 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/08 03:17:31 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,5 @@ void 			set_arguments(t_view *v)
 	cl_set_arg(v, &cam_o, sizeof(cl_float3), 5);
 	cl_set_arg(v, &v->space->antialiasing, sizeof(int), 6);
 	cl_set_arg(v, &v->cl.output_buffer, sizeof(cl_mem), 7);
+	cl_set_arg(v, &v->server_client, sizeof(int), 8);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abutok <abutok@student.42.fr>              +#+  +:+       +#+         #
+#    By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 16:24:00 by abutok            #+#    #+#              #
-#    Updated: 2018/03/22 20:16:18 by abutok           ###   ########.fr        #
+#    Updated: 2018/06/08 01:26:06 by vvinogra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,9 +46,10 @@ PARSEDIR = ./src/parse/
 OPENCLDIR = ./src/openCL/
 EFFECTSDIR = ./src/effects/
 GUIDIR = ./src/gui/
+CLIENT_SERVERDIR = ./src/client_server/
 
 #	Source files
-SRCFILES = main.c do_rt.c space.c solve_cubic.c solve_quatric.c
+SRCFILES = main.c do_rt.c space.c solve_cubic.c solve_quatric.c initing_mode.c
 COLORFILES = color.c
 FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c ftor.c \
 				fcube.c fquadrate.c fparaboloid.c felipsoid.c rotate_figure.c f_pos.c
@@ -69,9 +70,12 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c \
 OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c copy1.c \
 				copy2.c
 EFFECTSFILES = normal_disruption.c perlin_noise.c perlin_noise.c
+CLIENT_SERVERFILES = client_calculation.c server_calculation.c utils_client_server.c \
+			serialize_data.c unserialize_data.c
 
 #	Header folder
 INCLUDE = ./includes $(LIBSDLINCLUDE) $(TINYFD_INCLUDE)
+HEADER_RELATION = ./includes/effects.h ./includes/gui.h ./includes/open_cl.h ./includes/rt.h
 #	Binaries folder
 BINDIR = ./obj/
 #	Binaries list
@@ -82,7 +86,8 @@ BIN = $(addprefix $(BINDIR), $(SRCFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(VECTORFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(PARSEFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(OPENCLFILES:.c=.o)) \
-		$(addprefix $(BINDIR), $(GUIFILES:.c=.o))
+		$(addprefix $(BINDIR), $(GUIFILES:.c=.o)) \
+		$(addprefix $(BINDIR), $(CLIENT_SERVERFILES:.c=.o))
 #	Libft
 LIBFT = ./libft/libft.a
 #	Libft header
@@ -102,29 +107,32 @@ $(BINDIR):
 	@if [ ! -d "$(BINDIR)" ]; then mkdir $(BINDIR); fi
 
 
-$(BINDIR)%.o: $(PARSEDIR)%.c
+$(BINDIR)%.o: $(PARSEDIR)%.c $(HEADER_RELATION)
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
-$(BINDIR)%.o: $(SRCDIR)%.c
+$(BINDIR)%.o: $(SRCDIR)%.c $(HEADER_RELATION)
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
-$(BINDIR)%.o: $(COLORDIR)%.c
+$(BINDIR)%.o: $(COLORDIR)%.c $(HEADER_RELATION)
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
-$(BINDIR)%.o: $(FIGUREDIR)%.c
+$(BINDIR)%.o: $(FIGUREDIR)%.c $(HEADER_RELATION)
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
-$(BINDIR)%.o: $(LIGHTDIR)%.c
+$(BINDIR)%.o: $(LIGHTDIR)%.c $(HEADER_RELATION)
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
-$(BINDIR)%.o: $(VECTORDIR)%.c
+$(BINDIR)%.o: $(VECTORDIR)%.c $(HEADER_RELATION)
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
-$(BINDIR)%.o: $(GUIDIR)%.c
+$(BINDIR)%.o: $(GUIDIR)%.c $(HEADER_RELATION)
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
-$(BINDIR)%.o: $(OPENCLDIR)%.c
+$(BINDIR)%.o: $(OPENCLDIR)%.c $(HEADER_RELATION)
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+
+$(BINDIR)%.o: $(CLIENT_SERVERDIR)%.c $(HEADER_RELATION)
+	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 # $(BINDIR)%.o: $(EFFECTSDIR)%.c
 # 	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@

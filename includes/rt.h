@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 16:44:20 by abutok           ###   ########.fr       */
+/*   Updated: 2018/06/08 03:52:25 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +21,9 @@
 # include <mlx.h>
 # include <math.h>
 # include <fcntl.h>
+# include <sys/socket.h>
+# include <netinet/in.h>
+# include <arpa/inet.h>
 # include "SDL2/SDL.h"
 # include "SDL_image.h"
 # include "SDL_ttf.h"
@@ -52,6 +54,9 @@
 # define NUM_DIR_PR 7
 # define MAX_TEXT_LEN 150
 
+# define PORT 50000
+# define SERIALIZE_SIZE 48
+
 typedef union			u_color
 {
 	int					color;
@@ -63,6 +68,12 @@ typedef union			u_color
 		unsigned char	alpha;
 	}					spectrum;
 }						t_color;
+
+typedef union			u_double
+{
+	double         value;
+	unsigned char  bytes[sizeof(double)];
+}						u_double;
 
 typedef enum			e_figure_type
 {
@@ -77,6 +88,13 @@ typedef enum			e_figure_type
 	Parabaloid,
 	Tor
 }						t_figure_type;
+
+typedef enum			e_server_client
+{
+	Server = -1,
+	Normal,
+	Client
+}						t_server_client;
 
 typedef struct			s_vector
 {
@@ -255,7 +273,10 @@ typedef struct			s_space
 	t_cl_light			*cl_ligtmp;
 	/* effects */
 	int 				antialiasing;
-	int 				sepia;
+	bool 				sepia;
+	bool 				cartoon_effect;
+	bool 				grayscale;
+	bool				inversion;
 	/* end */
 }						t_space;
 
@@ -273,36 +294,42 @@ typedef	struct			s_lrt
 
 typedef struct		s_view
 {
-	int				exit_loop;
-	size_t 			figures_num;
-	size_t 			lights_num;
-	SDL_Window		*win[4];
-	SDL_Event		event;
-	SDL_Surface		*win_surface;
-	unsigned int	*buff;
-	t_gui			rr;
-	t_select		select;
-	t_list_obj		l_obj;
-	t_sp_prop		prop;
-	t_ic_prop		ic;
-	t_pl_prop		pl;
-	t_trial_prop	tri;
-	t_cone_prop		con;
-	t_cube_prop		cub;
-	t_quad_prop		qua;
-	t_elips_prop	elp;
-	t_par_prop		par;
-	t_light_prop	lp;
-	t_amblight_prop	am;
-	t_direct_prop	dir;
+	int					exit_loop;
+	size_t 				figures_num;
+	size_t 				lights_num;
+	SDL_Window			*win[4];
+	SDL_Event			event;
+	SDL_Surface			*win_surface;
+	unsigned int		*buff;
+	t_gui				rr;
+	t_select			select;
+	t_list_obj			l_obj;
+	t_sp_prop			prop;
+	t_ic_prop			ic;
+	t_pl_prop			pl;
+	t_trial_prop		tri;
+	t_cone_prop			con;
+	t_cube_prop			cub;
+	t_quad_prop			qua;
+	t_elips_prop		elp;
+	t_par_prop			par;
+	t_light_prop		lp;
+	t_amblight_prop		am;
+	t_direct_prop		dir;
 
 
-	t_list_light	l_light;
-	t_space			*space;
-	t_slider		**sl;
-	t_opencl 		cl;
-	t_ok			*ok;
-	int				flag;
+	t_list_light		l_light;
+	t_space				*space;
+	t_slider			**sl;
+	t_opencl 			cl;
+	t_ok				*ok;
+	int					flag;
+
+	struct sockaddr_in	addr;
+	int					socket;
+	int 				server_client;
+	int					sock_for_connect;
+	char				*server_ip;
 }					t_view;
 
 /*End*/
@@ -566,6 +593,36 @@ t_figure				*elipsoid_init(t_vector position, t_vector rotation,
 int						set_brightness(int color, double brightness,
 														double bbrightness);
 
+//server_client_part
+
+void					server_init(t_view	*view);
+void					server_send_get_info(t_view *view);
+
+void					client_init(t_view *view);
+void					client_send_get_info(t_view *view);
+
+bool					recv_all(int socket, void *buffer, size_t length);
+bool					send_all(int socket, void *buffer, size_t length);
+void					pack(unsigned char *buff, t_view *view);
+void					unpack(unsigned char *buff, t_view *view);
+void					fill_half_scr(unsigned int *half_scr, t_view *view);
+
+void					serialize_char(unsigned char **buffer, char value);
+void					serialize_int(unsigned char **buffer, int value);
+void					serialize_double(unsigned char **buffer, double value);
+
+char					deserialize_char(unsigned char **buffer);
+int						deserialize_int(unsigned char **buffer);
+double					deserialize_double(unsigned char **buffer);
+
+char					*get_file_contet(const char * const filename);
+void					check_server(t_view *view, const char * const filename);
+void					check_client(t_view *view, const char * const filename);
+
+//server_client_part
+
+void					usage(t_view *view, int argc, char **argv);
+void					initing_mode(t_view *view);
 
 
 /*SDL FUNCTIONS (and other by arudenko)*/

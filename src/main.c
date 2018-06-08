@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 01:11:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/14 15:50:41 by abutok           ###   ########.fr       */
+/*   Updated: 2018/06/08 03:37:20 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,29 +45,43 @@ int			exit_x(t_view *view)
 	return (0);
 }
 
+inline static void usage_exit(void)
+{
+	ft_putstr("Usage: ./RT scene_filename [server,client server_ip]\n");
+	exit(EXIT_FAILURE);
+}
+
+void	usage(t_view *view, int argc, char **argv)
+{
+	if (argc == 2)
+		view->server_client = Normal;
+	else if (argc == 3)
+	{
+		if (!ft_strcmp(argv[2], "server"))
+			view->server_client = Server;
+		else
+			usage_exit();
+	} else if (argc == 4)
+	{
+		if (!ft_strcmp(argv[2], "client"))
+			view->server_client = Client;
+		else
+			usage_exit();
+		view->server_ip = ft_strdup(argv[3]);
+	}
+	else
+		usage_exit();
+}
+
 int			main(int argc, char **argv)
 {
 	t_view	view;
 
-	if (argc != 2)
-	{
-		ft_putstr("usage: RT scene_filename\n");
-		return (0);
-	}
+	usage(&view, argc, argv);
 	init_sdl(&view);
 	view_init(&view, argv[1]);
 	opencl_init(&view);
-	while (view.exit_loop == 1)
-	{
-		if (!poll_event(&view))
-			view.exit_loop = 0;
-		button_staff(&view);
-		what_to_print(&view);
-		SDL_UpdateWindowSurface(view.win[0]);
-	}
-	cl_releasing(&view);
-	clean_staff(&view); /*TODO: make it good w/o segfault*/
-	system("leaks RT");
+	initing_mode(&view);
 
 	/*destroy texture..., cleaning staff HERE*/
 	return (0);

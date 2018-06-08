@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   opencl_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 12:50:43 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/05/11 12:50:44 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/08 03:31:06 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,28 @@ static char *get_kernel(void)
   "      float3 cam_v,   	    \n" \
   "      float3 cam_o,  		\n" \
 	  "    int antialaising,  		\n" \
-  "      __global unsigned int *output){\n" \
+  "      __global unsigned int *output, \n" \
+  "      int server_client){\n" \
   " size_t x = get_global_id(0);  		\n" \
   " size_t y = get_global_id(1);        \n" \
   " size_t w = get_global_size(0);      \n" \
   " size_t h = get_global_size(1);      \n" \
   " unsigned int color;                 \n" \
+  " if (server_client == 0){ 			\n" \
   " color = do_rt(x, y, w, h,  			\n" \
   "	  figures, light, cam_v, cam_o,     \n" \
   "	  figures_num, lights_num, antialaising);			\n" \
-  " output[y * w + x] = color;}     	\n";
+  "	  output[y * w + x] = color;}			\n" \
+  " else if (server_client == 1 && y < h / 2){ 			\n" \
+  " color = do_rt(x, y, w, h,  			\n" \
+  "	  figures, light, cam_v, cam_o,     \n" \
+  "	  figures_num, lights_num, antialaising);			\n" \
+  "	  output[y * w + x] = color;}			\n" \
+  " else if (server_client == -1 && y >= h / 2){ 			\n" \
+  " color = do_rt(x, y, w, h,  			\n" \
+  "	  figures, light, cam_v, cam_o,     \n" \
+  "	  figures_num, lights_num, antialaising);			\n" \
+  "	  output[y * w + x] = color;}}			\n";
   return (ft_strdup(kernel));
 }
 
@@ -93,8 +105,19 @@ void	opencl_init2(t_view *v)
 	if ((v->cl.result = clFinish(v->cl.commands)) != CL_SUCCESS)
 		opencl_errors("Failed to finish");
 	printf("Getting back the results...\n");
-	clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, 0, v->cl.buffers_size,
-						v->buff, 0, NULL, &v->cl.read_results_event);
+	// if (v->server_client == Server)
+	// {
+	// 	clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, v->cl.buffers_size / 2, v->cl.buffers_size / 2,
+	// 						v->buff, 0, NULL, &v->cl.read_results_event);
+	// }
+	if (v->server_client == Client)
+		// printf("test\n");
+		clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, 0, v->cl.buffers_size / 2,
+							v->buff, 0, NULL, &v->cl.read_results_event);
+	else
+	// else if (v->server_client == Normal)
+		clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, 0, v->cl.buffers_size,
+							v->buff, 0, NULL, &v->cl.read_results_event);
 	get_execution_time(v);
 }
 
