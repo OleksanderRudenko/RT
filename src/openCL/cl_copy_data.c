@@ -120,7 +120,7 @@ t_cl_figure *copy_figures(t_view *v)
 	if (copy_figure == NULL)
 		copy_figure = copy_array();
 	tmp = v->space->figures;
-	figures = (t_cl_figure*)malloc(sizeof(t_cl_figure) * v->figures_num);
+	figures = (t_cl_figure*)ft_memalloc(sizeof(t_cl_figure) * v->figures_num);
 	n = 0;
 	while (tmp)
 	{
@@ -132,6 +132,6 @@ t_cl_figure *copy_figures(t_view *v)
 		tmp = tmp->next;
 		n++;
 	}
-	printf_figures(v, figures);
+	// printf_figures(v, figures);
 	return (figures);
 }

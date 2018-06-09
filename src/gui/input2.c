@@ -25,6 +25,8 @@ void save_cone(t_view *s, int num)
 	num == 6 ? rotate_figures(&s->space->cl_figures[s->rr.fl.y], par_input(), num - 4) : 0;
 	num == 7 ? s->space->cl_figures[s->rr.fl.y].radius = par_input() : 0;
 	num == 8 ? s->space->cl_figures[s->rr.fl.y].mirror = mirror_val() : 0;
+	num == 9 ? s->space->cl_figures[s->rr.fl.y].texture = par_input() : 0;
+	redraw(s);
 }
 
 void save_parab(t_view *s, int num)
@@ -40,6 +42,7 @@ void save_parab(t_view *s, int num)
 	num == 6 ? rotate_figures(&s->space->cl_figures[s->rr.fl.y], par_input(), num - 5) : 0;
 	num == 7 ? rotate_figures(&s->space->cl_figures[s->rr.fl.y], par_input(), num - 5) : 0;
 	num == 8 ? s->space->cl_figures[s->rr.fl.y].mirror = mirror_val() : 0;
+	redraw(s);
 }
 
 void save_quadr(t_view *s, int num)
@@ -51,6 +54,7 @@ void save_quadr(t_view *s, int num)
 	num == 2 ? rotate_figures(&s->space->cl_figures[s->rr.fl.y], par_input(), num) : 0;
 	num == 3 ? s->space->cl_figures[s->rr.fl.y].reflection = par_input() : 0;
 	num == 4 ? s->space->cl_figures[s->rr.fl.y].mirror = mirror_val() : 0;
+	redraw(s);
 }
 
 void save_elips(t_view *s, int num)
@@ -67,4 +71,5 @@ void save_elips(t_view *s, int num)
 	num == 7 ? rotate_figures(&s->space->cl_figures[s->rr.fl.y], par_input(), num - 5) : 0;
 	num == 8 ? s->space->cl_figures[s->rr.fl.y].rdistance = par_input() : 0;
 	num == 9 ? s->space->cl_figures[s->rr.fl.y].mirror = mirror_val() : 0;
+	redraw(s);
 }

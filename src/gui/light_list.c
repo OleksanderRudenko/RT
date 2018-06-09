@@ -15,17 +15,15 @@
 void	select_init(t_view *s)
 {
 	s->select.sel_tex_on = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * 2);
-	s->select.sel_tex_off = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * 2);
+	// s->select.sel_tex_off = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * 2);
 	s->select.sel_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * 2);
-	s->select.s_flag = (int *)malloc(sizeof(int) * 2);
 	s->select.sel_tex_on[0] = get_tex("img/obj_on.bmp", s->rr.rend[1]);
-	s->select.sel_tex_off[0] = get_tex("img/obj_off.bmp", s->rr.rend[1]);
+	// s->select.sel_tex_off[0] = get_tex("img/obj_off.bmp", s->rr.rend[1]);
 	s->select.sel_tex_on[1] = get_tex("img/light_on.bmp", s->rr.rend[1]);
-	s->select.sel_tex_off[1] = get_tex("img/light_off.bmp", s->rr.rend[1]);
+	// s->select.sel_tex_off[1] = get_tex("img/light_off.bmp", s->rr.rend[1]);
 	s->select.sel_rect[0] = make_rect(50, 0, 100, 50);
 	s->select.sel_rect[1] = make_rect(150, 0, 100, 50);
-	s->select.s_flag[0] = 0;
-	s->select.s_flag[1] = 1;
+
 }
 
 
@@ -36,10 +34,7 @@ void	draw_select_button(t_view *s)
 	id = -1;
 	while (++id < 2)
 	{
-		if (s->select.s_flag[id] == 1)
-			SDL_RenderCopy(s->rr.rend[1], s->select.sel_tex_on[id], NULL, &s->select.sel_rect[id]);
-		else 
-			SDL_RenderCopy(s->rr.rend[1], s->select.sel_tex_off[id], NULL, &s->select.sel_rect[id]);
+		SDL_RenderCopy(s->rr.rend[1], s->select.sel_tex_on[id], NULL, &s->select.sel_rect[id]);
 	}
 }
 

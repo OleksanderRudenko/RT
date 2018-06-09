@@ -21,38 +21,27 @@ char	*light_type(char num)
 	return ("DIRECTIONAL");
 }
 
-// int			rt_figure(t_view *s, int x, int y)
-// {
-// 	t_figure	*iterator;
-// 	double		len;
-// 	double		lbuf;
-// 	t_ray		*ray;
-// 	int			i;
-// 	int			a = 0;
+void	screenshot(t_view *s)
+{
+	const char	*file;
+	const char	*format[1] = { "*.bmp" };
+	SDL_Surface *screen;
 
-// 	ray = ray_init(s->space->cam->o, (t_vector){0, 0, 1});
-// 	ray->v.x = (((x + 0.5) / WIDTH) * 2 - 1) * (((double)WIDTH) / HEIGHT) *
-// 					tan(M_PI / 360 * FOV_X);
-// 	ray->v.y = (1 - 2 * ((y + 0.5) / HEIGHT)) *
-// 			tan(M_PI / 360 * FOV_Y);
-// 	ray->v.z = 1;
-// 	cam_rotate(ray, s->space->cam->v);
-// 	len = INFINITY;
-// 	iterator = s->space->figures;
-// 	i = 0;
-// 	while (iterator != NULL)
-// 	{
-// 		lbuf = check_intersection(ray, iterator);
-// 		if (lbuf >= 1.0 && lbuf < len)
-// 		{
-// 			len = lbuf;
-// 			a = i;
-// 		}
-// 		iterator = iterator->next;
-// 		i++;
-// 	}
-// 	free(ray);
-// 	if (len == INFINITY)
-// 		return (-1);
-// 	return (a);
-// }
+	file = tinyfd_saveFileDialog("", "file.bmp", 1, format, NULL);
+	if (file == NULL)
+		return ;
+	SDL_LockSurface(s->win_surface);
+	screen = SDL_CreateRGBSurface(0, WIDTH, HEIGHT, 32, 0, 0, 0, 0);
+	ft_memcpy(screen->pixels, s->win_surface->pixels, screen->h * screen->pitch);
+	SDL_SaveBMP(screen, file);
+	SDL_UnlockSurface(s->win_surface);
+	SDL_FreeSurface(screen);
+}
+
+void	redraw(t_view *s)
+{
+	if (s->flag == 0)
+		s->space->cl_figures[s->rr.fl.y].color = color_unite(s->sl[0]->clr.red, s->sl[1]->clr.green, s->sl[2]->clr.blue);
+	ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
+	opencl_init2(s);
+}

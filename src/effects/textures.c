@@ -12,45 +12,35 @@
 
 #include "rt.h"
 
-// unsigned int	texture_sphere(t_vector normal, SDL_Surface *texture)
-// {
-// 	t_color		col;
-// 	Uint32		color;
-// 	float		u;
-// 	float		v;
-// 	int x = 0;
-// 	int y = 0;
+unsigned int	*array_ret()
+{
+	SDL_Surface		**surf;
+	unsigned int	*array;
+	int				i;
+	int				len;
 
-// 	u = 0.5 + atan2(normal.z, normal.x) / (M_PI);
-// 	v = 0.5 - asin(normal.y/2.0)/M_PI;
-// 	v = v - floor(v);
-// 	u = u - floor(u);
-// 	SDL_LockSurface( texture );
+	surf = (SDL_Surface **)malloc(sizeof(SDL_Surface*) * 4);
+	surf[0] = IMG_Load("img/one.jpeg");
+	surf[1] = IMG_Load("img/two.jpeg");
+	surf[2] = IMG_Load("img/three.jpeg");
+	surf[3] = IMG_Load("img/four.jpeg");
+	if (!surf[0] || !surf[1] || !surf[2] || !surf[3])
+		sdl_init_err();
+	i = -1;
+	while (++i < 4)
+		surf[i] = SDL_ConvertSurfaceFormat(surf[i], SDL_PIXELFORMAT_ARGB8888, 0);
+	len = surf[0]->pitch * surf[0]->h;
+	printf("%d\n", surf[0]->pitch);
+	printf("%d\n", surf[0]->h);
+	array = (unsigned int *)malloc(sizeof(unsigned int) * (len * 4));
+	ft_memcpy(array, surf[0]->pixels, len);
+	ft_memcpy(&array[len] , surf[1]->pixels, len);
+	ft_memcpy(&array[len * 2], surf[2]->pixels, len);
+	ft_memcpy(&array[len * 3], surf[3]->pixels, len);
+	SDL_FreeSurface(surf[0]);
+	SDL_FreeSurface(surf[1]);
+	SDL_FreeSurface(surf[2]);
+	SDL_FreeSurface(surf[3]);
+	return (array);
+}
 
-// 	x = (int)(texture->w * u * 10.0 ) % texture->w;
-// 	y = (int)(texture->h * v * 10.0 ) % texture->h;
-// 	color = getcolor(texture, x ,y);
-
-// 	SDL_GetRGB(color, texture->format, &col.r, &col.g, &col.b);
-
-// 	SDL_UnlockSurface( texture );
-
-// 	// color = (col.r << 16 | col.g << 8 | col.b);
-// 	return (col.r << 16 | col.g << 8 | col.b);
-// }
-
-// Uint32		getcolor(SDL_Surface *texture, int x, int y)
-// {
-// 	Uint8			*pixel;
-// 	unsigned int	sz;
-
-// 	sz = sizeof(Uint32);
-// 	pixel = (Uint8*)texture->pixels;
-// 	pixel += ((Uint32)y * (Uint32)texture->pitch) + ((Uint32)x * texture->format->BytesPerPixel);
-// 	return (*((Uint32*)pixel));
-// }
-
-// static float3 negative(float3 col)
-// {
-// 	return ((float3)(1,1,1) - cbrt(col));
-// }

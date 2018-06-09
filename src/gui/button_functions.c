@@ -15,7 +15,7 @@
 static void	button_handler(t_view *s)
 {
 	(int)s->rr.fl.x == 6 ? open_scene(s) : 0;
-	(int)s->rr.fl.x == 1 ? default_sphere_init(s) : 0;
+	(int)s->rr.fl.x == 1 ?default_sphere_init(s) : 0;
 	(int)s->rr.fl.x == 2 ? default_cylinder_init(s) : 0;
 	(int)s->rr.fl.x == 3 ? default_cone_init(s) : 0;
 	(int)s->rr.fl.x == 4 ? default_elipsoid_init(s) : 0;
@@ -26,6 +26,7 @@ static void	button_handler(t_view *s)
 	(int)s->rr.fl.x == 10 ? default_cube_init(s) : 0;
 	(int)s->rr.fl.x == 11 ? default_quadrate_init(s) : 0;
 	(int)s->rr.fl.x == 12 ? default_triangle_init(s) : 0;
+	(int)s->rr.fl.x == 13 ? screenshot(s) : 0;
 	(int)s->rr.fl.x == 0 ? default_plane_init(s) : 0;
 }
 
@@ -50,7 +51,7 @@ void		mouse_key_down(t_view *s, SDL_Event e)
 {
 	if (e.window.windowID == 4)
 	{
-		s->rr.fl.x = button_off_on(s->rr.but_rect, s->rr.flag, NUM_BUTTONS, e);
+		s->rr.fl.x = button_off_on(s->rr.but_rect, NUM_BUTTONS, e);
 		button_handler(s);
 	}
 	if (e.window.windowID == 2)
@@ -95,39 +96,7 @@ void		mouse_key_down(t_view *s, SDL_Event e)
 		// https://forum.processing.org/one/topic/3d-fractal-generation-mandelbulb.html
 }
 
-void	mouse_key_up(t_view *s)
-{
-	int	i;
-
-	i = -1;
-	while (++i < NUM_BUTTONS * 2)
-	{
-		s->rr.flag[i] = (s->rr.flag[i] == 1) ? 1 : 1;
-	}
-}
-
-void	select_button_up(t_view *s, SDL_Event e, int num)
-{
-	int	i;
-	int n;
-
-	i = -1;
-	while (++i < num)
-	{
-		if (is_in_rect(s->select.sel_rect[i], e))
-		{
-				s->select.s_flag[i] = (s->select.s_flag[i] == 1) ? 0 : 1;
-				n = -1;
-				while (++n < num)
-				{
-					if (n != i)
-						s->select.s_flag[n] = (s->select.s_flag[n] == 1) ? 0 : 1;
-				}
-		}
-	}
-}
-
-int		button_off_on(SDL_Rect *rect, int *flag, int num, SDL_Event	e)
+int		button_off_on(SDL_Rect *rect, int num, SDL_Event e)
 {
 	int			id;
 
@@ -138,7 +107,7 @@ int		button_off_on(SDL_Rect *rect, int *flag, int num, SDL_Event	e)
 		{
 			if (e.button.button == SDL_BUTTON_LEFT)
 			{
-				flag[id] = (flag[id] == 1) ? 0 : 1;
+				// flag[id] = (flag[id] == 1) ? 0 : 1;
 				return (id);
 			}
 		}

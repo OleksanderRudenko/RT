@@ -27,9 +27,6 @@ void		parse_color_reflection(JSON_Object *fobject, t_figure *figure)
 				STDERR_FILENO);
 	if (json_object_has_value_of_type(fobject, "mirror", JSONNumber))
 		figure->mirror = json_object_get_number(fobject, "mirror");
-	else
-		ft_putendl_fd("Unknown or invalid mirror. Default applied",
-				STDERR_FILENO);
 	if (figure->mirror != 1)
 		figure->mirror = 0;
 }

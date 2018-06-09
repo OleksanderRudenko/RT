@@ -3,11 +3,18 @@
   [
     {
       "type": "//cone",
-      "start": [0, 0, 0],
+      "start": [0, 0, 30],
       "vector": [0, 1, 0],
       "radius": 1,
       "color": "0xffff00",
       "reflection": 10
+    },
+      {
+      "type": "plane",
+      "normale": [0.0, -1.0, 0.0],
+      "point": [0, -3, 0],
+      "color": "0xaaaaaa",
+      "reflection": 100
     },
     {
 			"type": "//elipsoid",
@@ -46,7 +53,7 @@
          "reflection": 100
     },
     {
-         "type": "quadrate",
+         "type": "//quadrate",
        "position": [0, 0, 10],
        "rotation": [0, 90, 0],
        "scale": [1, 1],

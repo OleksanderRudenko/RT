@@ -48,9 +48,8 @@ typedef struct		s_slider
 typedef struct		s_select
 {
 	SDL_Texture		**sel_tex_on;
-	SDL_Texture		**sel_tex_off;
+	// SDL_Texture		**sel_tex_off;
 	SDL_Rect		*sel_rect;
-	int				*s_flag;
 }					t_select;
 
 typedef struct		s_text
@@ -197,10 +196,8 @@ typedef struct		s_gui
 	SDL_Renderer	*rend[3];
 	SDL_Texture		**but_on;
 	SDL_Texture		**but_off;
-	int				*flag;
 	Uint32			select_flag;
 	t_num			fl;
-	// t_num		fl2;
 }					t_gui;
 
 
@@ -220,7 +217,7 @@ void			mouse_key_down(t_view *s, SDL_Event e);
 void			mouse_key_up(t_view *s);
 void			select_button_up(t_view *s, SDL_Event e, int num);
 
-int				button_off_on(SDL_Rect *rect, int *flag, int num, SDL_Event	e);
+int				button_off_on(SDL_Rect *rect, int num, SDL_Event	e);
 
 SDL_Texture		*create_text(t_view *s, char *name, int i, int font_size);
 void			init_buttons(t_view *s);
@@ -276,7 +273,7 @@ void			ok_button_init(t_view *s);
 void			ok_button_function(t_view *s, SDL_Event e);
 void			open_scene(t_view *s);
 /*16.05.18*/
-double			par_input();
+float			par_input();
 void			xxx(int num, t_view *s);
 t_figure		*detect_figure(t_view *s);
 t_col			col_parse(int col);
@@ -381,7 +378,9 @@ void		default_helper_lights(t_view *view, t_light *light);
 void		default_am_light(t_view *view);
 void		default_point_light(t_view *view);
 void		default_dir_light(t_view *view);
-
+void		screenshot(t_view *s);
+unsigned int	*array_ret();
+void	redraw(t_view *s);
 /*END*/
 
 /*what were added

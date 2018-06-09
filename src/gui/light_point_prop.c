@@ -57,6 +57,7 @@ void	print_light_prop(t_view *s)
 		SDL_RenderCopy(s->rr.rend[2], s->ok->b_ok, NULL, &s->ok->ok_rect);
 		i++;
 	}
+	SDL_SetRenderDrawColor(s->rr.rend[2], 10, 20, 40, 255);
 	SDL_RenderPresent(s->rr.rend[2]);
 }
 
@@ -130,13 +131,10 @@ void	xxx_light(int num, t_view *s)
 	}
 	else if (type == LIGHT_TYPE_DIRECT)
 	{
-		num == 0 ? s->space->cl_lights[s->rr.fl.b].origin.x = par_input() : 0;
-		num == 1 ? s->space->cl_lights[s->rr.fl.b].origin.y = par_input() : 0;
-		num == 2 ? s->space->cl_lights[s->rr.fl.b].origin.z = par_input() : 0;
-		num == 3 ? s->space->cl_lights[s->rr.fl.b].direction.x = par_input() : 0;
-		num == 4 ? s->space->cl_lights[s->rr.fl.b].direction.y = par_input() : 0;
-		num == 5 ? s->space->cl_lights[s->rr.fl.b].direction.z = par_input() : 0;
-		num == 6 ? s->space->cl_lights[s->rr.fl.b].inten = par_input() : 0;
+		num == 0 ? s->space->cl_lights[s->rr.fl.b].direction.x = par_input() : 0;
+		num == 1 ? s->space->cl_lights[s->rr.fl.b].direction.y = par_input() : 0;
+		num == 2 ? s->space->cl_lights[s->rr.fl.b].direction.z = par_input() : 0;
+		num == 3 ? s->space->cl_lights[s->rr.fl.b].inten = par_input() : 0;
 		init_am_light_prop(s);
 	}
 }

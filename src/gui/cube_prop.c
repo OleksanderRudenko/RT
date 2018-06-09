@@ -106,6 +106,7 @@ void	print_cube_prop(t_view *s)
 		SDL_RenderCopy(s->rr.rend[2], s->ok->b_ok, NULL, &s->ok->ok_rect);
 		display_colored_rect(s);
 	}
+	SDL_SetRenderDrawColor(s->rr.rend[2], 10, 20, 40, 255);
 	SDL_RenderPresent(s->rr.rend[2]);
 }
 

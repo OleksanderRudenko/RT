@@ -54,9 +54,13 @@ int			main(int argc, char **argv)
 		ft_putstr("usage: RT scene_filename\n");
 		return (0);
 	}
+	view.array = array_ret();
 	init_sdl(&view);
 	view_init(&view, argv[1]);
 	opencl_init(&view);
+		// SDL_HideWindow(view.win[1]);
+		// SDL_HideWindow(view.win[2]);
+		// SDL_HideWindow(view.win[3]);
 	while (view.exit_loop == 1)
 	{
 		if (!poll_event(&view))
@@ -67,7 +71,7 @@ int			main(int argc, char **argv)
 	}
 	cl_releasing(&view);
 	clean_staff(&view); /*TODO: make it good w/o segfault*/
-	system("leaks RT");
+	// system("leaks RT");
 
 	/*destroy texture..., cleaning staff HERE*/
 	return (0);

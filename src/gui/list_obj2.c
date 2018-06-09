@@ -20,8 +20,6 @@ void			object_default_init(t_view *s)
 
 void			print_default_text(t_view *s)
 {
-	// if (s->l_obj.def_tex)
-	// 	SDL_DestroyTexture(s->l_obj.def_tex);
 	SDL_RenderClear(s->rr.rend[2]);
 	SDL_RenderCopy(s->rr.rend[2], s->l_obj.def_tex, NULL, &s->l_obj.def_rect);
 	SDL_SetRenderDrawColor(s->rr.rend[2], 10, 20, 40, 255);

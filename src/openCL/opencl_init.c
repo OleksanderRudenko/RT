@@ -32,6 +32,7 @@ static char *get_kernel(void)
 	"#include \"ftriangle.cl\"\n" \
 	"#include \"fquadrate.cl\"\n" \
 	"#include \"fcube.cl\"\n" \
+	"#include \"textures.cl\"\n" \
   "kernel void kernel_rt(     			\n" \
   "		 size_t figures_num, 			\n" \
   "		 size_t lights_num, 			\n" \
@@ -40,6 +41,7 @@ static char *get_kernel(void)
   "      float3 cam_v,   	    \n" \
   "      float3 cam_o,  		\n" \
 	  "    int antialaising,  		\n" \
+	   "  __global unsigned int *array,  		\n" \
   "      __global unsigned int *output){\n" \
   " size_t x = get_global_id(0);  		\n" \
   " size_t y = get_global_id(1);        \n" \
@@ -48,7 +50,8 @@ static char *get_kernel(void)
   " unsigned int color;                 \n" \
   " color = do_rt(x, y, w, h,  			\n" \
   "	  figures, light, cam_v, cam_o,     \n" \
-  "	  figures_num, lights_num, antialaising);			\n" \
+  "	  figures_num, lights_num, antialaising,"
+  	"	array);			\n" \
   " output[y * w + x] = color;}     	\n";
   return (ft_strdup(kernel));
 }

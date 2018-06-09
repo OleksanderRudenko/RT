@@ -19,6 +19,7 @@ float3	calc_reflect_ray(float3 ray_vector, float3 normale, float3 p)
 	new_ray = normale * buff;
 	new_ray = new_ray * 2;
 	new_ray = new_ray - ray_vector;
+
 	return (new_ray);
 }
 
@@ -151,7 +152,7 @@ unsigned int	do_lightrt(__constant t_cl_light *lights,
 						   __global t_cl_figure *figures,
 						   t_cl_figure figure,
 						   float3 ray_origin, float3 ray_vector, double k,
-						   size_t figures_num, size_t lights_num, int iters, float3 normale)
+						   size_t figures_num, size_t lights_num, int iters, float3 normale, __global unsigned int *tex)
 {
 	t_lrt	v;
 	size_t 	n;
@@ -191,12 +192,12 @@ unsigned int	do_lightrt(__constant t_cl_light *lights,
 		return (set_brightness(figure.color, v.bright, v.reflected));
 	ray_origin = v.intersection;
 	ray_vector = calc_reflect_ray(ray_vector, v.normale, v.intersection);
-	unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1);
+	unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1, tex);
 	return (add_colors(buf_color, set_brightness(figure.color, v.bright, v.reflected)));
 }
 
 unsigned int	rt(__constant t_cl_light *lights, __global t_cl_figure *figures,
-					float3 ray_origin, float3 ray_vector, size_t lights_num, size_t figures_num, int iters)
+					float3 ray_origin, float3 ray_vector, size_t lights_num, size_t figures_num, int iters, __global unsigned int *tex)
 {
 	t_cl_figure			closest;
 	t_cl_figure			buf;
@@ -221,10 +222,12 @@ unsigned int	rt(__constant t_cl_light *lights, __global t_cl_figure *figures,
 		}
 		n++;
 	}
+	if (closest.texture > 0)
+		closest.color = global_texture(normale, tex, closest, len, ray_origin, ray_vector);
 	if (len == INFINITY)
 		return (0);
 	else
-		return (do_lightrt(lights, figures, closest, ray_origin, ray_vector, len, figures_num, lights_num, iters, normale));
+		return (do_lightrt(lights, figures, closest, ray_origin, ray_vector, len, figures_num, lights_num, iters, normale, tex));
 }
 
 // unsigned char    find_cartoon(unsigned char col)
@@ -284,7 +287,8 @@ unsigned int	do_rt(unsigned int x,
 					  float3 cam_origin,
 					  size_t figures_num,
 					  size_t lights_num,
-						int antialising)
+						int antialising,
+						__global unsigned int *tex)
 {
 	float3				ray_origin;
 	float3				ray_vector;
@@ -320,7 +324,7 @@ unsigned int	do_rt(unsigned int x,
 			ray_vector.y = (1.0f - 2.0f * ((y + 0.5f + (step_y * (i / size_x))) / height)) * tan(3.14 / 360 * FOV_Y);
 			ray_vector.z = 1.0f;
 			ray_vector = cam_rotate(ray_vector, cam_vector);
-			colors[i] = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, MAX_MIRROR_ITERS);
+			colors[i] = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, MAX_MIRROR_ITERS, tex);
 			i++;
 		}
 		color = calc_middle_color(colors, antialising);

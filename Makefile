@@ -20,22 +20,22 @@ LINKLIBFT = -L ./libft -lft
 LINKPARSON = -L ./parson -lparson
 
 # Lib SDL
-LIBSDLINCLUDE = -I ./frameworks/SDL2.framework/Versions/A/Headers \
-				-I ./frameworks/SDL2_ttf.framework/Versions/A/Headers \
-				-I ./frameworks/SDL2_image.framework/Versions/A/Headers \
-				-F ./frameworks/
-LIBSDLFRAMES = -F ./frameworks \
+LIBSDLINCLUDE = -I./frameworks/SDL2.framework/Versions/A/Headers \
+				-I./frameworks/SDL2_ttf.framework/Versions/A/Headers \
+				-I./frameworks/SDL2_image.framework/Versions/A/Headers \
+				-F./frameworks/
+LIBSDLFRAMES = -F./frameworks \
 				-rpath ./frameworks \
-				-framework SDL2 \
-				-framework SDL2_ttf -framework SDL2_image \
-
+				-framework OpenGL -framework AppKit \
+				-framework SDL2 -framework SDL2_ttf \
+				-framework SDL2_image \
 #Lib Tiny Files Dialogs
 TINYFD_INCLUDE = -I./lib_tinyFD
 
 TINY_LIB		= -lft lib_tinyFD/libtfd.a
 
 #	Libs linking
-LINKLIB = -framework OpenGL -framework AppKit -framework OpenCl -O3 -OFast -lmlx $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES) $(TINY_LIB)
+LINKLIB = -framework OpenGL -framework AppKit -framework OpenCl -O3 -OFast $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES) $(TINY_LIB)
 #	Sources directories
 SRCDIR = ./src/
 COLORDIR = ./src/color/
@@ -62,13 +62,13 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c \
 			button_functions.c create_text.c list_obj1.c slider.c \
 			utils1.c list_obj2.c light_list.c sphere_prop.c sdl_quit.c \
 			inf_cyl_prop.c get_prop.c plane_prop.c cone_prop.c triangle_prop.c \
-			cube_prop.c quadrate_prop.c elipsoid_prop.c parabaloid_prop.c tor_prop.c \
+			cube_prop.c quadrate_prop.c elipsoid_prop.c parabaloid_prop.c \
 			input.c input2.c light_point_prop.c amb_light.c light_direct.c \
 			default.c default2.c input_functions.c utils2.c utils3.c default_light.c \
 
 OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c copy1.c \
 				copy2.c
-EFFECTSFILES = normal_disruption.c perlin_noise.c perlin_noise.c
+EFFECTSFILES = normal_disruption.c perlin_noise.c perlin_noise2.c textures.c
 
 #	Header folder
 INCLUDE = ./includes $(LIBSDLINCLUDE) $(TINYFD_INCLUDE)
@@ -82,7 +82,8 @@ BIN = $(addprefix $(BINDIR), $(SRCFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(VECTORFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(PARSEFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(OPENCLFILES:.c=.o)) \
-		$(addprefix $(BINDIR), $(GUIFILES:.c=.o))
+		$(addprefix $(BINDIR), $(GUIFILES:.c=.o)) \
+		$(addprefix $(BINDIR), $(EFFECTSFILES:.c=.o))
 #	Libft
 LIBFT = ./libft/libft.a
 #	Libft header
@@ -126,8 +127,8 @@ $(BINDIR)%.o: $(GUIDIR)%.c
 $(BINDIR)%.o: $(OPENCLDIR)%.c
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
-# $(BINDIR)%.o: $(EFFECTSDIR)%.c
-# 	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+$(BINDIR)%.o: $(EFFECTSDIR)%.c
+	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 clean:
 	@make -C ./libft/ clean
