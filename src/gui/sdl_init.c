@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 13:37:15 by arudenko          #+#    #+#             */
-/*   Updated: 2018/06/08 18:54:34 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 18:11:52 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	init_sdl(t_view *s)
 {
+	SDL_Surface *logo;
+
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
 		sdl_init_err();
 	if (TTF_Init() < 0)
@@ -26,6 +28,12 @@ void	init_sdl(t_view *s)
 		300, 1000, SDL_WINDOW_OPENGL);
 	s->win[3] = SDL_CreateWindow("Options-Line", SDL_WINDOWPOS_CENTERED, 100,
 		1000, 200, SDL_WINDOW_OPENGL);
+	if (!(logo = IMG_Load("img/rt_logo.png")))
+	{
+		ft_putstr("Error accured while loading img/rt_logo.png\n");
+		exit(EXIT_FAILURE);
+	}
+	SDL_SetWindowIcon(s->win[1], logo);
 	s->win_surface = SDL_GetWindowSurface(s->win[0]);
 	s->buff = s->win_surface->pixels;
 	s->exit_loop = 1;

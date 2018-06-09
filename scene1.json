@@ -171,7 +171,5 @@
   },
   "effects":
   {
-    "sepia": true,
-    "grayscale": true
   }
 }
