@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 12:50:43 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/06/09 19:46:56 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 19:51:39 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,17 @@ static char *get_kernel(void)
   " if (server_client == 0){ 			\n" \
   " color = do_rt(x, y, w, h,  			\n" \
   "	  figures, light, cam_v, cam_o,     \n" \
-  "	  figures_num, lights_num, antialaising);			\n" \
+  "	  figures_num, lights_num, antialaising, array);			\n" \
   "	  output[y * w + x] = color;}			\n" \
   " else if (server_client == 1 && y < h / 2){ 			\n" \
   " color = do_rt(x, y, w, h,  			\n" \
   "	  figures, light, cam_v, cam_o,     \n" \
-  "	  figures_num, lights_num, antialaising);			\n" \
+  "	  figures_num, lights_num, antialaising, array);			\n" \
   "	  output[y * w + x] = color;}			\n" \
   " else if (server_client == -1 && y >= h / 2){ 			\n" \
   " color = do_rt(x, y, w, h,  			\n" \
   "	  figures, light, cam_v, cam_o,     \n" \
-  "	  figures_num, lights_num, antialaising);			\n" \
+  "	  figures_num, lights_num, antialaising, array);			\n" \
   "	  output[y * w + x] = color;}}			\n";
   return (ft_strdup(kernel));
 }

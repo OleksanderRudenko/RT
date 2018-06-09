@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/09 19:37:28 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 19:49:29 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -292,36 +292,35 @@ typedef	struct			s_lrt
 
 typedef struct		s_view
 {
-	int					exit_loop;
-	size_t 				figures_num;
-	size_t 				lights_num;
-	SDL_Window			*win[4];
-	SDL_Event			event;
-	SDL_Surface			*win_surface;
-	unsigned int		*buff;
-	t_gui				rr;
-	t_select			select;
-	t_list_obj			l_obj;
-	t_sp_prop			prop;
-	t_ic_prop			ic;
-	t_pl_prop			pl;
-	t_trial_prop		tri;
-	t_cone_prop			con;
-	t_cube_prop			cub;
-	t_quad_prop			qua;
-	t_elips_prop		elp;
-	t_par_prop			par;
-	t_light_prop		lp;
-	t_amblight_prop		am;
-	t_direct_prop		dir;
-
-
-	t_list_light		l_light;
-	t_space				*space;
-	t_slider			**sl;
-	t_opencl 			cl;
-	t_ok				*ok;
-	int					flag;
+	int				exit_loop;
+	size_t 			figures_num;
+	size_t 			lights_num;
+	SDL_Window		*win[4];
+	SDL_Event		event;
+	SDL_Surface		*win_surface;
+	unsigned int	*buff;
+	t_gui			rr;
+	t_select		select;
+	t_list_obj		l_obj;
+	t_sp_prop		prop;
+	t_ic_prop		ic;
+	t_pl_prop		pl;
+	t_trial_prop	tri;
+	t_cone_prop		con;
+	t_cube_prop		cub;
+	t_quad_prop		qua;
+	t_elips_prop	elp;
+	t_par_prop		par;
+	t_light_prop	lp;
+	t_amblight_prop	am;
+	t_direct_prop	dir;
+	unsigned int 	*array;
+	t_list_light	l_light;
+	t_space			*space;
+	t_slider		**sl;
+	t_opencl 		cl;
+	t_ok			*ok;
+	int				flag;
 
 	struct sockaddr_in	addr;
 	int					socket;

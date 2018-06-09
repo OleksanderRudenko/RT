@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 01:11:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/09 19:40:29 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 19:54:54 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ int			main(int argc, char **argv)
 {
 	t_view	view;
 
+	view.array = array_ret();
 	usage(&view, argc, argv);
 	init_sdl(&view);
 	view_init(&view, argv[1]);

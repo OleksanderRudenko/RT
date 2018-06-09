@@ -6,7 +6,7 @@
 #    By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 16:24:00 by abutok            #+#    #+#              #
-#    Updated: 2018/06/09 19:35:46 by vvinogra         ###   ########.fr        #
+#    Updated: 2018/06/09 19:55:56 by vvinogra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,7 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c \
 OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c copy1.c \
 				copy2.c
 				
-EFFECTSFILES = color_effects.c
+EFFECTSFILES = color_effects.c textures.c
 	# normal_disruption.c perlin_noise.c perlin_noise.c 
 
 CLIENT_SERVERFILES = client_calculation.c server_calculation.c utils_client_server.c \
