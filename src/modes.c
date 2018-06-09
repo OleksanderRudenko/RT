@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   initing_mode.c                                     :+:      :+:    :+:   */
+/*   modes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/06/08 00:50:07 by vvinogra          #+#    #+#             */
-/*   Updated: 2018/06/08 22:22:41 by vvinogra         ###   ########.fr       */
+/*   Created: 2018/06/09 01:29:30 by vvinogra          #+#    #+#             */
+/*   Updated: 2018/06/09 01:37:55 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	choose_mode(t_view *view)
 	// system("leaks RT");
 }
 
-void	initing_mode(t_view *view, const char * const filename)
+void	initing_mode(t_view *view, const char *const filename)
 {
 	if (view->server_client == Server)
 	{

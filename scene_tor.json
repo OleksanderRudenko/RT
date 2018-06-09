@@ -2,56 +2,12 @@
   "figures":
   [
     {
-      "type": "//cone",
-      "start": [0, 0, 0],
-      "vector": [0, 1, 0],
-      "radius": 1,
+      "type": "tor",
+      "center": [0, 0, 0],
+      "radius1": 1,
+      "radius2": 2,
       "color": "0xffff00",
       "reflection": 10
-    },
-    {
-			"type": "//elipsoid",
-			"position": [0.0, 0.0, 30.0],
-			"rotation": [0.0, 0, 1],
-			"radius": 1,
-			"rdistance": 5,
-			"color": "0xff0000",
-			"reflection": 10
-		},
-    {
-			"type": "//paraboloid",
-			"position": [0.0, -0.0, 100000.0],
-			"rotation": [0.0, 1, 0],
-			"radius": 1,
-			"color": "0xff0000",
-			"reflection": 10
-		},
-    {
-  		"type": "//triangle",
-  		"points":
-  				[
-  					[5, 0, 0],
-  					[-5, 5, 0],
-  					[-5, 0, 0]
-  				],
-  		"color": "0xff0000",
-  		"reflection": 10
-  	},
-    {
-         "type": "//cube",
-       "position": [0, 0, 0],
-       "rotation": [0, 0, 0],
-       "scale": [1, 1, 1],
-         "color": "0xff0000",
-         "reflection": 100
-    },
-    {
-         "type": "quadrate",
-       "position": [0, 0, 10],
-       "rotation": [0, 90, 0],
-       "scale": [1, 1],
-         "color": "0xff0000",
-         "reflection": 10
     }
   ],
   "lights":
@@ -60,16 +16,6 @@
       "type": "point",
       "position": [0.0, 0.0, -10.0],
       "intensity": 0.5
-    },
-    {
-      "type": "//point",
-      "position": [0.0, 12.0, 30.0],
-      "intensity": 1
-    },
-    {
-      "type": "//point",
-      "position": [0.0, 10.0, -20.0],
-      "intensity": 0.1
     }
   ],
   "cam":

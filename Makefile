@@ -6,7 +6,7 @@
 #    By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 16:24:00 by abutok            #+#    #+#              #
-#    Updated: 2018/06/08 17:56:25 by vvinogra         ###   ########.fr        #
+#    Updated: 2018/06/09 01:31:15 by vvinogra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ GUIDIR = ./src/gui/
 CLIENT_SERVERDIR = ./src/client_server/
 
 #	Source files
-SRCFILES = main.c do_rt.c space.c solve_cubic.c solve_quatric.c initing_mode.c
+SRCFILES = main.c do_rt.c space.c solve_cubic.c solve_quatric.c modes.c
 COLORFILES = color.c
 FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c ftor.c \
 				fcube.c fquadrate.c fparaboloid.c felipsoid.c rotate_figure.c f_pos.c

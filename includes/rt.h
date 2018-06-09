@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/08 22:46:45 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 02:40:41 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,6 @@ typedef union			u_double
 	double			value;
 	unsigned char	bytes[sizeof(double)];
 }						t_double;
-
-typedef union			u_size_t
-{
-	size_t			value;
-	unsigned char	bytes[sizeof(size_t)];
-}						t_size_t;
 
 typedef enum			e_figure_type
 {

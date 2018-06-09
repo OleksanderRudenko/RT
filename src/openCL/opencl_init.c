@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 12:50:43 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/06/08 03:31:06 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 02:36:02 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,11 +111,9 @@ void	opencl_init2(t_view *v)
 	// 						v->buff, 0, NULL, &v->cl.read_results_event);
 	// }
 	if (v->server_client == Client)
-		// printf("test\n");
 		clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, 0, v->cl.buffers_size / 2,
 							v->buff, 0, NULL, &v->cl.read_results_event);
 	else
-	// else if (v->server_client == Normal)
 		clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, 0, v->cl.buffers_size,
 							v->buff, 0, NULL, &v->cl.read_results_event);
 	get_execution_time(v);
