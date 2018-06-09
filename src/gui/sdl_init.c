@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 13:37:15 by arudenko          #+#    #+#             */
-/*   Updated: 2018/06/09 18:11:52 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 19:39:45 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,13 @@ void	init_sdl(t_view *s)
 		sdl_init_err();
 	if (TTF_Init() < 0)
 		sdl_ttf_err();
+	if (IMG_Init(IMG_INIT_PNG) < 0)
+		sdl_ttf_err();
 	s->win[0] = SDL_CreateWindow("RT", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
-	s->win[1] = SDL_CreateWindow("Object_list", 350, SDL_WINDOWPOS_CENTERED,
+	s->win[1] = SDL_CreateWindow("Object_list", 470, SDL_WINDOWPOS_CENTERED,
 		300, 1000, SDL_WINDOW_OPENGL);
-	s->win[2] = SDL_CreateWindow("Properties", 1920, SDL_WINDOWPOS_CENTERED,
+	s->win[2] = SDL_CreateWindow("Properties", 1790, SDL_WINDOWPOS_CENTERED,
 		300, 1000, SDL_WINDOW_OPENGL);
 	s->win[3] = SDL_CreateWindow("Options-Line", SDL_WINDOWPOS_CENTERED, 100,
 		1000, 200, SDL_WINDOW_OPENGL);
@@ -53,14 +55,10 @@ int		poll_event(t_view *s)
 		else if (e.type == SDL_MOUSEBUTTONDOWN)
 		{
 			slider_click_event(e.button.button, s, e);
-			select_button_up(s, e, 2);
 			mouse_key_down(s, e);
-			// what_to_print(s);
 		}
 		else if (e.type == SDL_MOUSEMOTION && e.window.windowID == 3)
 			slider_motion_event(e.button.button, s, e);
-		else if (e.type == SDL_MOUSEBUTTONUP && e.window.windowID == 4)
-			mouse_key_up(s);
 		else if (e.window.windowID == 2)
 			s->flag == 0 ? obj_highlight(s, e, s->l_obj.obj_rect) :
 			light_list_highlight(s, e, s->l_light.light_rect);

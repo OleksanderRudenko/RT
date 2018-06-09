@@ -35,7 +35,7 @@ SDL_Texture *get_tex(char *file, SDL_Renderer *ren_tar)
 	SDL_Texture *texture;
 	SDL_Surface *surface;
 
-	surface = SDL_LoadBMP(file);
+	surface = IMG_Load(file);
 	if (surface == NULL)
 	{
 		ft_putendl(SDL_GetError());

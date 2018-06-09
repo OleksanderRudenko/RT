@@ -18,7 +18,7 @@ void	light_am_properties(t_view *s)
 	s->am.aml_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_AM_PR);
 	s->am.aml_pr_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_AM_PR);
 	s->am.aml_prop = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * NUM_AM_PR);
-	s->am.aml_rect[0] = make_rect(10, 10, ft_strlen("Intensity") * 10, 32);
+	s->am.aml_rect[0] = make_rect(10, 10, 100, 32);
 	s->am.aml_tex[0] = create_text(s, "Intensity", 2, 32);
 	s->am.aml_pr_rect[0] = make_rect(120, 10, 60, 32);
 	s->am.aml_prop[0] =  tf(s, 0, 2, 32);

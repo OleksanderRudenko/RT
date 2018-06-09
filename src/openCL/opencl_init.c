@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 12:50:43 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/06/09 19:07:50 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 19:46:56 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static char *get_kernel(void)
 	"#include \"ftriangle.cl\"\n" \
 	"#include \"fquadrate.cl\"\n" \
 	"#include \"fcube.cl\"\n" \
+	"#include \"textures.cl\"\n" \
   "kernel void kernel_rt(     			\n" \
   "		 size_t figures_num, 			\n" \
   "		 size_t lights_num, 			\n" \
@@ -40,8 +41,9 @@ static char *get_kernel(void)
   "      float3 cam_v,   	    \n" \
   "      float3 cam_o,  		\n" \
 	  "    int antialaising,  		\n" \
-  "      __global unsigned int *output, \n" \
-  "      int server_client){\n" \
+	   "  __global unsigned int *array,  		\n" \
+  "      __global unsigned int *output,\n" \
+   "      int server_client){\n" \
   " size_t x = get_global_id(0);  		\n" \
   " size_t y = get_global_id(1);        \n" \
   " size_t w = get_global_size(0);      \n" \

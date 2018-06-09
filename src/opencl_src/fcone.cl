@@ -59,7 +59,7 @@ float			check_cone_intersection(float3 ray_origin, float3 ray_vector, t_cl_figur
 
 	cone->normale = (float3){0, 0, 0};
 
-	cone->color = cone->color_f;
+	// cone->color = cone->color_f;
 
 	if (check_cone_intersection1(ray_origin, ray_vector, *cone, inter_dists_cone, min) < 0)
 		return (-1);

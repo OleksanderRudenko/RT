@@ -6,7 +6,7 @@
 #    By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 16:24:00 by abutok            #+#    #+#              #
-#    Updated: 2018/06/09 16:00:29 by vvinogra         ###   ########.fr        #
+#    Updated: 2018/06/09 19:35:46 by vvinogra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,22 +20,22 @@ LINKLIBFT = -L ./libft -lft
 LINKPARSON = -L ./parson -lparson
 
 # Lib SDL
-LIBSDLINCLUDE = -I ./frameworks/SDL2.framework/Versions/A/Headers \
-				-I ./frameworks/SDL2_ttf.framework/Versions/A/Headers \
-				-I ./frameworks/SDL2_image.framework/Versions/A/Headers \
-				-F ./frameworks/
-LIBSDLFRAMES = -F ./frameworks \
+LIBSDLINCLUDE = -I./frameworks/SDL2.framework/Versions/A/Headers \
+				-I./frameworks/SDL2_ttf.framework/Versions/A/Headers \
+				-I./frameworks/SDL2_image.framework/Versions/A/Headers \
+				-F./frameworks/
+LIBSDLFRAMES = -F./frameworks \
 				-rpath ./frameworks \
-				-framework SDL2 \
-				-framework SDL2_ttf -framework SDL2_image \
-
+				-framework OpenGL -framework AppKit \
+				-framework SDL2 -framework SDL2_ttf \
+				-framework SDL2_image \
 #Lib Tiny Files Dialogs
 TINYFD_INCLUDE = -I./lib_tinyFD
 
 TINY_LIB		= -lft lib_tinyFD/libtfd.a
 
 #	Libs linking
-LINKLIB = -framework OpenGL -framework AppKit -framework OpenCl -O3 -OFast -lmlx $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES) $(TINY_LIB)
+LINKLIB = -framework OpenGL -framework AppKit -framework OpenCl -O3 -OFast $(LINKLIBFT) $(LINKPARSON) $(LIBSDLFRAMES) $(TINY_LIB)
 #	Sources directories
 SRCDIR = ./src/
 COLORDIR = ./src/color/
@@ -63,7 +63,7 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c \
 			button_functions.c create_text.c list_obj1.c slider.c \
 			utils1.c list_obj2.c light_list.c sphere_prop.c sdl_quit.c \
 			inf_cyl_prop.c get_prop.c plane_prop.c cone_prop.c triangle_prop.c \
-			cube_prop.c quadrate_prop.c elipsoid_prop.c parabaloid_prop.c tor_prop.c \
+			cube_prop.c quadrate_prop.c elipsoid_prop.c parabaloid_prop.c \
 			input.c input2.c light_point_prop.c amb_light.c light_direct.c \
 			default.c default2.c input_functions.c utils2.c utils3.c default_light.c \
 

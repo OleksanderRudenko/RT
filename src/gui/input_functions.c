@@ -12,14 +12,14 @@
 
 #include "rt.h"
 
-double		par_input()
+float	par_input()
 {
 	const char	*input;
 	float		num;
 
 	input = tinyfd_inputBox("", "Click something", "0");
 	if (input == NULL)
-		return (0.0);
+		return (num);
 	num = atof(input);
 	printf("input num: %f\n", num);/*for debug*/
 	return (num);

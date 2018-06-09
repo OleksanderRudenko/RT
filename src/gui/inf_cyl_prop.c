@@ -33,7 +33,11 @@ static inline void	ic_prop2(t_view *s)
 	s->ic.ic_rect[8] = make_rect(10, 600, 60, 32);
 	s->ic.ic_tex[8] = create_text(s, "Mirror", 2, 32);
 	s->ic.ic_pr_rect[8] = make_rect(120, 600, 60, 32);
-	s->ic.ic_prop[8] =  NULL;
+	s->ic.ic_prop[8] =  tf(s, 0, 2, 32);
+	s->ic.ic_rect[9] = make_rect(10, 650, 100, 32);
+	s->ic.ic_tex[9] = create_text(s, "Texture-id", 2, 32);
+	s->ic.ic_pr_rect[9] = make_rect(120, 650, 60, 32);
+	s->ic.ic_prop[9] =  tf(s, 0, 2, 32);
 }
 
 void	ic_prop(t_view *s)
@@ -57,7 +61,7 @@ void	ic_prop(t_view *s)
 	s->ic.ic_rect[3] = make_rect(10, 350, 70, 32);
 	s->ic.ic_tex[3] = create_text(s, "Radius", 2, 32);
 	s->ic.ic_pr_rect[3] = make_rect(120, 350, 60, 32);
-	s->ic.ic_prop[3] =  tf(s, 0, 2, 32);
+	s->ic.ic_prop[3] = tf(s, 0, 2, 32);
 	ic_prop2(s);
 }
 
@@ -81,6 +85,7 @@ void	init_ic_prop(t_view *s)
 	s->ic.ic_prop[6] = NULL;
 	s->ic.ic_prop[7] = NULL;
 	s->ic.ic_prop[8] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
+	s->ic.ic_prop[9] = tf(s, s->space->cl_figures[s->rr.fl.y].texture, 2, 32);
 }
 
 void	print_ic_prop(t_view *s)
@@ -96,6 +101,7 @@ void	print_ic_prop(t_view *s)
 		SDL_RenderCopy(s->rr.rend[2], s->ok->b_ok, NULL, &s->ok->ok_rect);
 		display_colored_rect(s);
 	}
+	SDL_SetRenderDrawColor(s->rr.rend[2], 10, 20, 40, 255);
 	SDL_RenderPresent(s->rr.rend[2]);
 }
 

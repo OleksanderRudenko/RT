@@ -26,13 +26,13 @@ SDL_Rect	make_rect(int x, int y, int w, int h)
 char *figure_type(t_figure_type num)
 {
 	if (num == 0)
-		return ("Infinite Plane");
+		return ("Plane");
 	else if (num == 1)
 		return ("Sphere");
 	else if (num == 2)
-		return ("Infinite Cylinder");
+		return ("Cylinder");
 	else if (num == 3)
-		return ("Infinite Cone");
+		return ("Cone");
 	else if (num == 4)
 		return ("Triangle");
 	else if (num == 5)

@@ -16,8 +16,8 @@ typedef union			u_color
 	unsigned char 		chanel[4];
 	// color_t.chanel[3] = 255; //A1
 	// color_t.chanel[2] = 255; // R
-	// color_t.chanel[1] = 0;
-	// color_t.chanel[0] = 0;
+	// color_t.chanel[1] = 0; G
+	// color_t.chanel[0] = 0; B
 }						t_color;
 
 typedef enum			e_figure_type
@@ -105,17 +105,17 @@ unsigned int			do_rt(unsigned int x,
 					  float3 cam_origin,
 					  size_t figures_num,
 					  size_t lights_num,
-						int antialaising);
+						int antialising,
+						__global unsigned int *tex);
 
-unsigned int			rt(__constant t_cl_light *lights,
-						   __global t_cl_figure *figures,
-						   float3 ray_origin, float3 ray_vector,
-						   size_t lights_num, size_t figures_num, int iters);
+unsigned int			rt(__constant t_cl_light *lights, __global t_cl_figure *figures,
+					float3 ray_origin, float3 ray_vector, size_t lights_num, size_t figures_num, int iters, __global unsigned int *tex);
 
 unsigned int			do_lightrt(__constant t_cl_light *lights,
 						   __global t_cl_figure *figures,
 						   t_cl_figure figure,
-						   float3 ray_origin, float3 ray_vector, double k, size_t figures_num, size_t lights_num, int iters, float3 normale);
+						   float3 ray_origin, float3 ray_vector, double k,
+						   size_t figures_num, size_t lights_num, int iters, float3 normale, __global unsigned int *tex);
 
 t_lrt					tlrt_init(float3 ray_origin, float3 ray_vector, t_cl_figure figure, double k, float3 normale);
 float					rt_lightr(float3 l, float3 normale, float3 view, float3 buf);
@@ -181,6 +181,12 @@ unsigned int		calc_middle_color(unsigned int *colors, int antialising);
 float3					calc_reflect_ray(float3 ray_vector, float3 normale, float3 p);
 unsigned	int		add_colors(unsigned	int	color1, unsigned	int	color2);
 
+unsigned int	texture_sphere(float3 normal, __global unsigned int *texture,t_cl_figure closest);
+unsigned int	getcolor(__global unsigned int *texture, int x, int y, int w);
+unsigned int	texture_plane(float3 normal, __global unsigned int *texture, t_cl_figure plane);
+unsigned int	texture_cone(float3 p_c, float3 normal, __global unsigned int *texture, t_cl_figure closest);
+unsigned int	global_texture(float3 normal, __global unsigned int *texture, t_cl_figure closest,
+		float len, float3 ray_origin, float3 ray_vector);
 
 float			dot_my(float3 v1, float3 v2);
 float		pow_my(float d, char del);

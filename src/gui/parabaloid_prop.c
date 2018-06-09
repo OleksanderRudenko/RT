@@ -98,6 +98,7 @@ void	print_parab_prop(t_view *s)
 		display_colored_rect(s);
 		i++;
 	}
+	SDL_SetRenderDrawColor(s->rr.rend[2], 10, 20, 40, 255);
 	SDL_RenderPresent(s->rr.rend[2]);
 }
 

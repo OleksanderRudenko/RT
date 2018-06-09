@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/09 15:54:20 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 19:37:28 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,26 +32,26 @@
 # include "open_cl.h"
 # include "gui.h"
 
-# define WIDTH 1280
+# define WIDTH 1024
 # define HEIGHT 768
 # define FOV_X 30
 # define FOV_Y 30
 # define LIGHT_TYPE_AMBIENT 0
 # define LIGHT_TYPE_POINT 1
 # define LIGHT_TYPE_DIRECT 2
-# define NUM_BUTTONS 13
-# define NUM_SP_PR 6
-# define NUM_IC_PR 9
-# define NUM_PL_PR 8
+# define NUM_BUTTONS 14
+# define NUM_SP_PR 7
+# define NUM_IC_PR 10
+# define NUM_PL_PR 9
 # define NUM_TR_PR 11
-# define NUM_CN_PR 9
+# define NUM_CN_PR 10
 # define NUM_CU_PR 11
 # define NUM_QUA_PR 5
 # define NUM_EL_PR 10
 # define NUM_PR_PR 9
 # define NUM_LI_PR 4
 # define NUM_AM_PR 1
-# define NUM_DIR_PR 7
+# define NUM_DIR_PR 4
 # define MAX_TEXT_LEN 150
 
 # define PORT 50000
@@ -268,16 +268,14 @@ typedef struct			s_space
 	t_ray				*cam;
 	t_cl_figure 		*cl_figures;
 	t_cl_light			*cl_lights;
-
 	t_cl_figure			*cl_figtmp;
 	t_cl_light			*cl_ligtmp;
-	/* effects */
+
 	int					antialiasing;
 	int					sepia;
 	int					cartoon;
 	int					grayscale;
 	int					inversion;
-	/* end */
 }						t_space;
 
 typedef	struct			s_lrt
