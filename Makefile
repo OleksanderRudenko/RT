@@ -6,7 +6,7 @@
 #    By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/03/22 16:24:00 by abutok            #+#    #+#              #
-#    Updated: 2018/06/09 01:31:15 by vvinogra         ###   ########.fr        #
+#    Updated: 2018/06/09 16:00:29 by vvinogra         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,10 @@ GUIFILES =  sdl_errors.c sdl_init.c init_buttons.c ok_button.c \
 
 OPENCLFILES = opencl_init.c cl_copy_data.c cl_set_args.c cl_wrapper.c copy1.c \
 				copy2.c
-EFFECTSFILES = normal_disruption.c perlin_noise.c perlin_noise.c
+				
+EFFECTSFILES = color_effects.c
+	# normal_disruption.c perlin_noise.c perlin_noise.c 
+
 CLIENT_SERVERFILES = client_calculation.c server_calculation.c utils_client_server.c \
 			serialize_data.c unserialize_data.c check_same_files.c
 
@@ -87,7 +90,8 @@ BIN = $(addprefix $(BINDIR), $(SRCFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(PARSEFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(OPENCLFILES:.c=.o)) \
 		$(addprefix $(BINDIR), $(GUIFILES:.c=.o)) \
-		$(addprefix $(BINDIR), $(CLIENT_SERVERFILES:.c=.o))
+		$(addprefix $(BINDIR), $(CLIENT_SERVERFILES:.c=.o)) \
+		$(addprefix $(BINDIR), $(EFFECTSFILES:.c=.o))
 #	Libft
 LIBFT = ./libft/libft.a
 #	Libft header
@@ -134,8 +138,8 @@ $(BINDIR)%.o: $(OPENCLDIR)%.c $(HEADER_RELATION)
 $(BINDIR)%.o: $(CLIENT_SERVERDIR)%.c $(HEADER_RELATION)
 	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
-# $(BINDIR)%.o: $(EFFECTSDIR)%.c
-# 	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+$(BINDIR)%.o: $(EFFECTSDIR)%.c
+	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 clean:
 	@make -C ./libft/ clean

@@ -168,5 +168,10 @@
   {
     "position": [0.0, 0.0, -10.0],
     "rotation": [0.0, 0.0, 0.0]
+  },
+  "effects":
+  {
+    "sepia": true,
+    "grayscale": true
   }
 }

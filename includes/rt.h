@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/09 02:40:41 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 15:54:20 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,11 +272,11 @@ typedef struct			s_space
 	t_cl_figure			*cl_figtmp;
 	t_cl_light			*cl_ligtmp;
 	/* effects */
-	int 				antialiasing;
-	bool 				sepia;
-	bool 				cartoon_effect;
-	bool 				grayscale;
-	bool				inversion;
+	int					antialiasing;
+	int					sepia;
+	int					cartoon;
+	int					grayscale;
+	int					inversion;
 	/* end */
 }						t_space;
 
@@ -347,6 +347,9 @@ void 		copy_quadrate(t_cl_figure *figure, t_figure *tmp);
 void 		copy_elipsoid(t_cl_figure *figure, t_figure *tmp);
 void 		copy_paraboloid(t_cl_figure *figure, t_figure *tmp);
 void 		copy_tor(t_cl_figure *figure, t_figure *tmp);
+
+//effects/color_effects
+void				color_effects(t_view *view);
 
 //effects/checkerdoard
 void 	 	checkerboard_effect(t_view *v, int color);

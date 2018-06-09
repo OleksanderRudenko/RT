@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 12:50:43 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/06/09 02:36:02 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/09 15:56:43 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ void	opencl_init2(t_view *v)
 	else
 		clEnqueueReadBuffer(v->cl.commands, v->cl.output_buffer, CL_TRUE, 0, v->cl.buffers_size,
 							v->buff, 0, NULL, &v->cl.read_results_event);
+	color_effects(v);
 	get_execution_time(v);
 }
 

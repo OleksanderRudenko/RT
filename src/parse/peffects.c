@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   peffects.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:48:12 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/05/16 17:48:13 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/09 14:29:20 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,17 @@ void 	init_effects(t_view *view)
 {
 	view->space->antialiasing = 1;
 	view->space->sepia = 0;
+	view->space->inversion = 0;
+	view->space->grayscale = 0;
+	view->space->cartoon = 0;
+}
+
+void 	parse_effects2(JSON_Object *effects, t_view *view)
+{
+	if (json_object_has_value_of_type(effects, "grayscale", JSONBoolean))
+		view->space->grayscale = json_object_get_boolean(effects, "grayscale");
+	if (json_object_has_value_of_type(effects, "cartoon", JSONBoolean))
+		view->space->cartoon = json_object_get_boolean(effects, "cartoon");
 }
 
 void 	parse_effects(JSON_Object *root, t_view *view)
@@ -25,16 +36,14 @@ void 	parse_effects(JSON_Object *root, t_view *view)
 	init_effects(view);
 	if ((effects = json_object_get_object(root, "effects")) == NULL)
 		return ;
-	if (json_object_has_value_of_type(effects, "sepia", JSONNumber))
-		view->space->sepia = json_object_get_number(effects, "sepia");
-	else
-		ft_putendl_fd("Invalid effect parameter. Default applied",
-						STDERR_FILENO);
-	if (json_object_has_value_of_type(effects, "antialiasing", JSONNumber))
-		view->space->antialiasing = json_object_get_number(effects, "antialiasing");
-	else
-		ft_putendl_fd("Invalid effect parameter. Default applied",
-						STDERR_FILENO);
+	if (json_object_has_value_of_type(effects, "sepia", JSONBoolean))
+		view->space->sepia = json_object_get_boolean(effects, "sepia");
+	if (json_object_has_value_of_type(effects, "inversion", JSONBoolean))
+		view->space->inversion = json_object_get_boolean(effects, "inversion");
+	if (json_object_has_value_of_type(effects, "antialiasing", JSONBoolean))
+		view->space->antialiasing = json_object_get_boolean(effects,
+														"antialiasing");
 	if (view->space->antialiasing > 4 || view->space->antialiasing < 1)
 		view->space->antialiasing = 1;
+	parse_effects2(effects, view);
 }
