@@ -137,7 +137,8 @@
       "center": [0, -2, 5],
       "radius": 0.5,
       "color": "0xff0000",
-      "reflection": 10
+      "reflection": 10,
+      "mirror": 1
     },
 	{
 		"type": "//triangle",
