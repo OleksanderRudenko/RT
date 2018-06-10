@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cl_copy_data.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 14:43:52 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/06/10 12:19:01 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/10 20:37:32 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ t_cl_figure		*copy_figures(t_view *v)
 		figures[n].reflection = tmp->reflection;
 		figures[n].mirror = tmp->mirror;
 		figures[n].texture = tmp->texture;
+		figures[n].refract = tmp->refract;
 		copy_figure[tmp->type](&figures[n], tmp);
 		tmp = tmp->next;
 		n++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   open_cl.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 14:51:33 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/06/10 12:22:39 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/10 20:37:24 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct			s_cl_figure
 	float				rdistance;
 	float				radius_s;
 	float				radius_b;
+	float				refract;
 }						t_cl_figure;
 
 typedef struct			s_opencl

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   preflection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/08 12:46:44 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/05/08 12:46:45 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/10 20:47:53 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
+
+#define NO_REFRACTION 101
 
 void		parse_color_reflection(JSON_Object *fobject, t_figure *figure)
 {
@@ -27,12 +29,12 @@ void		parse_color_reflection(JSON_Object *fobject, t_figure *figure)
 				STDERR_FILENO);
 	if (json_object_has_value_of_type(fobject, "refraction", JSONNumber))
 	{
-		if (!json_object_has_value_of_type(fobject, "reflection", JSONNumber))
-			figure->refraction =
-						json_object_get_number(fobject, "refraction");
+		figure->refract = json_object_get_number(fobject, "refraction");
+		if (figure->refract < -100)
+			figure->refract = -100;
+		if (figure->refract > 100)
+			figure->refract = 100;
 	}
-	if (json_object_has_value_of_type(fobject, "mirror", JSONNumber))
-		figure->mirror = json_object_get_number(fobject, "mirror");
-	if (figure->mirror != 1)
-		figure->mirror = 0;
+	else
+		figure->refract = NO_REFRACTION;
 }

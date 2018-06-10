@@ -80,6 +80,7 @@ typedef struct			s_cl_figure
 	float				radius_s;
 	float				radius_b;
 
+	float				refract;
 }						t_cl_figure;
 
 typedef	struct			s_lrt

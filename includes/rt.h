@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/10 14:19:11 by ataranov         ###   ########.fr       */
+/*   Updated: 2018/06/10 20:55:52 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,8 +259,8 @@ typedef struct			s_figure
 	int					color;
 	float				reflection;
 	int					mirror;
-	int texture;
-	double refraction;
+	int					texture;
+	double				refract;
 	t_figure_type		type;
 	struct s_figure		*next;
 }						t_figure;

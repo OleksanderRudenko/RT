@@ -1,6 +1,7 @@
 #include "rt_h.cl"
 
 #define MAX_MIRROR_ITERS 5
+#define NO_REFRACTION 101
 
 float3	calc_reflect_ray(float3 ray_vector, float3 normale, float3 p)
 {
@@ -13,6 +14,32 @@ float3	calc_reflect_ray(float3 ray_vector, float3 normale, float3 p)
 	new_ray = new_ray * 2;
 	new_ray = new_ray - ray_vector;
 
+	return (new_ray);
+}
+
+float3	calc_refract_ray(float3 ray_vector, float3 normal, float3 intersection, float ior)
+{
+	float	refraction;
+	float	cos1;
+	float	cos2;
+	float	n;
+	float3	new_ray;
+	float3	tmp1;
+	float3	tmp2;
+
+	n = 1. * ior / 100.;
+	ray_vector *= -1;
+	cos1 = ray_vector.x * normal.x + ray_vector.y * normal.y + ray_vector.z * normal.z;
+	ray_vector *= -1;
+
+	cos2 = sqrtf(1 - n * n * (1 - cos1 * cos1));
+	if (cos1 > 0)
+		refraction = (n * cos1 - cos2);
+	else
+		refraction = (n * cos1 + cos2);
+	tmp1 = ray_vector * n;
+	tmp2 = normal * refraction;
+	new_ray = tmp1 + tmp2;
 	return (new_ray);
 }
 
@@ -110,6 +137,15 @@ unsigned int	do_lightrt(__constant t_cl_light *lights,
 			}
 		}
 		n++;
+	}
+	if (figure.refract != NO_REFRACTION)
+	{
+		ray_vector = calc_refract_ray(ray_vector, v.normale, v.intersection, figure.refract);
+		ray_origin.x = v.intersection.x + ray_vector.x * 0.001;
+		ray_origin.y = v.intersection.y + ray_vector.y * 0.001;
+		ray_origin.z = v.intersection.z + ray_vector.z * 0.001;
+		unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1, tex);
+		return (buf_color);
 	}
 	if (iters <= 0 || figure.mirror == 0)
 		return (set_brightness(figure.color, v.bright, v.reflected));
