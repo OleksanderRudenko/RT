@@ -60,7 +60,7 @@ float3	calc_refract_ray(float3 ray_vector, float3 normal, float3 intersection, f
 	float3	tmp1;
 	float3	tmp2;
 
-	n = 0.985;
+	n = 1. * ior / 100.;
 	ray_vector *= -1;
 	cos1 = ray_vector.x * normal.x + ray_vector.y * normal.y + ray_vector.z * normal.z;
 	ray_vector *= -1;
@@ -73,7 +73,6 @@ float3	calc_refract_ray(float3 ray_vector, float3 normal, float3 intersection, f
 	tmp1 = ray_vector * n;
 	tmp2 = normal * refraction;
 	new_ray = tmp1 + tmp2;
-	// ray->dir = v3f_add(v3f_mul_float(ray->dir, n), v3f_mul_float(hit->normal, refraction));
 
 
 	// ray_vector = ray_vector * -1;
@@ -256,7 +255,13 @@ unsigned int	do_lightrt(__constant t_cl_light *lights,
 		return (set_brightness(figure.color, v.bright, v.reflected));
 
 		ray_origin = v.intersection;
-		ray_vector = calc_refract_ray(ray_vector, v.normale, v.intersection, 1);
+		ray_vector = calc_refract_ray(ray_vector, v.normale, v.intersection, 20);
+
+		float3 tmp;
+		tmp.x = ray_vector.x * 0.001;
+		tmp.y = ray_vector.y * 0.001;
+		tmp.z = ray_vector.z * 0.001;
+		ray_origin += tmp;
 		unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1, tex);
 		return (buf_color);
 	}

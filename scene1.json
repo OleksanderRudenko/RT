@@ -59,7 +59,20 @@
       "vector": [0.0, 1.0, 0.0],
       "radius": 0.625,
       "color": "0xffffff",
+      "cut plane1":
+        {
+          "normale": [4.5, 0.0, 1.0],
+          "point": [10, 20, 30],
+          "color": "0x00300a"
+        },
+      "cut plane2":
+        {
+            "normale": [2.0, 0.0, 1.0],
+            "point": [11, 22, 33],
+            "color": "0x040004aa"
+        },
       "reflection": 200
+
     },
     {
       "type": "cylinder",
