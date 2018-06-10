@@ -20,8 +20,7 @@
       "normale": [0.0, 0.0, 1.0],
       "point": [0, 0, 20],
       "color": "0x00000aa",
-      "reflection": 0,
-      "mirror": 1
+      "reflection": 0
     },
     {
       "type": "plane",
@@ -51,7 +50,8 @@
       "vector": [0.0, 1.0, 0.0],
       "radius": 0.625,
       "color": "0xffffff",
-      "reflection": 200
+      "reflection": 200,
+      "mirror": 1
     },
     {
       "type": "cylinder",

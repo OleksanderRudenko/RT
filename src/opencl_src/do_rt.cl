@@ -22,42 +22,67 @@ float3	calc_reflect_ray(float3 ray_vector, float3 normale, float3 p)
 	return (new_ray);
 }
 
-float3	calc_refract_ray(float3 ray_vector, float3 normale, float3 p, float ior)
+float3	calc_refract_ray(float3 ray_vector, float3 normal, float3 intersection, float ior)
 {
 	// float3	new_ray;
 	// float		buff;
-	float cosi = ray_vector.x * normale.x + ray_vector.y * normale.y + ray_vector.z * normale.z;
-	float		etai = 1, etat = ior;
-	float3 n = normale;
+	// float cosi = ray_vector.x * normal.x + ray_vector.y * normal.y + ray_vector.z * normal.z;
+	// float		etai = 1, etat = ior;
+	// float3 n = normal;
 
-	if (cosi < -1)
-		cosi = -1;
-	else if (cosi > 1)
-		cosi = 1;
+	// if (cosi < -1)
+	// 	cosi = -1;
+	// else if (cosi > 1)
+	// 	cosi = 1;
 
-	if (cosi < 0)
-	{
-		cosi = -cosi;
-	}
+	// if (cosi < 0)
+	// {
+	// 	cosi = -cosi;
+	// }
+	// else
+	// {
+	// 	float tmp;
+
+	// 	tmp = etai;
+	// 	etai = etat;
+	// 	etat = tmp;
+	// 	n = normal * -1;
+	// }
+	// float eta = etai / etat; 
+	// float k = 1 - eta * eta * (1 - cosi * cosi);
+	// return k < 0 ? 0 : eta * ray_vector + (eta * cosi - q_rsqrt(k)) * n;
+
+	float	refraction;
+	float	cos1;
+	float	cos2;
+	float	n;
+	float3	new_ray;
+	float3	tmp1;
+	float3	tmp2;
+
+	n = 0.985;
+	ray_vector *= -1;
+	cos1 = ray_vector.x * normal.x + ray_vector.y * normal.y + ray_vector.z * normal.z;
+	ray_vector *= -1;
+
+	cos2 = sqrtf(1 - n * n * (1 - cos1 * cos1));
+	if (cos1 > 0)
+		refraction = (n * cos1 - cos2);
 	else
-	{
-		float tmp;
+		refraction = (n * cos1 + cos2);
+	tmp1 = ray_vector * n;
+	tmp2 = normal * refraction;
+	new_ray = tmp1 + tmp2;
+	// ray->dir = v3f_add(v3f_mul_float(ray->dir, n), v3f_mul_float(hit->normal, refraction));
 
-		tmp = etai;
-		etai = etat;
-		etat = tmp;
-		n = normale * -1;
-	}
-	float eta = etai / etat; 
-	float k = 1 - eta * eta * (1 - cosi * cosi);
-	return k < 0 ? 0 : eta * ray_vector + (eta * cosi - q_rsqrt(k)) * n;
-	// ray_vector = ray_vector * 1.3;
+
+	// ray_vector = ray_vector * -1;
 	// buff = ray_vector.x * normale.x + ray_vector.y * normale.y + ray_vector.z * normale.z;
 	// new_ray = normale * buff;
 	// new_ray = new_ray * 2;
 	// new_ray = new_ray - ray_vector;
-	// new_ray *= 1.3;
-	// return (new_ray);
+	// new_ray *= -1;
+	return (new_ray);
 }
 
 // t_ray	calc_reflect_ray(t_ray *old_ray, t_vector p, t_vector normal)
@@ -225,24 +250,25 @@ unsigned int	do_lightrt(__constant t_cl_light *lights,
 		}
 		n++;
 	}
-	// if (1 != 0)
-	// {
-	// 	if (iters <= 0 || figure.mirror == 0)
-	// 	return (set_brightness(figure.color, v.bright, v.reflected));
-	// 	ray_origin = v.intersection;
-	// 	ray_vector = calc_refract_ray(ray_vector, v.normale, v.intersection, 10);
-	// 	unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1, tex);
-	// 	return (buf_color);
-	// }
-	// else
-	// {
+	if (1 != 0)
+	{
+		if (iters <= 0 || figure.mirror == 0)
+		return (set_brightness(figure.color, v.bright, v.reflected));
+
+		ray_origin = v.intersection;
+		ray_vector = calc_refract_ray(ray_vector, v.normale, v.intersection, 1);
+		unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1, tex);
+		return (buf_color);
+	}
+	else
+	{
 		if (iters <= 0 || figure.mirror == 0)
 		return (set_brightness(figure.color, v.bright, v.reflected));
 		ray_origin = v.intersection;
 		ray_vector = calc_reflect_ray(ray_vector, v.normale, v.intersection);
 		unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1, tex);
 		return (add_colors(buf_color, set_brightness(figure.color, v.bright, v.reflected)));
-	// }
+	}
 	// if (iters <= 0 || figure.mirror == 0)
 	// 	return (set_brightness(figure.color, v.bright, v.reflected));
 	// ray_origin = v.intersection;
