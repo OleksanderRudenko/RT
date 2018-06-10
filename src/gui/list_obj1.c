@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void			object_init(t_view *s)
+void	object_init(t_view *s)
 {
 	int			i;
 	int			y;
@@ -24,46 +24,45 @@ void			object_init(t_view *s)
 		sdl_ttf_err();
 	fig = s->space->figures;
 	num = s->figures_num;
-	// printf("%d - NUM\n", num);
 	i = 0;
 	y = 50;
 	s->l_obj.obj_tex = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * num);
 	s->l_obj.obj_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * num);
 	while (fig)
 	{
-		s->l_obj.obj_rect[i] = make_rect(10, y, text_width(font,figure_type(fig->type)), 32);
+		s->l_obj.obj_rect[i] = make_rect(10, y,
+			text_width(font, figure_type(fig->type)), 32);
 		s->l_obj.obj_tex[i] = create_text(s, figure_type(fig->type), 1, 32);
 		++i;
-		y+=32;
+		y += 32;
 		fig = fig->next;
 	}
 	TTF_CloseFont(font);
 }
 
-void			obj_highlight(t_view *s, SDL_Event e, SDL_Rect *rect)
+void	obj_highlight(t_view *s, SDL_Event e, SDL_Rect *rect)
 {
 	int			id;
 	int			num;
 
 	id = -1;
-	
 	num = s->figures_num;
 	SDL_RenderClear(s->rr.rend[1]);
-	
 	while (++id < num && s->flag == 0)
 	{
 		if (is_in_rect(rect[id], e))
 			SDL_SetRenderDrawColor(s->rr.rend[1], 255, 255, 255, 255);
 		SDL_RenderFillRect(s->rr.rend[1], &s->l_obj.obj_rect[id]);
 		SDL_RenderDrawRect(s->rr.rend[1], &s->l_obj.obj_rect[id]);
-		SDL_RenderCopy(s->rr.rend[1], s->l_obj.obj_tex[id], NULL, &s->l_obj.obj_rect[id]);
+		SDL_RenderCopy(s->rr.rend[1], s->l_obj.obj_tex[id],
+			NULL, &s->l_obj.obj_rect[id]);
 		SDL_SetRenderDrawColor(s->rr.rend[1], 10, 20, 40, 255);
 	}
 	draw_select_button(s);
 	SDL_RenderPresent(s->rr.rend[1]);
 }
 
-int				select_figure(SDL_Rect *rect, SDL_Event e, int num)
+int		select_figure(SDL_Rect *rect, SDL_Event e, int num)
 {
 	int			id;
 

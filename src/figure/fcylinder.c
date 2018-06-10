@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cylinder.c                                         :+:      :+:    :+:   */
+/*   fcylinder.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/01 11:03:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 16:15:36 by abutok           ###   ########.fr       */
+/*   Created: 2018/06/10 11:26:09 by ataranov          #+#    #+#             */
+/*   Updated: 2018/06/10 13:12:28 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,14 +51,18 @@ t_figure		*cylinder_init(t_ray *axis, double radius, int color,
 	t_figure	*new_figure;
 	t_icylinder	*cylinder;
 
-	new_figure = (t_figure*)malloc(sizeof(t_figure));
+	new_figure = (t_figure*)ft_memalloc(sizeof(t_figure));
 	new_figure->type = InfiniteCylinder;
-	cylinder = (t_icylinder*)malloc(sizeof(t_icylinder));
+	cylinder = (t_icylinder*)ft_memalloc(sizeof(t_icylinder));
 	new_figure->figure = cylinder;
 	cylinder->start = axis->o;
 	cylinder->vector = vnormalize(axis->v);
 	cylinder->radius = radius;
 	new_figure->color = color;
+	cylinder->c_color[0] = 0xffffffff;
+	cylinder->c_color[1] = 0xffffffff;
+	cylinder->c_distances[0] = -INFINITY;
+	cylinder->c_distances[1] = INFINITY;
 	new_figure->reflection = reflection;
 	new_figure->next = NULL;
 	free(axis);

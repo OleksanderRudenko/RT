@@ -12,23 +12,23 @@
 
 #include "rt.h"
 
-float	par_input()
+float	par_input(void)
 {
 	const char	*input;
 	float		num;
 
+	num = 0.0;
 	input = tinyfd_inputBox("", "Click something", "0");
 	if (input == NULL)
 		return (num);
 	num = atof(input);
-	printf("input num: %f\n", num);/*for debug*/
 	return (num);
 }
 
-int		mirror_val()
+int		mirror_val(void)
 {
 	const char	*input;
-	int		num;
+	int			num;
 
 	input = tinyfd_inputBox("", "Mirror or not ?", "0");
 	if (input == NULL)
@@ -38,20 +38,21 @@ int		mirror_val()
 		return (1);
 	else if (num < 0)
 		return (0);
-	printf("mirror input num: %d\n", num);/*for debug*/
 	return (num);
 }
 
-// int		rot_input()
-// {
-// 	const char	*input;
-// 	int		num;
+int		texture_val(void)
+{
+	const char	*input;
+	int			num;
 
-// 	input = tinyfd_inputBox("", "Mirror or not ?", "0");
-// 	if (input == NULL)
-// 		return (0.0);
-// 	num = atof(input);
-	
-// 	printf("mirror input num: %d\n", num);/*for debug*/
-// 	return (num);
-// }
+	input = tinyfd_inputBox("", "Mirror or not ?", "0");
+	if (input == NULL)
+		return (0.0);
+	num = atof(input);
+	if (num > 4)
+		return (1);
+	else if (num < 0)
+		return (0);
+	return (num);
+}

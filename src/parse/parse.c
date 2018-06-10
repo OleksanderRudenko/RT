@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/13 11:47:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/17 14:51:34 by abutok           ###   ########.fr       */
+/*   Created: 2018/04/13 11:47:00 by knovytsk          #+#    #+#             */
+/*   Updated: 2018/06/10 11:58:47 by knovytsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,8 @@ void				parse_scene(const char *filename, t_view *view)
 	errno = 0;
 	if (!(root = json_parse_file(filename)))
 	{
-				ft_putendl_fd("Cannot parse file", STDERR_FILENO);
-				exit(-1);
+		ft_putendl_fd("Cannot parse file", STDERR_FILENO);
+		exit(1);
 	}
 	type = json_value_get_type(root);
 	if (type != JSONObject)

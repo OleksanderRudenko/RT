@@ -6,20 +6,21 @@
 /*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 12:50:43 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/05/11 12:50:44 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/10 13:53:08 by knovytsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "effects.h"
 
-double  perlin(t_perlin *p, double x, double y, double z)
+double			perlin(t_perlin *p, double x, double y, double z)
 {
-	static int 	*permutation = NULL;
+	static int	*permutation = NULL;
+	int			i;
 
 	if (!(permutation))
 	{
 		permutation = (int*)malloc(sizeof(int) * 512);
-		int i = -1;
+		i = -1;
 		while (++i < 512)
 			permutation[i] = rand() % 256;
 	}
@@ -36,52 +37,52 @@ double  perlin(t_perlin *p, double x, double y, double z)
 	return (perlin2(p->hashed, p->faded, p->location));
 }
 
-double octave_perlin(t_perlin *p, double x, double y, double z)
+double			octave_perlin(t_perlin *p, double x, double y, double z)
 {
-	double 	total;
-	double 	maxValue;
-	int 	i;
+	double	total;
+	double	max_value;
+	int		i;
 
 	p->persistence = 1;
 	p->octaves = 4;
 	p->frequency = 8;
 	p->amplitude = 128;
 	total = 0;
-	maxValue = 0;
+	max_value = 0;
 	i = -1;
 	while (++i < p->octaves)
 	{
 		total += perlin(p, x * p->frequency, y * p->frequency,
 							z * p->frequency) * p->amplitude;
-		maxValue += p->amplitude;
-	    p->amplitude *= p->persistence;
-	    p->frequency *= 2;
+		max_value += p->amplitude;
+		p->amplitude *= p->persistence;
+		p->frequency *= 2;
 	}
-	return (total / maxValue);
+	return (total / max_value);
 }
 
-unsigned int *perlin_noise(t_view *view)
+unsigned int	*perlin_noise(void)
 {
-	t_perlin 		p;
-	int	 			y;
-	int 			x;
+	t_perlin	p;
+	int			y;
+	int			x;
 
 	y = -1;
-	p.perlin_texture = (unsigned int*)malloc(sizeof(unsigned int) * (500 * 500));
-	while (++y < 500)
+	p.perlin_texture =
+			(unsigned int*)malloc(sizeof(unsigned int) * (256 * 256));
+	while (++y < 256)
 	{
 		x = -1;
-		while (++x < 500)
+		while (++x < 256)
 		{
-			p.p[X] += (double)x / 500.0;
-			p.color_t.color = view->buff[y * WIDTH + x];
+			p.p[X] += (double)x / 256.0;
 			p.p_factor = 20 * octave_perlin(&p, p.p[X], p.p[Y], 0.8);
 			p.color_t.spectrum.red = (255 * p.p_factor);
 			p.color_t.spectrum.green = (255 * p.p_factor);
 			p.color_t.spectrum.blue = (255 * p.p_factor);
-			p.perlin_texture[y * 500 + x] = p.color_t.color;
+			p.perlin_texture[y * 256 + x] = p.color_t.color;
 		}
-		p.p[Y] += (double)y / 500.0;
+		p.p[Y] += (double)y / 256.0;
 	}
 	return (p.perlin_texture);
 }

@@ -125,7 +125,7 @@ typedef struct		s_cube_prop
 {
 	SDL_Texture		**cu_tex;
 	SDL_Rect		*cu_rect;
-	SDL_Texture		**cu_prop;
+	SDL_Texture		**cu_pr;
 	SDL_Rect		*cu_pr_rect;
 }					t_cube_prop;
 /*Quadrate*/
@@ -269,8 +269,8 @@ void			slider_motion_event(SDL_Keycode key, t_view *s, SDL_Event e);
 
 
 int				color_unite(int r, int g, int b);
-void			ok_button_init(t_view *s);
-void			ok_button_function(t_view *s, SDL_Event e);
+// void			ok_button_init(t_view *s);
+// void			ok_button_function(t_view *s, SDL_Event e);
 void			open_scene(t_view *s);
 /*16.05.18*/
 float			par_input();
@@ -372,7 +372,6 @@ void		default_cube_init(t_view *view);
 void		default_quadrate_init(t_view *view);
 void		default_triangle_init(t_view *view);
 
-/*6.05.18*/
 int		mirror_val();
 void		default_helper_lights(t_view *view, t_light *light);
 void		default_am_light(t_view *view);
@@ -381,22 +380,16 @@ void		default_dir_light(t_view *view);
 void		screenshot(t_view *s);
 unsigned int	*array_ret();
 void	redraw(t_view *s);
-/*END*/
 
-/*what were added
-1)default.c 
--function: void	default_cone_init(t_view *view)
 
-2)button_functions.c
--in function button_handler: changes for cone
 
-3)file default2.c
 
-4)file input_functions.c
-
-????????? SCALE FOR CUBE!!
-????????? COLOR FOR CONE!!
-end added*/
+int		texture_val();
+void	scroll_down(t_view *s, SDL_Event e);
+void	cube_prop3(t_view *s);
+void	ligit_type_prop(t_view *s, int num);
+void	sdl_img_err(void);
+void	triangle_init_prop2(t_view *s);
 
 
 /**/

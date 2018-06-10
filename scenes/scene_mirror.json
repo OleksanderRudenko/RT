@@ -1,0 +1,117 @@
+{
+	"figures":
+	[
+		{
+      		"type": "plane",
+      		"normale": [0.0, -1.0, 0.0],
+      		"point": [0, -3, 0],
+      		"color": "0xCBB59E",
+      		"reflection": 100,
+      		"mirror": 1
+    	},
+    	{
+      		"type": "plane",
+      		"normale": [0.0, -1.0, 0.0],
+      		"point": [0, 3, 0],
+      		"color": "0xffffff",
+      		"reflection": 100,
+      		"mirror": 1
+    	},
+    	{
+      		"type": "plane",
+      		"normale": [0.0, 0.0, 1.0],
+      		"point": [0, 0, 20],
+      		"color": "0xCBB59E",
+      		"reflection": 0,
+      		"mirror": 1
+    	},
+    	{
+     		"type": "plane",
+     		"normale":[1, 0, 0],
+     		"point": [5, 0, 0],
+     		"color": "0xCBB59E",
+     		"reflection": 0,
+     		"mirror": 1
+    	},
+    	{
+      		"type": "plane",
+      		"normale":[1, 0, 0],
+      		"point": [-5, 0, 0],
+      		"color": "0xCBB59E",
+      		"reflection": 0,
+      		"mirror": 1
+    	},
+			{
+					"type": "plane",
+					"normale":[0, 0, 1],
+					"point": [-5, 0, -15],
+					"color": "0xCBB59E",
+					"reflection": 0,
+					"mirror": 1
+			},
+    	{
+      		"type": "sphere",
+      		"center": [0, -2, 5],
+      		"radius": 0.5,
+      		"color": "0x192968",
+      		"reflection": 10
+    	},
+    	{
+      		"type": "sphere",
+      		"center": [-2, -2, 5],
+      		"radius": 1,
+      		"color": "0x192968",
+      		"reflection": 10,
+      		"mirror": 1
+    	},
+    	{
+      		"type": "sphere",
+      		"center": [2, -2, 5],
+      		"radius": 1,
+      		"color": "0x192968",
+      		"reflection": 10,
+      		"mirror": 1
+    	},
+    	{
+      		"type": "cylinder",
+      		"start": [-3.5, 0.0, 15],
+      		"vector": [0.0, 1.0, 0.0],
+      		"radius": 0.625,
+      		"color": "0xffffff",
+      		"reflection": 200,
+      		"mirror": 1
+    	},
+    	{
+      		"type": "cylinder",
+      		"start": [3.5, 0.0, 15],
+      		"vector": [0.0, 1.0, 0.0],
+      		"radius": 0.625,
+      		"color": "0xffffff",
+      		"reflection": 200,
+      		"mirror": 1
+    	}
+	],
+	"lights":
+	[
+		{
+     		"type": "direction",
+     		"position": [-3.0, 0.0, 0.0],
+     		"direction": [-3.0, 0.0, 0.0],
+     		"intensity": 0.5
+    	},
+    	{
+     		"type": "point",
+     		"position": [3.0, 0.0, 0.0],
+     		"intensity": 0.5
+    	}
+	],
+	"cam":
+	{
+		"position": [0.0, 0.0, -10.0],
+    	"rotation": [0.0, 0.0, 0.0]
+	},
+	"effects":
+	{
+		"antialiasing": 3
+	}
+}

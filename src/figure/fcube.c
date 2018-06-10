@@ -3,32 +3,32 @@
 /*                                                        :::      ::::::::   */
 /*   fcube.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/19 19:15:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/19 19:15:00 by abutok           ###   ########.fr       */
+/*   Created: 2018/06/10 13:09:51 by ataranov          #+#    #+#             */
+/*   Updated: 2018/06/10 13:12:17 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	find_first_dots(double k_x, int i, t_cube *cube)
+void		find_first_dots(double k_x, int i, t_cube *cube)
 {
-	t_vector	tmp_x;
-	t_vector	tmp_y;
-	t_vector	tmp_z;
+	t_vector	x;
+	t_vector	y;
+	t_vector	z;
 
-	tmp_x = vk_multiple(get_default_vector('x'), k_x * cube->scale.x);
-	tmp_y = vsum(tmp_x, vk_multiple(get_default_vector('y'), cube->scale.y));
-	tmp_z = vsum(tmp_y, vk_multiple(get_default_vector('z'), cube->scale.z));
-	cube->planes[i].points[0] = tmp_z;
-	tmp_z = vsub(tmp_y, vk_multiple(get_default_vector('z'), cube->scale.z));
-	cube->planes[i].points[1] = tmp_z;
-	tmp_y = vsub(tmp_x, vk_multiple(get_default_vector('y'), cube->scale.y));
-	tmp_z = vsum(tmp_y, vk_multiple(get_default_vector('z'), cube->scale.z));
-	cube->planes[i].points[3] = tmp_z;
-	tmp_z = vsub(tmp_y, vk_multiple(get_default_vector('z'), cube->scale.z));
-	cube->planes[i].points[2] = tmp_z;
+	x = vk_multiple(get_default_vector('x'), k_x * cube->scale.x / 2);
+	y = vsum(x, vk_multiple(get_default_vector('y'), cube->scale.y / 2));
+	z = vsum(y, vk_multiple(get_default_vector('z'), cube->scale.z / 2));
+	cube->planes[i].points[0] = z;
+	z = vsub(y, vk_multiple(get_default_vector('z'), cube->scale.z / 2));
+	cube->planes[i].points[1] = z;
+	y = vsub(x, vk_multiple(get_default_vector('y'), cube->scale.y / 2));
+	z = vsum(y, vk_multiple(get_default_vector('z'), cube->scale.z / 2));
+	cube->planes[i].points[3] = z;
+	z = vsub(y, vk_multiple(get_default_vector('z'), cube->scale.z / 2));
+	cube->planes[i].points[2] = z;
 }
 
 void		rotate_cube(t_cube *cube)
@@ -41,7 +41,8 @@ void		rotate_cube(t_cube *cube)
 		rotate_x(&cube->planes[i / 4].points[i % 4], cube->rotation.x);
 		rotate_y(&cube->planes[i / 4].points[i % 4], cube->rotation.y);
 		rotate_z(&cube->planes[i / 4].points[i % 4], cube->rotation.z);
-		cube->planes[i / 4].points[i % 4] = vsum(cube->planes[i / 4].points[i % 4], cube->position);
+		cube->planes[i / 4].points[i % 4] =
+			vsum(cube->planes[i / 4].points[i % 4], cube->position);
 		++i;
 	}
 }
@@ -78,8 +79,9 @@ void		count_planes(t_cube *cube)
 	i = 0;
 	while (i < 6)
 	{
-			cube->planes[i].normale = count_triangle_normale(cube->planes[i].points);
-			++i;
+		cube->planes[i].normale =
+			count_triangle_normale(cube->planes[i].points);
+		++i;
 	}
 }
 
@@ -88,9 +90,8 @@ t_figure	*cube_init(t_vector vector[3], int color, double reflection)
 	t_figure	*new_figure;
 	t_cube		*cube;
 
-	// printf("AAA\n");
-	new_figure = (t_figure*)malloc(sizeof(t_figure));
-	cube = (t_cube*)malloc(sizeof(t_cube));
+	new_figure = (t_figure*)ft_memalloc(sizeof(t_figure));
+	cube = (t_cube*)ft_memalloc(sizeof(t_cube));
 	new_figure->type = Cube;
 	new_figure->figure = cube;
 	cube->position = vector[0];

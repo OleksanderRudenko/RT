@@ -6,13 +6,13 @@
 /*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 19:57:40 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/05/19 19:57:41 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/10 12:06:43 by knovytsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void 		copy_triangle(t_cl_figure *figure, t_figure *tmp)
+void	copy_triangle(t_cl_figure *figure, t_figure *tmp)
 {
 	int i;
 
@@ -23,7 +23,7 @@ void 		copy_triangle(t_cl_figure *figure, t_figure *tmp)
 	figure->normale = copy_vector(((t_triangle*)tmp->figure)->normale);
 }
 
-void 		copy_quadrate(t_cl_figure *figure, t_figure *tmp)
+void	copy_quadrate(t_cl_figure *figure, t_figure *tmp)
 {
 	int i;
 
@@ -35,7 +35,7 @@ void 		copy_quadrate(t_cl_figure *figure, t_figure *tmp)
 	figure->position = copy_vector(((t_squard*)tmp->figure)->position);
 }
 
-void 		copy_elipsoid(t_cl_figure *figure, t_figure *tmp)
+void	copy_elipsoid(t_cl_figure *figure, t_figure *tmp)
 {
 	figure->position = copy_vector(((t_elipsoid*)tmp->figure)->position);
 	figure->rotation = copy_vector(((t_elipsoid*)tmp->figure)->rotation);
@@ -43,7 +43,7 @@ void 		copy_elipsoid(t_cl_figure *figure, t_figure *tmp)
 	figure->rdistance = ((t_elipsoid*)tmp->figure)->rdistance;
 }
 
-void 		copy_paraboloid(t_cl_figure *figure, t_figure *tmp)
+void	copy_paraboloid(t_cl_figure *figure, t_figure *tmp)
 {
 	figure->t_points[0] = copy_vector(((t_parabaloid*)tmp->figure)->capses[0]);
 	figure->caps1 = ((t_parabaloid*)tmp->figure)->c_distances[0];
@@ -53,7 +53,7 @@ void 		copy_paraboloid(t_cl_figure *figure, t_figure *tmp)
 	figure->radius = ((t_parabaloid*)tmp->figure)->radius;
 }
 
-void 		copy_tor(t_cl_figure *figure, t_figure *tmp)
+void	copy_tor(t_cl_figure *figure, t_figure *tmp)
 {
 	figure->radius_s = ((t_itor*)tmp->figure)->r;
 	figure->radius_b = ((t_itor*)tmp->figure)->r_b;

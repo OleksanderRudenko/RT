@@ -53,9 +53,9 @@ t_figure		*cone_init(t_ray *axis, double k, int color,
 	t_figure	*new_figure;
 	t_icone		*cone;
 
-	new_figure = (t_figure*)malloc(sizeof(t_figure));
+	new_figure = (t_figure*)ft_memalloc(sizeof(t_figure));
 	new_figure->type = InfiniteCone;
-	cone = (t_icone*)malloc(sizeof(t_icone));
+	cone = (t_icone*)ft_memalloc(sizeof(t_icone));
 	cone->vertex = axis->o;
 	cone->radius = k;
 	new_figure->color = color;

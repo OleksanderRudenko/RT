@@ -3,24 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/16 22:04:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 16:29:03 by knovytsk         ###   ########.fr       */
+/*   Created: 2018/04/16 22:04:00 by knovytsk          #+#    #+#             */
+/*   Updated: 2018/06/10 11:58:21 by knovytsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static void parse_cylinder2(JSON_Object *cylinder, t_figure	*fcylinder,
+static void	parse_cylinder2(JSON_Object *cylinder, t_figure *fcylinder,
 															t_view *view)
 {
+	t_icylinder	*cyl;
+
+	cyl = (t_icylinder*)fcylinder->figure;
 	if (json_object_has_value_of_type(cylinder, "cut plane1", JSONNumber))
-		((t_icylinder*)fcylinder->figure)->c_distances[0] =
-					json_object_get_number(cylinder, "cut plane1");
+		cyl->c_distances[0] = json_object_get_number(cylinder, "cut plane1");
 	if (json_object_has_value_of_type(cylinder, "cut plane2", JSONNumber))
-		((t_icylinder*)fcylinder->figure)->c_distances[1] =
-					json_object_get_number(cylinder, "cut plane2");
+		cyl->c_distances[1] = json_object_get_number(cylinder, "cut plane2");
+	if ((cyl->c_distances[0] - cyl->c_distances[1]) == 0)
+		cyl->c_distances[0] += 1e-5;
+	if (json_object_has_value_of_type(cylinder, "texture", JSONNumber))
+		fcylinder->texture = json_object_get_number(cylinder, "texture");
 	parse_color_reflection(cylinder, fcylinder);
 	add_figure(fcylinder, view);
 }

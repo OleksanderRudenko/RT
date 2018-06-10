@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   figure.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/16 11:58:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/09 01:40:33 by vvinogra         ###   ########.fr       */
+/*   Created: 2018/06/10 13:14:49 by ataranov          #+#    #+#             */
+/*   Updated: 2018/06/10 13:14:53 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <sys/types.h>
 #include "rt.h"
 
 t_ray		*ray_init(t_vector origin, t_vector vector)
@@ -46,8 +45,6 @@ double		check_intersection(t_ray *ray, t_figure *figure)
 		return (check_cylinder_intersection(ray, figure->figure));
 	else if (figure->type == InfiniteCone)
 		return (check_cone_intersection(ray, figure->figure));
-	else if (figure->type == Tor)
-		return (check_tor_intersection(ray, figure->figure));
 	return (-1);
 }
 

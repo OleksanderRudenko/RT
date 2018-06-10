@@ -34,7 +34,7 @@ void	view_init(t_view *view, const char *filename)
 	object_default_init(view);
 	select_init(view);
 	light_list_init(view);
-	ok_button_init(view);
+	// ok_button_init(view);
 }
 
 

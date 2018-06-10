@@ -1,25 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fparaboloid.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/06/10 13:21:37 by ataranov          #+#    #+#             */
+/*   Updated: 2018/06/10 13:25:11 by ataranov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "rt.h"
 
-// t_figure  *elipsoid_init(t_vector position, t_vector rotation, int color, double reflection)
-
-
-
-// t_figure	*parabaloid_init(t_vector position, t_vector rotation)
-// {
-// 	t_figure	*fparaboloid;
-// 	t_parabaloid	*parab;
-//
-// 	fparaboloid = (t_figure*)ft_memalloc(sizeof(t_figure));
-// 	fparaboloid->type = Parabaloid;
-// 	fparaboloid->color = 0xff00;
-// 	fparaboloid->reflection = 10;
-// 	fparaboloid->next = NULL;
-// 	parab = (t_parabaloid*)ft_memalloc(sizeof(t_parabaloid));
-// 	parab->position = position;
-// 	parab->rotation = rotation;
-// 	parab->rotation = vnormalize(parab->rotation);
-// 	parab->radius = 0;
-// 	parab->caps = NULL;
-// 	fparaboloid->figure = parab;
-// 	return (fparaboloid);
-// }
+t_figure	*init_parab(t_figure *fparaboloid, t_vector v1, t_vector v2)
+{
+	fparaboloid = (t_figure*)ft_memalloc(sizeof(t_figure));
+	fparaboloid->figure = (t_parabaloid*)ft_memalloc(sizeof(t_parabaloid));
+	fparaboloid->type = Parabaloid;
+	fparaboloid->next = NULL;
+	((t_parabaloid*)fparaboloid->figure)->position = v1;
+	((t_parabaloid*)fparaboloid->figure)->rotation = v2;
+	return (fparaboloid);
+}

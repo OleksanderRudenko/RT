@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   triangle.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/18 21:31:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 21:31:00 by abutok           ###   ########.fr       */
+/*   Created: 2018/04/18 21:31:00 by knovytsk          #+#    #+#             */
+/*   Updated: 2018/06/10 11:45:30 by knovytsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ int			check_triangle_points(t_vector vector[3])
 {
 	int a;
 
-	if ((a = vis_equal(vector[0],vector[1]) || vis_equal(vector[2],vector[1]) ||
-			vis_equal(vector[0],vector[2])))
+	if ((a = vis_equal(vector[0], vector[1]) ||
+		vis_equal(vector[2], vector[1]) || vis_equal(vector[0], vector[2])))
 		ft_putendl_fd("Triangle cannot have equal points. Figure skipped",
 				STDERR_FILENO);
 	return (a);

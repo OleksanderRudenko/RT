@@ -23,7 +23,7 @@ void		default_helper_figures(t_view *view, t_figure *figure)
 		i++;
 	}
 	clean_list_obj(view);
-	add_figure (figure, view);
+	add_figure(figure, view);
 	if (view->space->cl_figures)
 	{
 		free(view->space->cl_figures);
@@ -68,7 +68,7 @@ void		default_plane_init(t_view *view)
 	plane = (t_iplane*)ft_memalloc(sizeof(t_iplane));
 	new_figure->figure = plane;
 	plane->normale = vnormalize((t_vector){0.0, 1.0, 0.0});
-	plane->point = (t_vector){1.0, 1.0, 1.0};;
+	plane->point = (t_vector){1.0, 1.0, 1.0};
 	new_figure->color = 0xff;
 	new_figure->reflection = 0;
 	new_figure->next = NULL;
@@ -88,6 +88,8 @@ void		default_cylinder_init(t_view *view)
 	cylinder->vector = vnormalize((t_vector){0.0, 1.0, 0.0});
 	cylinder->radius = 0.5;
 	new_figure->color = 0xff;
+	cylinder->c_distances[0] = -INFINITY;
+	cylinder->c_distances[1] = INFINITY;
 	new_figure->reflection = 0;
 	new_figure->next = NULL;
 	default_helper_figures(view, new_figure);

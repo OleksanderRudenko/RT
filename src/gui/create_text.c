@@ -30,7 +30,7 @@ SDL_Texture	*create_text(t_view *s, char *name, int i, int font_size)
 	return (t.tex);
 }
 
-SDL_Texture *get_tex(char *file, SDL_Renderer *ren_tar)
+SDL_Texture	*get_tex(char *file, SDL_Renderer *ren_tar)
 {
 	SDL_Texture *texture;
 	SDL_Surface *surface;
@@ -72,7 +72,7 @@ SDL_Texture	*tf(t_view *s, float num, int i, int font_size)
 	return (t.tex);
 }
 
-int				text_width(TTF_Font *f, char *str)
+int			text_width(TTF_Font *f, char *str)
 {
 	char		*buf;
 	int			width;
@@ -85,5 +85,5 @@ int				text_width(TTF_Font *f, char *str)
 	ft_strncpy(buf, str, len);
 	TTF_SizeUTF8(f, buf, &width, NULL);
 	free(buf);
-	return(width);
+	return (width);
 }

@@ -1,0 +1,52 @@
+{
+	"figures":
+	[
+		{
+      		"type": "plane",
+     		"normale": [0.0, -1.0, 0.0],
+     		"point": [0, -1.6, 0],
+      		"color": "0xaaaaaa",
+      		"reflection": 100
+    	},
+    	{
+      		"type": "cube",
+     		"position": [0.0, -0.3, 0.0],
+     		"rotation": [10.0, 20.0, 0.0],
+     		"scale": [1, 1, 1],
+      		"color": "0x40BD61",
+      		"reflection": 100
+    	}
+	],
+	"lights":
+	[
+		{
+      		"type": "point",
+      		"position": [-3.0, 0.0, 0.0],
+      		"intensity": 0.5
+    	},
+    	{
+      		"type": "point",
+      		"position": [3.0, 0.0, 0.0],
+      		"intensity": 0.5
+    	},
+    	{
+      		"type": "point",
+      		"position": [0.0, -1.0, -1.0],
+      		"intensity": 0.4
+    	},
+    	{
+      		"type": "point",
+      		"position": [-2.0, 0.0, -1.0],
+      		"intensity": 0.4
+    	}
+	],
+	"cam":
+	{
+		"position": [0.0, 0.0, -10.0],
+    	"rotation": [0.0, 0.0, 0.0]
+	},
+	"effects":
+	{
+		"antialiasing": 3
+	}
+}

@@ -38,42 +38,46 @@ void	display_colored_rect(t_view *s)
 	SDL_Rect	tr;
 
 	tr = make_rect(50, 120, 150, 50);
-
-	SDL_SetRenderDrawColor(s->rr.rend[2], s->sl[0]->clr.red, s->sl[1]->clr.green, s->sl[2]->clr.blue, 255);
+	SDL_SetRenderDrawColor(s->rr.rend[2], s->sl[0]->clr.red,
+		s->sl[1]->clr.green, s->sl[2]->clr.blue, 255);
 	SDL_RenderFillRect(s->rr.rend[2], &tr);
 	SDL_RenderDrawRect(s->rr.rend[2], &tr);
 	SDL_SetRenderDrawColor(s->rr.rend[2], 0, 0, 0, 255);
 	SDL_RenderCopy(s->rr.rend[2], s->sl[0]->line, NULL, &s->sl[0]->line_rect);
-	SDL_RenderCopy(s->rr.rend[2], s->sl[0]->slider_but, NULL, &s->sl[0]->slider_rect);
+	SDL_RenderCopy(s->rr.rend[2], s->sl[0]->slider_but,
+		NULL, &s->sl[0]->slider_rect);
 	SDL_RenderCopy(s->rr.rend[2], s->sl[1]->line, NULL, &s->sl[1]->line_rect);
-	SDL_RenderCopy(s->rr.rend[2], s->sl[1]->slider_but, NULL, &s->sl[1]->slider_rect);
+	SDL_RenderCopy(s->rr.rend[2], s->sl[1]->slider_but,
+		NULL, &s->sl[1]->slider_rect);
 	SDL_RenderCopy(s->rr.rend[2], s->sl[2]->line, NULL, &s->sl[2]->line_rect);
-	SDL_RenderCopy(s->rr.rend[2], s->sl[2]->slider_but, NULL, &s->sl[2]->slider_rect);
-
+	SDL_RenderCopy(s->rr.rend[2], s->sl[2]->slider_but,
+		NULL, &s->sl[2]->slider_rect);
 }
 
 void	slider_click_event(SDL_Keycode key, t_view *s, SDL_Event e)
 {
 	if (key == 1 && s->flag == 0)
 	{
-		if (is_in_rect(s->sl[0]->line_rect, e) && s->sl[0]->slider_rect.x <= 255 )
+		if (is_in_rect(s->sl[0]->line_rect, e)
+			&& s->sl[0]->slider_rect.x <= 255)
 		{
-			s->sl[0]->clr.red = s->sl[0]->slider_rect.x ;
+			s->sl[0]->clr.red = s->sl[0]->slider_rect.x;
 			s->sl[0]->slider_rect.x = e.button.x;
-			// redraw(s);
-			printf("slider: %d\n",s->sl[0]->slider_rect.x);
+			redraw(s);
 		}
-		else if (is_in_rect(s->sl[1]->line_rect, e) && s->sl[1]->slider_rect.x <= 255 )
+		else if (is_in_rect(s->sl[1]->line_rect, e)
+			&& s->sl[1]->slider_rect.x <= 255)
 		{
-			s->sl[1]->clr.green = s->sl[1]->slider_rect.x ;
+			s->sl[1]->clr.green = s->sl[1]->slider_rect.x;
 			s->sl[1]->slider_rect.x = e.button.x;
-			// redraw(s);
+			redraw(s);
 		}
-		else if (is_in_rect(s->sl[2]->line_rect, e) && s->sl[2]->slider_rect.x <= 255 )
+		else if (is_in_rect(s->sl[2]->line_rect, e)
+			&& s->sl[2]->slider_rect.x <= 255)
 		{
-			s->sl[2]->clr.blue= s->sl[2]->slider_rect.x ;
+			s->sl[2]->clr.blue = s->sl[2]->slider_rect.x;
 			s->sl[2]->slider_rect.x = e.button.x;
-			// redraw(s);
+			redraw(s);
 		}
 	}
 }
@@ -82,27 +86,26 @@ void	slider_motion_event(SDL_Keycode key, t_view *s, SDL_Event e)
 {
 	if (key == 1 && s->flag == 0)
 	{
-		if (is_in_rect(s->sl[0]->line_rect, e) && s->sl[0]->slider_rect.x <= 255
-			&& e.button.button == 1)
+		if (is_in_rect(s->sl[0]->line_rect, e)
+			&& s->sl[0]->slider_rect.x <= 255)
 		{
-			s->sl[0]->clr.red = s->sl[0]->slider_rect.x ;
+			s->sl[0]->clr.red = s->sl[0]->slider_rect.x;
 			s->sl[0]->slider_rect.x = e.button.x;
 			redraw(s);
 		}
-		else if (is_in_rect(s->sl[1]->line_rect, e) && s->sl[1]->slider_rect.x <= 255
-			&& e.button.button == 1)
+		else if (is_in_rect(s->sl[1]->line_rect, e)
+			&& s->sl[1]->slider_rect.x <= 255)
 		{
 			s->sl[1]->clr.green = s->sl[1]->slider_rect.x;
 			s->sl[1]->slider_rect.x = e.button.x;
 			redraw(s);
 		}
-		else if (is_in_rect(s->sl[2]->line_rect, e) && s->sl[2]->slider_rect.x <= 255
-			&& e.button.button == 1)
+		else if (is_in_rect(s->sl[2]->line_rect, e)
+			&& s->sl[2]->slider_rect.x <= 255)
 		{
 			s->sl[2]->clr.blue = s->sl[2]->slider_rect.x;
 			s->sl[2]->slider_rect.x = e.button.x;
 			redraw(s);
 		}
 	}
-
 }

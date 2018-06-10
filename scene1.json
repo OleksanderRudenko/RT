@@ -49,6 +49,8 @@
       "type": "cylinder",
       "start": [3.0, 0.0, 4],
       "vector": [0.0, 1.0, 0.0],
+      "cut plane1": -1,
+      "cut plane2": 2,
       "radius": 0.625,
       "color": "0xffffff",
       "reflection": 200

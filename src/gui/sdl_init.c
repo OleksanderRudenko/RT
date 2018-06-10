@@ -16,12 +16,10 @@ void	init_sdl(t_view *s)
 {
 	SDL_Surface *logo;
 
-	if (SDL_Init(SDL_INIT_EVERYTHING) < 0)
+	if (SDL_Init(SDL_INIT_EVERYTHING) < 0 || TTF_Init() < 0)
 		sdl_init_err();
-	if (TTF_Init() < 0)
-		sdl_ttf_err();
 	if (IMG_Init(IMG_INIT_PNG) < 0)
-		sdl_ttf_err();
+		sdl_img_err();
 	s->win[0] = SDL_CreateWindow("RT", SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_OPENGL);
 	s->win[1] = SDL_CreateWindow("Object_list", 470, SDL_WINDOWPOS_CENTERED,
@@ -31,10 +29,7 @@ void	init_sdl(t_view *s)
 	s->win[3] = SDL_CreateWindow("Options-Line", SDL_WINDOWPOS_CENTERED, 100,
 		1000, 200, SDL_WINDOW_OPENGL);
 	if (!(logo = IMG_Load("img/rt_logo.png")))
-	{
-		ft_putstr("Error accured while loading img/rt_logo.png\n");
-		exit(EXIT_FAILURE);
-	}
+		sdl_img_err();
 	SDL_SetWindowIcon(s->win[1], logo);
 	s->win_surface = SDL_GetWindowSurface(s->win[0]);
 	s->buff = s->win_surface->pixels;
@@ -49,6 +44,7 @@ int		poll_event(t_view *s)
 	SDL_Event e;
 
 	while (SDL_PollEvent(&e))
+	{
 		if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN &&
 			e.key.keysym.sym == SDLK_ESCAPE))
 				s->exit_loop = 0;
@@ -69,69 +65,16 @@ int		poll_event(t_view *s)
 			if (s->server_client == Client)
 				client_send_get_info(s);
 		}
+	}
 	if (s->server_client != Normal)//Fix Sasha plz
 	{
+		ft_putendl("Fix pliz");
 		SDL_HideWindow(s->win[1]);
 		SDL_HideWindow(s->win[2]);
 		SDL_HideWindow(s->win[3]);
 		if (s->server_client == Server)
 			SDL_HideWindow(s->win[0]);
 	}
+	scroll_down(s, e);
 	return (1);
-}
-
-void	camera_move(t_view *s, SDL_Scancode key)
-{
-	if (key ==  SDL_SCANCODE_W)
-	{
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->o.y += 0.5;
-		opencl_init2(s);
-	}
-	else if (key ==  SDL_SCANCODE_S)
-	{
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->o.y -= 0.5;
-		opencl_init2(s);
-	}
-	else if (key ==  SDL_SCANCODE_D)
-	{
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->o.x -= 0.5;
-		opencl_init2(s);
-	}
-	else if (key ==  SDL_SCANCODE_A)
-	{
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->o.x += 0.5;
-		opencl_init2(s);
-	}
-}
-
-void	camera_rot(t_view *s, SDL_Scancode key)
-{
-	if (key ==  SDL_SCANCODE_UP)
-	{
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->v.y += 0.5;
-		opencl_init2(s);
-	}
-	else if (key ==  SDL_SCANCODE_DOWN)
-	{
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->v.y -= 0.5;
-		opencl_init2(s);
-	}
-	else if (key ==  SDL_SCANCODE_RIGHT)
-	{
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->v.x += 0.5;
-		opencl_init2(s);
-	}
-	else if (key ==  SDL_SCANCODE_LEFT)
-	{
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		s->space->cam->v.x -= 0.5;
-		opencl_init2(s);
-	}
 }

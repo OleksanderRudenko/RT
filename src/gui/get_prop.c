@@ -14,7 +14,7 @@
 
 t_pr	*get_print(void)
 {
-	t_pr	*luck;
+	t_pr			*luck;
 
 	luck = (t_pr*)malloc(sizeof(t_pr) * 10);
 	luck[Sphere] = &print_sph_prop;
@@ -31,9 +31,9 @@ t_pr	*get_print(void)
 
 void	get_properties(t_view *s)
 {
-	static t_pr *func = NULL;
-	int type;
-	
+	static t_pr		*func = NULL;
+	int				type;
+
 	type = s->space->cl_figures[s->rr.fl.y].type;
 	if (!func)
 		func = get_print();
@@ -42,7 +42,7 @@ void	get_properties(t_view *s)
 
 t_init	*get_init(void)
 {
-	t_init	*init;
+	t_init			*init;
 
 	init = (t_init*)malloc(sizeof(t_init) * 10);
 	init[Sphere] = &init_prop;
@@ -60,7 +60,7 @@ t_init	*get_init(void)
 void	get_init_prop(t_view *s)
 {
 	static	t_init	*init = NULL;
-	int		type;
+	int				type;
 
 	type = s->space->cl_figures[s->rr.fl.y].type;
 	if (!init)

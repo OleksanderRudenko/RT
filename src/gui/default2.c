@@ -14,8 +14,8 @@
 
 void	default_elipsoid_init(t_view *view)
 {
-	t_figure *new_figure;
-	t_elipsoid *elips;
+	t_figure		*new_figure;
+	t_elipsoid		*elips;
 
 	new_figure = (t_figure *)ft_memalloc(sizeof(t_figure));
 	new_figure->type = Elipsoid;
@@ -33,8 +33,8 @@ void	default_elipsoid_init(t_view *view)
 
 void	default_paraboloid_init(t_view *view)
 {
-	t_figure *new_figure;
-	t_parabaloid *elips;
+	t_figure		*new_figure;
+	t_parabaloid	*elips;
 
 	new_figure = (t_figure *)ft_memalloc(sizeof(t_figure));
 	new_figure->type = Parabaloid;
@@ -51,11 +51,11 @@ void	default_paraboloid_init(t_view *view)
 
 void	default_cube_init(t_view *view)
 {
-	t_figure *new_figure;
-	t_cube *cube;
+	t_figure		*new_figure;
+	t_cube			*cube;
 
-	new_figure = (t_figure *)malloc(sizeof(t_figure));
-	cube = (t_cube *)malloc(sizeof(t_cube));
+	new_figure = (t_figure *)ft_memalloc(sizeof(t_figure));
+	cube = (t_cube *)ft_memalloc(sizeof(t_cube));
 	new_figure->type = Cube;
 	new_figure->figure = cube;
 	cube->position = (t_vector){0.0, 0.0, 0.0};
@@ -70,11 +70,11 @@ void	default_cube_init(t_view *view)
 
 void	default_quadrate_init(t_view *view)
 {
-	t_figure *quadr;
-	t_squard *q;
+	t_figure		*quadr;
+	t_squard		*q;
 
-	quadr = (t_figure *)malloc(sizeof(t_figure));
-	q = (t_squard *)malloc(sizeof(t_squard));
+	quadr = (t_figure *)ft_memalloc(sizeof(t_figure));
+	q = (t_squard *)ft_memalloc(sizeof(t_squard));
 	q->rotation = (t_vector){0.0, 90.0, 0.0};
 	q->position = (t_vector){0.0, 0.0, 0.0};
 	q->scale[0] = 1;
@@ -90,14 +90,14 @@ void	default_quadrate_init(t_view *view)
 
 void	default_triangle_init(t_view *view)
 {
-	t_figure *new_figure;
-	t_triangle *triangle;
+	t_figure		*new_figure;
+	t_triangle		*triangle;
 
-	new_figure = (t_figure *)malloc(sizeof(t_figure));
+	new_figure = (t_figure *)ft_memalloc(sizeof(t_figure));
 	new_figure->type = Triangle;
-	triangle = (t_triangle *)malloc(sizeof(t_triangle));
+	triangle = (t_triangle *)ft_memalloc(sizeof(t_triangle));
 	triangle->points[0] = (t_vector){1.0, 0.0, 0.0};
-	triangle->points[1] =(t_vector){-1.0, 1.0, 0.0};
+	triangle->points[1] = (t_vector){-1.0, 1.0, 0.0};
 	triangle->points[2] = (t_vector){-1.0, 0.0, 0.0};
 	triangle->normale = count_triangle_normale(triangle->points);
 	new_figure->color = 0xff;

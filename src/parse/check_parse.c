@@ -6,13 +6,13 @@
 /*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/16 17:48:12 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/05/16 17:48:13 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/10 12:00:08 by knovytsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void check_parse(JSON_Object *figure, t_view * view, char *type)
+void	check_parse(JSON_Object *figure, t_view *view, char *type)
 {
 	if (ft_strequ(type, "sphere"))
 		parse_sphere(figure, view);
@@ -26,8 +26,6 @@ void check_parse(JSON_Object *figure, t_view * view, char *type)
 		parse_triangle(figure, view);
 	else if (ft_strequ(type, "elipsoid"))
 		parse_elipsoid(figure, view);
-	else if (ft_strequ(type, "tor"))
-		parse_tor(figure, view);
 	else if (ft_strequ(type, "paraboloid"))
 		parse_paraboloid(figure, view);
 	else if (ft_strequ(type, "quadrate"))

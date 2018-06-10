@@ -70,7 +70,6 @@ void		default_dir_light(t_view *view)
 
 	new_light = (t_light*)ft_memalloc(sizeof(t_light));
 	new_light->type = LIGHT_TYPE_DIRECT;
-	// new_light->o = o;
 	new_light->d = (t_vector){0.0, -10, 1};
 	new_light->inten = 0.05;
 	new_light->next = NULL;

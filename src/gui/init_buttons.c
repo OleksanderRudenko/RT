@@ -15,23 +15,20 @@
 void	init_rect(t_gui *r)
 {
 	r->but_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_BUTTONS);
-
 	r->but_rect[0] = make_rect(5, 5, 75, 75);
 	r->but_rect[1] = make_rect(90, 5, 75, 75);
 	r->but_rect[2] = make_rect(175, 5, 75, 75);
 	r->but_rect[3] = make_rect(250, 5, 75, 75);
 	r->but_rect[4] = make_rect(325, 5, 75, 75);
 	r->but_rect[5] = make_rect(410, 5, 75, 75);
-	// r->but_rect[6] = make_rect(495, 0, 75, 75);//
 	r->but_rect[10] = make_rect(580, 5, 75, 75);
 	r->but_rect[11] = make_rect(665, 5, 75, 75);
 	r->but_rect[12] = make_rect(750, 5, 75, 75);
-	/*New line*/
 	r->but_rect[7] = make_rect(0, 85, 75, 75);
 	r->but_rect[8] = make_rect(75, 85, 75, 75);
 	r->but_rect[9] = make_rect(150, 85, 75, 75);
 	r->but_rect[13] = make_rect(410, 85, 75, 75);
-	r->but_rect[6] = make_rect(495, 85, 75, 75);//
+	r->but_rect[6] = make_rect(495, 85, 75, 75);
 }
 
 void	init_buttons(t_view *s)
@@ -58,9 +55,12 @@ void	set_things_up(t_view *s)
 
 	i = -1;
 	s->rr.but_on = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * NUM_BUTTONS);
-	s->rr.rend[0] = SDL_CreateRenderer(s->win[3], -1, SDL_RENDERER_ACCELERATED);/*options*/
-	s->rr.rend[1] = SDL_CreateRenderer(s->win[1], -1, SDL_RENDERER_ACCELERATED);/*have to be list of figures*/
-	s->rr.rend[2] = SDL_CreateRenderer(s->win[2], -1, SDL_RENDERER_ACCELERATED);/*have to be list of properties*/
+	s->rr.rend[0] = SDL_CreateRenderer(s->win[3],
+		-1, SDL_RENDERER_ACCELERATED);
+	s->rr.rend[1] = SDL_CreateRenderer(s->win[1],
+		-1, SDL_RENDERER_ACCELERATED);
+	s->rr.rend[2] = SDL_CreateRenderer(s->win[2],
+		-1, SDL_RENDERER_ACCELERATED);
 	init_buttons(s);
 }
 
@@ -72,7 +72,8 @@ void	button_staff(t_view *s)
 	SDL_RenderClear(s->rr.rend[0]);
 	while (i < NUM_BUTTONS)
 	{
-		SDL_RenderCopy(s->rr.rend[0], s->rr.but_on[i],NULL, &s->rr.but_rect[i]);
+		SDL_RenderCopy(s->rr.rend[0], s->rr.but_on[i],
+			NULL, &s->rr.but_rect[i]);
 		i++;
 	}
 	SDL_SetRenderDrawColor(s->rr.rend[0], 10, 20, 40, 255);

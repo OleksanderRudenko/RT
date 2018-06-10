@@ -1,0 +1,41 @@
+{
+	"figures":
+	[
+		{
+			"type": "cylinder",
+			"start": [-3.0, 0.0, 12],
+      		"vector": [0.0, 1.0, 0.0],
+      		"radius": 0.625,
+      		"color": "0xD0863D",
+      		"reflection": 200
+		},
+		{
+			"type": "cone",
+			"start": [1.0, 0.0, 12],
+      		"vector": [0.0, 1.0, 0.0],
+      		"radius": 0.625,
+      		"color": "0xD0863D",
+      		"reflection": 200
+		}
+	],
+	"lights":
+	[
+		{
+			"type": "direction",
+			"position": [0.0, -2.0, -1.0],
+			"direction": [1.0, 1.0, 0.0],
+			"intensity": 0.1
+		},
+		{
+			"type": "direction",
+			"position": [0.0, 3.0, 0.0],
+			"direction": [-1.0, -1.0, 0.0],
+			"intensity": 0.6
+		}
+	],
+	"cam":
+	{
+		"position": [0.0, 0.0, -10.0],
+    	"rotation": [0.0, -1.0, 0.0]
+	}
+}

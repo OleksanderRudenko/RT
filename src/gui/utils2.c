@@ -12,13 +12,13 @@
 
 #include "rt.h"
 
-void	delete_init_cl(t_view *s)
+void		delete_init_cl(t_view *s)
 {
 	free(s->space->cl_figures);
 	free(s->space->cl_lights);
 }
 
-void	del_list(t_view *s)
+void		del_list(t_view *s)
 {
 	t_figure	*fig;
 	t_figure	*lol;
@@ -39,7 +39,7 @@ int			select_num(t_view *s)
 
 	type = s->space->cl_figures[s->rr.fl.y].type;
 	if (type == InfinitePlane)
-		return(NUM_PL_PR);
+		return (NUM_PL_PR);
 	else if (type == Sphere)
 		return (NUM_SP_PR);
 	else if (type == InfiniteCylinder)
@@ -59,13 +59,13 @@ int			select_num(t_view *s)
 	return (-1);
 }
 
-char	*ft_ftoa(double value)
+char		*ft_ftoa(double value)
 {
-	int		nb;
-	char	*arr;
-	char	*arr2;
-	int		point_part;
-	char	*tmp;
+	int			nb;
+	char		*arr;
+	char		*arr2;
+	int			point_part;
+	char		*tmp;
 
 	nb = (int)value;
 	arr = ft_itoa(nb);
@@ -86,7 +86,7 @@ SDL_Rect	*select_rect(t_view *s)
 
 	type = s->space->cl_figures[s->rr.fl.y].type;
 	if (type == InfinitePlane)
-		return(s->pl.pl_pr_rect);
+		return (s->pl.pl_pr_rect);
 	else if (type == Sphere)
 		return (s->prop.pr_rect);
 	else if (type == InfiniteCylinder)

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sphere.c                                           :+:      :+:    :+:   */
+/*   fsphere.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/16 11:58:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 15:24:41 by abutok           ###   ########.fr       */
+/*   Created: 2018/06/10 13:19:44 by ataranov          #+#    #+#             */
+/*   Updated: 2018/06/10 13:19:51 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ t_figure		*sphere_init(t_vector center, double r, int color,
 	t_figure *new_figure;
 	t_sphere *sphere;
 
-	new_figure = (t_figure*)malloc(sizeof(t_figure));
+	new_figure = (t_figure*)ft_memalloc(sizeof(t_figure));
 	new_figure->type = Sphere;
-	sphere = (t_sphere*)malloc(sizeof(t_sphere));
+	sphere = (t_sphere*)ft_memalloc(sizeof(t_sphere));
 	new_figure->figure = sphere;
 	sphere->center = center;
 	sphere->radius = r;

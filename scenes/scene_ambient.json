@@ -1,0 +1,52 @@
+{
+	"figures":
+	[
+		{
+			"type": "sphere",
+      		"center": [-1, 0, 5],
+      		"radius": 2,
+      		"color": "0x2BB8DB",
+      		"reflection": 20
+		},
+		{
+			"type": "sphere",
+      		"center": [1, -1, -3],
+      		"radius": 0.5,
+      		"color": "0x4231E1",
+      		"reflection": 20
+		},
+		{
+      		"type": "plane",
+      		"normale":[1, 0, 0],
+      		"point": [5, 0, 0],
+      		"color": "0xffffff",
+      		"reflection": 0
+    	},
+    	{
+      		"type": "plane",
+      		"normale": [0.0, 0.0, 1.0],
+      		"point": [0, 0, 60],
+      		"color": "0xEBE6CB",
+      		"reflection": 0
+    	},
+    	{
+      		"type": "plane",
+      		"normale": [0.0, -1.0, 0.0],
+      		"point": [0, -3, 0],
+      		"color": "0xC6BC7A",
+      		"reflection": 1
+    	}
+	],
+	"lights":
+	[
+		{
+			"type": "ambient",
+			"intensity": 0.2
+		}
+	],
+	"cam":
+  	{
+    	"position": [0.0, 0.0, -10.0],
+    	"rotation": [0.0, 0.0, 0.0]
+  	}
+}

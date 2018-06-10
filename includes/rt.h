@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt.h                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/09 19:49:29 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/10 14:19:11 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@
 # define NUM_PL_PR 9
 # define NUM_TR_PR 11
 # define NUM_CN_PR 10
-# define NUM_CU_PR 11
-# define NUM_QUA_PR 5
+# define NUM_CU_PR 12
+# define NUM_QUA_PR 9
 # define NUM_EL_PR 10
 # define NUM_PR_PR 9
 # define NUM_LI_PR 4
@@ -56,6 +56,8 @@
 
 # define PORT 50000
 # define SER_SIZE 48
+
+typedef	void	func(cl_float3 *ps, cl_float3 *nul_dot, float l);
 
 typedef union			u_color
 {
@@ -176,7 +178,7 @@ typedef struct			s_icylinder							      /* CYLINDER */
 	double				radius;
 	t_vector 			capses[2];
 	double 				c_distances[2];
-	int 				c_color[2];
+	int 					c_color[2];
 }						t_icylinder;
 
 typedef struct			s_triangle				 				  /* TRIANGLE */
@@ -257,6 +259,8 @@ typedef struct			s_figure
 	int					color;
 	float				reflection;
 	int					mirror;
+	int texture;
+	double refraction;
 	t_figure_type		type;
 	struct s_figure		*next;
 }						t_figure;
@@ -352,7 +356,7 @@ void				color_effects(t_view *view);
 void 	 	checkerboard_effect(t_view *v, int color);
 
 //effects/perlin_noise
-unsigned int 		*perlin_noise(t_view *view);
+unsigned int 		*perlin_noise(void);
 
 //effects/normal_disruption
 unsigned int 		*normal_disruption(t_view *view);
@@ -363,7 +367,9 @@ int						exit_x(t_view *view);
 //openCL/opencl_init
 void					opencl_init(t_view *v);
 void					opencl_init2(t_view *v);
-void					opencl_errors(const char *msg);
+void					opencl_errors(cl_int result, const char *msg);
+
+// void					opencl_errors(const char *msg);
 // void					opencl_errors(cl_uint result, const char *msg);
 
 //openCL/cl_wrapper
@@ -448,6 +454,20 @@ void					rotate_x(t_vector *ps, double l);
 void					rotate_y(t_vector *ps, double l);
 void					rotate_z(t_vector *ps, double l);
 
+void					rotate_p_cl_z(cl_float3 *dot_rot, cl_float3 *dot_null, float angle);
+void					rotate_p_cl_x(cl_float3 *dot_rot, cl_float3 *dot_null, float angle);
+void					rotate_p_cl_y(cl_float3 *dot_rot, cl_float3 *dot_null, float angle);
+
+void					rotate_cl_x(cl_float3 *ps, float l);
+void					rotate_cl_y(cl_float3 *ps, float l);
+void					rotate_cl_z(cl_float3 *ps, float l);
+
+cl_float3				mult_vec_cl(cl_float3 v, float k);
+cl_float3				sub_vec_cl(cl_float3 v1, cl_float3 v2);
+cl_float3				sum_vec_cl(cl_float3 v1, cl_float3 v2);
+cl_float3				vector_cl_init(float x, float y, float z);
+cl_float3				choose_vec(int id);
+
 //vector/vector
 t_vector				vector_init(double x, double y, double z);
 double					vscalar_multiple(t_vector a, t_vector b);
@@ -499,6 +519,8 @@ void					parse_elipsoid(JSON_Object *elipsoid, t_view *view);
 
 //parse/pparaboloid
 void					parse_paraboloid(JSON_Object *paraboloid, t_view *view);
+t_figure				*init_parab(t_figure *fparaboloid, t_vector v1, t_vector v2); //!!!!!!!!!!!
+
 
 //parse/ptor
 void					parse_tor(JSON_Object *elipsoid, t_view *view);
@@ -530,7 +552,6 @@ void					parse_color_reflection(JSON_Object *sphere,
 
 //parse//parse_effects
 void 					parse_effects(JSON_Object *root, t_view *view);
-
 void 					check_parse(JSON_Object *figure, t_view * view, char *type);
 
 //light/light

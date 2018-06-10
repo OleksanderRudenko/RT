@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   plane.c                                            :+:      :+:    :+:   */
+/*   fplane.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/27 22:58:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 16:33:54 by abutok           ###   ########.fr       */
+/*   Created: 2018/06/10 10:54:58 by ataranov          #+#    #+#             */
+/*   Updated: 2018/06/10 13:17:54 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ t_figure		*plane_init(t_vector normale, t_vector point, int color,
 	t_figure *new_figure;
 	t_iplane *plane;
 
-	new_figure = (t_figure*)malloc(sizeof(t_figure));
+	new_figure = (t_figure*)ft_memalloc(sizeof(t_figure));
 	new_figure->type = InfinitePlane;
-	plane = (t_iplane*)malloc(sizeof(t_iplane));
+	plane = (t_iplane*)ft_memalloc(sizeof(t_iplane));
 	new_figure->figure = plane;
 	plane->normale = vnormalize(normale);
 	plane->point = point;

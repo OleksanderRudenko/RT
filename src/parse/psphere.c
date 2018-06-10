@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/16 18:41:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 16:48:20 by abutok           ###   ########.fr       */
+/*   Created: 2018/04/16 18:41:00 by knovytsk          #+#    #+#             */
+/*   Updated: 2018/04/18 16:48:20 by knovytsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void		parse_sphere(JSON_Object *sphere, t_view *view)
 	else
 		ft_putendl_fd("Unknown or invalid sphere radius. Default applied",
 				STDERR_FILENO);
+	if (json_object_has_value_of_type(sphere, "texture", JSONNumber))
+		fsphere->texture = json_object_get_number(sphere, "texture");
 	parse_color_reflection(sphere, fsphere);
 	add_figure(fsphere, view);
 }

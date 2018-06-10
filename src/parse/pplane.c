@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   plane.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/04/16 21:55:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/04/18 16:47:58 by abutok           ###   ########.fr       */
+/*   Created: 2018/04/16 21:55:00 by knovytsk          #+#    #+#             */
+/*   Updated: 2018/04/18 16:47:58 by knovytsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ void		parse_plane(JSON_Object *plane, t_view *view)
 				((t_iplane*)fplane->figure)->point);
 	else
 		ft_putendl_fd("Unknown plane point. Default applied", STDERR_FILENO);
+	if (json_object_has_value_of_type(plane, "texture", JSONNumber))
+		fplane->texture = json_object_get_number(plane, "texture");
 	parse_color_reflection(plane, fplane);
 	add_figure(fplane, view);
 }

@@ -8,19 +8,25 @@ unsigned int	texture_sphere(float3 normal, __global unsigned int *texture, t_cl_
 	int x = 0;
 	int y = 0;
 	int	w,h, lol;
+	int kek;
 
 	w = 256;
 	h = 256;
+	kek = (256 * 256 ) * 4;
 	switch (closest.texture )
 	{
 		case 1:
 			lol = 0;
+			break;
 		case 2:
-			lol = (256 * 256 ) * 4;
+			lol = kek;
+			break;
 		case 3:
-			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4;
+			lol = kek + kek;
+			break;
 		case 4:
-			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4 + (256 * 256 ) * 4;
+			lol = 3 * kek;
+			break;
 		break;
 	}
 	// printf("%f %f %f\n ", normal.x ,normal.y, normal.z);
@@ -60,12 +66,16 @@ unsigned int	texture_plane(float3 p_c, __global unsigned int *texture, t_cl_figu
 	{
 		case 1:
 			lol = 0;
+			break;
 		case 2:
 			lol = (256 * 256 ) * 4;
+			break;
 		case 3:
 			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4;
+			break;
 		case 4:
 			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4 + (256 * 256 ) * 4;
+			break;
 		break;
 	}
 	buf_u = cross_vec(plane.normale, (float3)(0.f, 1.f, 0.f));
@@ -103,12 +113,16 @@ unsigned int	texture_cone(float3 p_c, float3 normal, __global unsigned int *text
 	{
 		case 1:
 			lol = 0;
+			break;
 		case 2:
 			lol = (256 * 256 ) * 4;
+			break;
 		case 3:
 			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4;
+			break;
 		case 4:
 			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4 + (256 * 256 ) * 4;
+			break;
 		break;
 	}
 	u = fabs(dot_my(vec, (float3)(0,0,1)));
@@ -144,6 +158,16 @@ unsigned int	global_texture(float3 normal, __global unsigned int *texture, t_cl_
 		{
 			float3 p = ray_origin + (ray_vector * len);
 			return (texture_cone(closest.point - p, normal, texture, closest));
+		}
+		case Cube :
+		{
+			float3 p = ray_origin + (ray_vector * len);
+			return (texture_plane(closest.point - p, texture, closest));
+		}
+		case Quadrate :
+		{
+			float3 p = ray_origin + (ray_vector * len);
+			return (texture_plane(closest.point - p, texture, closest));
 		}
 		break;
 	}

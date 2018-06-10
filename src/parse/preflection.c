@@ -25,6 +25,12 @@ void		parse_color_reflection(JSON_Object *fobject, t_figure *figure)
 	else
 		ft_putendl_fd("Unknown or invalid reflection. Default applied",
 				STDERR_FILENO);
+	if (json_object_has_value_of_type(fobject, "refraction", JSONNumber))
+	{
+		if (!json_object_has_value_of_type(fobject, "reflection", JSONNumber))
+			figure->refraction =
+						json_object_get_number(fobject, "refraction");
+	}
 	if (json_object_has_value_of_type(fobject, "mirror", JSONNumber))
 		figure->mirror = json_object_get_number(fobject, "mirror");
 	if (figure->mirror != 1)

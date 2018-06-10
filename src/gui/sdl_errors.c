@@ -14,14 +14,18 @@
 
 void	sdl_init_err(void)
 {
-	/*maybe need to clean every fucking thing*/
 	ft_putendl(SDL_GetError());
 	exit(0);
 }
 
 void	sdl_ttf_err(void)
 {
-	/*maybe need to clean every fucking thing*/
 	ft_putendl(TTF_GetError());
+	exit(0);
+}
+
+void	sdl_img_err(void)
+{
+	ft_putendl(IMG_GetError());
 	exit(0);
 }

@@ -6,16 +6,16 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/19 14:45:18 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/06/09 19:54:24 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/10 12:16:16 by knovytsk         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void 			set_arguments(t_view *v)
+void	set_arguments(t_view *v)
 {
-	cl_float3 		cam_o;
-	cl_float3 		cam_v;
+	cl_float3	cam_o;
+	cl_float3	cam_v;
 
 	init_cam(v, &cam_o, &cam_v);
 	cl_set_arg(v, &v->figures_num, sizeof(size_t), 0);

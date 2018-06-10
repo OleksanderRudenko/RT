@@ -18,18 +18,6 @@
 # define X 0
 # define Y 1
 
-typedef struct 		s_sind
-{
-	unsigned int 	*sin_texture;
-	t_color 		color_t;
-	int 			center[2];
-	int 			distance;
-	double 			frequency[3];
-	double 			phase[3];
-	double 			a;
-	double			b;
-}					t_sind;
-
 typedef struct 		s_perlin
 {
 	unsigned int 	*perlin_texture;

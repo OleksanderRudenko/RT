@@ -12,18 +12,7 @@
 
 #include "rt.h"
 
-SDL_Rect	make_rect(int x, int y, int w, int h)
-{
-	SDL_Rect rect;
-
-	rect.x = x;
-	rect.y = y;
-	rect.w = w;
-	rect.h = h;
-	return (rect);
-}
-
-char *figure_type(t_figure_type num)
+char	*figure_type(t_figure_type num)
 {
 	if (num == 0)
 		return ("Plane");
@@ -53,38 +42,29 @@ int		is_in_rect(SDL_Rect rect, SDL_Event e)
 
 	x = e.button.x;
 	y = e.button.y;
-	if (x >= rect.x && x <= (rect.x + rect.w) && y >= rect.y && y <= (rect.y + rect.h))
+	if (x >= rect.x && x <= (rect.x + rect.w)
+		&& y >= rect.y && y <= (rect.y + rect.h))
 		return (1);
 	return (0);
 }
 
 void	open_scene(t_view *s)
 {
-		char const *type[2] = { "*.txt", "*.json" };
-		char const *name = tinyfd_openFileDialog("", "", 2, type, NULL, 0);
+	char const *type[2] = { "*.txt", "*.json" };
+	char const *name = tinyfd_openFileDialog("", "", 2, type, NULL, 0);
 
-		if (name == NULL)
-		{
-			ft_putendl("U dont choose anything");
-			return ;
-		}
-
-		ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
-		delete_init_cl(s);
-		del_list(s);
-		space_init(name, s);
-		object_init(s);
-		// view_init(s, name);
-
-		// opencl_init(s);
-		opencl_init2(s);
-		// get_init_prop(s);
-		// get_properties(s);
-		// detect_type_of_figure(s);
-		// what_to_print(s);
-		/*NEED to delete all malloc before redrawing all!*/
+	if (name == NULL)
+	{
+		ft_putendl("U dont choose anything");
+		return ;
+	}
+	ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
+	delete_init_cl(s);
+	del_list(s);
+	space_init(name, s);
+	object_init(s);
+	opencl_init2(s);
 }
-
 
 t_col	col_parse(int col)
 {

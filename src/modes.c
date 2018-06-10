@@ -37,8 +37,8 @@ void	initing_mode(t_view *view, const char *const filename)
 	if (view->server_client == Server)
 	{
 		poll_event(view);
-		// button_staff(view);
-		// what_to_print(view);
+		button_staff(view);
+		what_to_print(view);
 		server_init(view);
 		check_server(view, filename);
 	}

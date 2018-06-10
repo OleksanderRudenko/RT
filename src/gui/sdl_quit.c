@@ -12,12 +12,26 @@
 
 #include "rt.h"
 
-void	clean_staff(t_view *s)
+static	void	clear_staff2(t_view *s)
+{
+	SDL_DestroyRenderer(s->rr.rend[0]);
+	SDL_DestroyRenderer(s->rr.rend[1]);
+	SDL_DestroyRenderer(s->rr.rend[2]);
+	SDL_DestroyTexture(s->l_obj.def_tex);
+	clean_light(s);
+	clean_buttons(s);
+	SDL_DestroyTexture(s->select.sel_tex_on[0]);
+	SDL_DestroyTexture(s->select.sel_tex_on[1]);
+	TTF_Quit();
+	IMG_Quit();
+	SDL_Quit();
+}
+
+void			clean_staff(t_view *s)
 {
 	SDL_FreeSurface(s->win_surface);
 	clean_buttons(s);
 	clean_list_obj(s);
-
 	clean_sphere_prop(s);
 	clean_ic_prop(s);
 	clean_plane_prop(s);
@@ -29,21 +43,6 @@ void	clean_staff(t_view *s)
 	clean_parab_prop(s);
 	clean_light_prop(s);
 	clean_am_light_prop(s);
-	clean_dir_light_prop(s);;
-	SDL_DestroyRenderer(s->rr.rend[0]);
-	SDL_DestroyRenderer(s->rr.rend[1]);
-	SDL_DestroyRenderer(s->rr.rend[2]);
-	SDL_DestroyTexture(s->l_obj.def_tex);
-	clean_light(s); 
-	clean_buttons(s);
-	/*DELETE IN FUNCTION*/
-	SDL_DestroyTexture(s->select.sel_tex_on[0]);
-	SDL_DestroyTexture(s->select.sel_tex_on[1]);
-	/**/
-	TTF_Quit();
-	IMG_Quit();
-	SDL_Quit();
-	// ft_putendl("cleaned");
-	//export MallocStackLogging=1
-	/*delete textures and so on*/
+	clean_dir_light_prop(s);
+	clear_staff2(s);
 }

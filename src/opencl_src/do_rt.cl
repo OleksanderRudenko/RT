@@ -1,13 +1,6 @@
-
 #include "rt_h.cl"
 
-#define RAYS_PER_PIXEL 1 // antialising
-#define MAX_MIRROR_ITERS 5 // MIRROR
-
-
-/*
-	mirror effect
-*/
+#define MAX_MIRROR_ITERS 5
 
 float3	calc_reflect_ray(float3 ray_vector, float3 normale, float3 p)
 {
@@ -22,18 +15,6 @@ float3	calc_reflect_ray(float3 ray_vector, float3 normale, float3 p)
 
 	return (new_ray);
 }
-
-// t_ray	calc_reflect_ray(t_ray *old_ray, t_vector p, t_vector normal)
-// {
-// 	t_ray new_ray;
-//
-// 	new_ray.o = p;
-// 	old_ray->v = vk_multiple(old_ray->v, -1);
-// 	new_ray.v = vk_multiple(normal, 2 * vscalar_multiple(old_ray->v, normal));
-// 	new_ray.v = vsub(new_ray.v, old_ray->v);
-// 	return (new_ray);
-// }
-
 
 unsigned	int	add_colors(unsigned	int	color1, unsigned	int	color2)
 {
@@ -51,35 +32,11 @@ unsigned	int	add_colors(unsigned	int	color1, unsigned	int	color2)
 
 }
 
-// int		add_colors(int color1, int color2)
-// {
-// 	t_color	color_t1;
-// 	t_color	color_t2;
-// 	t_color	rez;
-//
-// 	color_t1.color = color1;
-// 	color_t2.color = color2;
-// 	rez.spectrum.red = (color_t1.spectrum.red + color_t2.spectrum.red) / 2;
-// 	rez.spectrum.green = (color_t1.spectrum.green + color_t2.spectrum.green) / 2;
-// 	rez.spectrum.blue = (color_t1.spectrum.blue + color_t2.spectrum.blue) / 2;
-// 	return (rez.color);
-// }
-
-
-
-/*
-	mirror effect END
-*/
-
-
 float			rt_lightr(float3 light, float3 normale, float3 view, float3 buf)
 {
 	float3		h;
 	float		d;
 	float 		a;
-
-	// h = sum(view, light);
-	// d = dot(h, normale);
 
 	h = view + light;
 	d = dot_my(h, normale);
@@ -97,11 +54,7 @@ t_lrt			tlrt_init(float3 ray_origin, float3 ray_vector, t_cl_figure figure, doub
 	t_lrt	var;
 
 	var.intersection = get_intersection(ray_origin, ray_vector, k);
-	// var.normale = get_normale(var.intersection, figure);
 	var.normale = normale;
-	// if (dot(var.normale, ray_vector) >= 0.0)
-	// 	var.normale = k_multiply(var.normale, -1.0f);
-
 	if ((figure.type == InfinitePlane ||
 			figure.type == Triangle ||
 				figure.type == Cube ||
@@ -117,36 +70,6 @@ t_lrt			tlrt_init(float3 ray_origin, float3 ray_vector, t_cl_figure figure, doub
 	var.reflected = 0.05;
 	return (var);
 }
-//
-// int			do_lightrt(t_space *space, t_ray *ray, t_figure *figure, double k)
-// {
-// 	t_lrt	v;
-//
-// 	v = tlrt_init(space, ray, figure, k);
-// 	while (v.light != NULL)
-// 	{
-// 		if (v.light->type == LIGHT_TYPE_AMBIENT)
-// 			v.bright += v.light->inten;
-// 		else
-// 		{
-// 			v.vlight = vsub(v.light->o, v.intersection);
-// 			v.buf = ray_init(v.intersection, v.vlight);
-// 			if (!check_intersections(v.buf, space->figures))
-// 			{
-// 				if ((v.nl_s = vscalar_multiple(v.normale, v.vlight)) > 0)
-// 					v.bright += v.light->inten * v.nl_s / vlen(v.vlight);
-// 				if (v.nl_s > 0 && figure->reflection > 0)
-// 					v.reflected += rt_lightr(v.vlight, v.normale,
-// 							vk_multiple(ray->v, -1),
-// 					vector_init(v.light->inten, figure->reflection, 0));
-// 			}
-// 			free(v.buf);
-// 		}
-// 		v.light = v.light->next;
-// 	}
-// 	return (set_brightness(figure->color, v.bright, v.reflected));
-// }
-
 
 unsigned int	do_lightrt(__constant t_cl_light *lights,
 						   __global t_cl_figure *figures,
@@ -213,7 +136,6 @@ unsigned int	rt(__constant t_cl_light *lights, __global t_cl_figure *figures,
 	{
 		buf = figures[n];
 		lbuf = check_intersection(ray_origin, ray_vector, &buf, 0, &buf_normale);
-		// lbuf = check_intersection(ray_origin, ray_vector, &figures[n]);
 		if (lbuf >= 1.0 && lbuf < len)
 		{
 			len = lbuf;
@@ -229,23 +151,6 @@ unsigned int	rt(__constant t_cl_light *lights, __global t_cl_figure *figures,
 	else
 		return (do_lightrt(lights, figures, closest, ray_origin, ray_vector, len, figures_num, lights_num, iters, normale, tex));
 }
-
-// unsigned char    find_cartoon(unsigned char col)
-// {
-//     if (col <= 0)
-//         return (0);
-//     else if (col > 0 && col <= 50)
-//         return (25);
-//     else if (col > 50 && col <= 100)
-//         return (75);
-//     else if (col > 100 && col <= 200)
-//         return (150);
-//     else if (col > 200 && col <= 250)
-//         return (225);
-//     else if (col > 250)
-//         return (255);
-//     return (col);
-// }
 
 unsigned int		calc_middle_color(unsigned int *colors, int antialising)
 {
@@ -272,11 +177,6 @@ unsigned int		calc_middle_color(unsigned int *colors, int antialising)
 	return(rez.color);
 }
 
-/*
-	with antialising
-*/
-
-
 unsigned int	do_rt(unsigned int x,
 					  unsigned int y,
 					  size_t width,
@@ -302,10 +202,6 @@ unsigned int	do_rt(unsigned int x,
 	float					size_y;
 	float					buf;
 
-	// if (x != 0 || y != 0)
-		// return (0);
-
-	// buf = (int)q_rsqrt((float)antialising);
 	buf = antialising;
 	antialising *= antialising;
 	size_x = buf;
@@ -331,44 +227,3 @@ unsigned int	do_rt(unsigned int x,
 	}
 	return (color);
 }
-
-/*
-	without antialising
-*/
-
-//
-// unsigned int	do_rt(unsigned int x,
-// 					  unsigned int y,
-// 					  size_t width,
-// 					  size_t height,
-// 					  __global t_cl_figure *figures,
-// 					  __constant t_cl_light *lights,
-// 					  float3 cam_vector,
-// 					  float3 cam_origin,
-// 					  size_t figures_num,
-// 					  size_t lights_num)
-// {
-// 	float3				ray_origin;
-// 	float3				ray_vector;
-// 	unsigned int 		color;
-// 	int						i;
-//
-// 	i = 0;
-// 	ray_origin = cam_origin;
-// 	ray_vector = (float3)(0.0f, 0.0f, 1.0f);
-// 	color = 0;
-// 	if (y < height && x < width)
-// 	{
-// 		while (i < RAYS_PER_PIXEL)
-// 		{
-//
-// 			ray_vector.x = (((x + 0.5f) / width) * 2.0f - 1.0f) * (((float)width) / height) * tan(M_PI / 360 * FOV_X);
-// 			ray_vector.y = (1.0f - 2.0f * ((y + 0.5f) / height)) * tan(3.14 / 360 * FOV_Y);
-// 			ray_vector.z = 1.0f;
-// 			cam_rotate(ray_origin, cam_vector);
-// 			color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, 0);
-// 			i++;
-// 		}
-// 	}
-// 	return (color);
-// }
