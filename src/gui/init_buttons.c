@@ -15,20 +15,20 @@
 void	init_rect(t_gui *r)
 {
 	r->but_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * NUM_BUTTONS);
-	r->but_rect[0] = make_rect(5, 5, 75, 75);
-	r->but_rect[1] = make_rect(90, 5, 75, 75);
-	r->but_rect[2] = make_rect(175, 5, 75, 75);
-	r->but_rect[3] = make_rect(250, 5, 75, 75);
-	r->but_rect[4] = make_rect(325, 5, 75, 75);
-	r->but_rect[5] = make_rect(410, 5, 75, 75);
-	r->but_rect[10] = make_rect(580, 5, 75, 75);
-	r->but_rect[11] = make_rect(665, 5, 75, 75);
-	r->but_rect[12] = make_rect(750, 5, 75, 75);
-	r->but_rect[7] = make_rect(0, 85, 75, 75);
-	r->but_rect[8] = make_rect(75, 85, 75, 75);
-	r->but_rect[9] = make_rect(150, 85, 75, 75);
-	r->but_rect[13] = make_rect(410, 85, 75, 75);
-	r->but_rect[6] = make_rect(495, 85, 75, 75);
+	r->but_rect[0] = make_rect(5, 5, 60, 60);
+	r->but_rect[1] = make_rect(90, 5, 60, 60);
+	r->but_rect[2] = make_rect(175, 5, 60, 60);
+	r->but_rect[3] = make_rect(250, 5, 60, 60);
+	r->but_rect[4] = make_rect(325, 5, 60, 60);
+	r->but_rect[5] = make_rect(410, 5, 60, 60);
+	r->but_rect[10] = make_rect(495, 5, 60, 60);
+	r->but_rect[11] = make_rect(580, 5, 60, 60);
+	r->but_rect[12] = make_rect(665, 5, 60, 60);
+	r->but_rect[7] = make_rect(0, 85, 60, 60);
+	r->but_rect[8] = make_rect(75, 85, 60, 60);
+	r->but_rect[9] = make_rect(150, 85, 60, 60);
+	r->but_rect[13] = make_rect(580, 85, 60, 60);
+	r->but_rect[6] = make_rect(665, 85, 60, 60);
 }
 
 void	init_buttons(t_view *s)
