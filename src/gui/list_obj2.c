@@ -14,8 +14,8 @@
 
 void		object_default_init(t_view *s)
 {
-	s->l_obj.def_rect = make_rect(10, 10, 250, 30);
-	s->l_obj.def_tex = create_text(s, "Please, select figure", 2, 42);
+	s->l_obj.def_rect = make_rect(10, 0, 250, 90);
+	s->l_obj.def_tex = get_tex("img/sel.png", s->rr.rend[2]);
 }
 
 void		print_default_text(t_view *s)
