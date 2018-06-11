@@ -37,10 +37,7 @@ SDL_Texture	*get_tex(char *file, SDL_Renderer *ren_tar)
 
 	surface = IMG_Load(file);
 	if (surface == NULL)
-	{
-		ft_putendl(SDL_GetError());
-		exit(0);
-	}
+		sdl_img_err();
 	texture = SDL_CreateTextureFromSurface(ren_tar, surface);
 	if (texture == NULL)
 	{
@@ -49,6 +46,19 @@ SDL_Texture	*get_tex(char *file, SDL_Renderer *ren_tar)
 	}
 	SDL_FreeSurface(surface);
 	return (texture);
+}
+
+SDL_Surface	*get_valid_texture(char *file)
+{
+	SDL_Surface *surface;
+
+	surface = IMG_Load(file);
+	if (surface == NULL)
+		sdl_img_err();
+	if (surface->w != 256 && surface->w != 256
+		&& surface->format->BytesPerPixel != 4)
+		sdl_texture_valid_error();
+	return (surface);
 }
 
 SDL_Texture	*tf(t_view *s, float num, int i, int font_size)

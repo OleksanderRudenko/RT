@@ -33,12 +33,12 @@ unsigned int	*array_ret(void)
 	int				len;
 
 	surf = (SDL_Surface **)malloc(sizeof(SDL_Surface*) * 4);
-	surf[0] = IMG_Load("img/one.jpeg");
-	surf[1] = IMG_Load("img/two.jpeg");
-	surf[2] = IMG_Load("img/three.jpeg");
-	surf[3] = IMG_Load("img/four.jpeg");
-	if (!surf[0] || !surf[1] || !surf[2] || !surf[3])
-		sdl_init_err();
+	surf[0] = get_valid_texture("img/one.jpeg");
+	surf[1] = get_valid_texture("img/two.jpeg");
+	surf[2] = get_valid_texture("img/three.jpeg");
+	surf[3] = get_valid_texture("img/four.jpeg");
+	// if (!surf[0] || !surf[1] || !surf[2] || !surf[3])
+	// 	sdl_init_err();
 	i = -1;
 	while (++i < 4)
 		surf[i] = SDL_ConvertSurfaceFormat(surf[i],

@@ -39,7 +39,7 @@ void		screenshot(t_view *s)
 	SDL_FreeSurface(screen);
 }
 
-void	redraw(t_view *s)
+void		redraw(t_view *s)
 {
 	s->space->cl_figures[s->rr.fl.y].color =
 	color_unite(s->sl[0]->clr.red, s->sl[1]->clr.green, s->sl[2]->clr.blue);

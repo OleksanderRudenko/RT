@@ -29,3 +29,9 @@ void	sdl_img_err(void)
 	ft_putendl(IMG_GetError());
 	exit(0);
 }
+
+void	sdl_texture_valid_error(void)
+{
+	ft_putendl("Invalid Texture");
+	exit(0);
+}

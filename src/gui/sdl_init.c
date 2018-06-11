@@ -66,7 +66,7 @@ int		poll_event(t_view *s)
 				client_send_get_info(s);
 		}
 	}
-	if (s->server_client != Normal)//Fix Sasha plz
+	if (s->server_client != Normal)
 	{
 		ft_putendl("Fix pliz");
 		SDL_HideWindow(s->win[1]);
