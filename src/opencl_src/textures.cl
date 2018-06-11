@@ -32,12 +32,8 @@ unsigned int	texture_sphere(float3 normal, __global unsigned int *texture, t_cl_
 			break;
 		break;
 	}
-	// printf("%f %f %f\n ", normal.x ,normal.y, normal.z);
 	u = 0.5f + atan2(normal.z, normal.x) / 3.1415f;
 	v = 0.5f - asin(normal.y / 2.0f) / 3.1415f;
-	// v = v - floor(v);
-	// u = u - floor(u);
-
 	x = (int)(w * u) % w;
 	y = (int)(h * v) % h;
 	col.color = getcolor(&texture[lol], x, y, w);
@@ -62,22 +58,27 @@ unsigned int	texture_plane(float3 p_c, __global unsigned int *texture, t_cl_figu
 	float		u;
 	float		v;
 	int	w,h, lol;
+	int	kek;
 
 	w = 256;
 	h = 256;
+	kek = (256 * 256 ) * 4;
 	switch (plane.texture )
 	{
 		case 1:
 			lol = 0;
 			break;
 		case 2:
-			lol = (256 * 256 ) * 4;
+			lol = kek;
 			break;
 		case 3:
-			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4;
+			lol = kek * 2;
 			break;
 		case 4:
-			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4 + (256 * 256 ) * 4;
+			lol = 3 * kek;
+			break;
+		case 5:
+			lol = 4 * kek;
 			break;
 		break;
 	}
@@ -107,9 +108,11 @@ unsigned int	texture_cone(float3 p_c, float3 normal, __global unsigned int *text
 	int x = 0;
 	int y = 0;
 	int	w,h, lol;
+	int	kek;
+
 	w = 256;
 	h = 256;
-
+	kek = (256 * 256 ) * 4;
 	float3 uu = closest.vector;
 	float3 vec = closest.vertex - p_c;
 	switch (closest.texture )
@@ -124,7 +127,10 @@ unsigned int	texture_cone(float3 p_c, float3 normal, __global unsigned int *text
 			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4;
 			break;
 		case 4:
-			lol = (256 * 256 ) * 4 + (256 * 256 ) * 4 + (256 * 256 ) * 4;
+			lol = 3 * kek;
+			break;
+		case 5:
+			lol = 4 * kek;
 			break;
 		break;
 	}
