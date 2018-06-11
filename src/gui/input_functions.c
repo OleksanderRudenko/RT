@@ -50,7 +50,7 @@ int		texture_val(void)
 	if (input == NULL)
 		return (0.0);
 	num = atof(input);
-	if (num > 4)
+	if (num > 5)
 		return (1);
 	else if (num < 0)
 		return (0);
