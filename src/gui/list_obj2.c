@@ -14,7 +14,7 @@
 
 void		object_default_init(t_view *s)
 {
-	s->l_obj.def_rect = make_rect(20, 10, 250, 30);
+	s->l_obj.def_rect = make_rect(10, 10, 250, 30);
 	s->l_obj.def_tex = create_text(s, "Please, select figure", 2, 42);
 }
 

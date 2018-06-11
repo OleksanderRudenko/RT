@@ -16,10 +16,10 @@ void	select_init(t_view *s)
 {
 	s->select.sel_tex_on = (SDL_Texture **)malloc(sizeof(SDL_Texture *) * 2);
 	s->select.sel_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * 2);
-	s->select.sel_tex_on[0] = get_tex("img/obj_on.bmp", s->rr.rend[1]);
-	s->select.sel_tex_on[1] = get_tex("img/light_on.bmp", s->rr.rend[1]);
-	s->select.sel_rect[0] = make_rect(50, 0, 100, 50);
-	s->select.sel_rect[1] = make_rect(150, 0, 100, 50);
+	s->select.sel_tex_on[0] = get_tex("img/obj.png", s->rr.rend[1]);
+	s->select.sel_tex_on[1] = get_tex("img/light.png", s->rr.rend[1]);
+	s->select.sel_rect[0] = make_rect(10, 0, 150, 75);
+	s->select.sel_rect[1] = make_rect(160, 10, 100, 65);
 }
 
 void	draw_select_button(t_view *s)
@@ -69,7 +69,7 @@ void	light_list_init(t_view *s)
 	light = s->space->lights;
 	num = s->lights_num;
 	i = 0;
-	y = 50;
+	y = 100;
 	s->l_light.light_tex = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * num);
 	s->l_light.light_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * num);
 	while (light)

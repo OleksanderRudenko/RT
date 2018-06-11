@@ -23,7 +23,7 @@ void	init_sdl(t_view *s)
 	s->win[1] = SDL_CreateWindow("Object_list", 470, SDL_WINDOWPOS_CENTERED,
 		300, 1000, SDL_WINDOW_OPENGL);
 	s->win[2] = SDL_CreateWindow("Properties", 1790, SDL_WINDOWPOS_CENTERED,
-		300, 1000, SDL_WINDOW_OPENGL);
+		270, 1000, SDL_WINDOW_OPENGL);
 	s->win[3] = SDL_CreateWindow("Options-Line", SDL_WINDOWPOS_CENTERED, 100,
 		1000, 200, SDL_WINDOW_OPENGL);
 	if (!(s->rr.logo = IMG_Load("img/rt_logo.png")))
