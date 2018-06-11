@@ -26,6 +26,10 @@ static inline void	sphere_prop2(t_view *s)
 	s->prop.tex[6] = create_text(s, "Texture-id", 2, 30);
 	s->prop.pr_rect[6] = make_rect(150, 500, 60, 30);
 	s->prop.prop[6] = tf(s, 0, 2, 30);
+	s->prop.rect[7] = make_rect(10, 550, 100, 30);
+	s->prop.tex[7] = create_text(s, "Refraction", 2, 30);
+	s->prop.pr_rect[7] = make_rect(150, 550, 60, 30);
+	s->prop.prop[7] = tf(s, 0, 2, 30);
 }
 
 void				sphere_prop(t_view *s)
@@ -74,6 +78,7 @@ void				init_prop(t_view *s)
 		s->space->cl_figures[s->rr.fl.y].reflection, 2, 32);
 	s->prop.prop[5] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
 	s->prop.prop[6] = tf(s, s->space->cl_figures[s->rr.fl.y].texture, 2, 32);
+	s->prop.prop[7] = tf(s, s->space->cl_figures[s->rr.fl.y].refract, 2, 32);
 }
 
 void				print_sph_prop(t_view *s)

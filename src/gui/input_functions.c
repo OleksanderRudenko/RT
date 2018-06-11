@@ -56,3 +56,17 @@ int		texture_val(void)
 		return (0);
 	return (num);
 }
+
+int		refract_val(void)
+{
+	const char	*input;
+	int			num;
+
+	input = tinyfd_inputBox("", "Refract or not ?", "0");
+	if (input == NULL)
+		return (0.0);
+	num = atof(input);
+	if (num > 100 && num < -100)
+		return (0);
+	return (num);
+}
