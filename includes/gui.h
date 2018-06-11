@@ -343,5 +343,6 @@ void				triangle_init_prop2(t_view *s);
 SDL_Surface			*get_valid_texture(char *file);
 void				sdl_texture_valid_error(void);
 int					refract_val(void);
+void				triangle_prop3(t_view *s);
 
 #endif

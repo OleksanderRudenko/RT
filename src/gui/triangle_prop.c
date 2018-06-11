@@ -67,6 +67,7 @@ void				triangle_prop(t_view *s)
 	s->tri.tri_pr_rect[4] = make_rect(120, 400, 60, 32);
 	s->tri.tri_prop[4] = tf(s, 0, 2, 32);
 	tr_prop2(s);
+	triangle_prop3(s);
 }
 
 void				triangle_init_prop(t_view *s)

@@ -25,4 +25,14 @@ void	triangle_init_prop2(t_view *s)
 	s->tri.tri_prop[9] = tf(s,
 		s->space->cl_figures[s->rr.fl.y].reflection, 2, 32);
 	s->tri.tri_prop[10] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
+	s->tri.tri_prop[11] = tf(s,
+		s->space->cl_figures[s->rr.fl.y].refract, 2, 32);
+}
+
+void	triangle_prop3(t_view *s)
+{
+	s->tri.tri_rect[11] = make_rect(10, 750, 90, 32);
+	s->tri.tri_tex[11] = create_text(s, "Refraction", 2, 32);
+	s->tri.tri_pr_rect[11] = make_rect(120, 750, 60, 32);
+	s->tri.tri_prop[11] = tf(s, 0, 2, 32);
 }
