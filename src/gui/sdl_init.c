@@ -12,7 +12,7 @@
 
 #include "rt.h"
 
-void	init_sdl(t_view *s)
+void		init_sdl(t_view *s)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0 || TTF_Init() < 0)
 		sdl_init_err();
@@ -37,7 +37,16 @@ void	init_sdl(t_view *s)
 	s->rr.fl = (t_num){0, -1, 0, -1, -1, -1};
 }
 
-int		poll_event(t_view *s)
+static void	eventess(t_view *s)
+{
+	SDL_HideWindow(s->win[1]);
+	SDL_HideWindow(s->win[2]);
+	SDL_HideWindow(s->win[3]);
+	if (s->server_client == Server)
+		SDL_HideWindow(s->win[0]);
+}
+
+int			poll_event(t_view *s)
 {
 	SDL_Event e;
 
@@ -65,14 +74,7 @@ int		poll_event(t_view *s)
 		}
 	}
 	if (s->server_client != Normal)
-	{
-		ft_putendl("Fix pliz");
-		SDL_HideWindow(s->win[1]);
-		SDL_HideWindow(s->win[2]);
-		SDL_HideWindow(s->win[3]);
-		if (s->server_client == Server)
-			SDL_HideWindow(s->win[0]);
-	}
+		eventess(s);
 	scroll_down(s, e);
 	return (1);
 }
