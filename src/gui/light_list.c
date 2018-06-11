@@ -98,4 +98,6 @@ void	clean_light(t_view *s)
 		s->l_light.light_tex[i] = NULL;
 		i++;
 	}
+	free(s->l_light.light_tex);
+	free(s->l_light.light_rect);
 }

@@ -85,7 +85,7 @@ char		*ft_ftoa(double value)
 	nb = (int)value;
 	arr = ft_itoa(nb);
 	ft_strcat(arr, ".");
-	point_part = (value - nb) * 1000;
+	point_part = (value - nb) * 100;
 	point_part = point_part < 0 ? point_part * -1 : point_part;
 	arr2 = ft_itoa(point_part);
 	tmp = arr;
