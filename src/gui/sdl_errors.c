@@ -32,6 +32,6 @@ void	sdl_img_err(void)
 
 void	sdl_texture_valid_error(void)
 {
-	ft_putendl("Invalid Texture");
+	ft_putendl("Invalid Texture HERE");
 	exit(0);
 }

@@ -94,10 +94,12 @@ void	clean_light(t_view *s)
 	num = s->lights_num;
 	while (i < num)
 	{
-		SDL_DestroyTexture(s->l_light.light_tex[i]);
-		s->l_light.light_tex[i] = NULL;
+		if (s->l_light.light_tex[i])
+			SDL_DestroyTexture(s->l_light.light_tex[i]);
 		i++;
 	}
-	free(s->l_light.light_tex);
-	free(s->l_light.light_rect);
+	if (s->l_light.light_tex)
+		free(s->l_light.light_tex);
+	if (s->l_light.light_rect)
+		free(s->l_light.light_rect);
 }

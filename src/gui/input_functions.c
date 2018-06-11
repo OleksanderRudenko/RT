@@ -51,7 +51,7 @@ int		texture_val(void)
 		return (0.0);
 	num = atof(input);
 	if (num > 5)
-		return (1);
+		return (0);
 	else if (num < 0)
 		return (0);
 	return (num);
