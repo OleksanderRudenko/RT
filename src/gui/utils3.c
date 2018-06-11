@@ -52,20 +52,24 @@ void		scroll_down(t_view *s, SDL_Event e)
 	size_t	i;
 
 	i = 0;
-	if (e.wheel.y < 0 && e.type == SDL_MOUSEWHEEL)
+	if (s->l_obj.obj_rect)
 	{
-		while (i < s->figures_num)
+		if (e.wheel.y < 0 && e.type == SDL_MOUSEWHEEL)
 		{
-			s->l_obj.obj_rect[i].y -= 5;
-			i++;
+			while (i < s->figures_num)
+			{
+				s->l_obj.obj_rect[i].y -= 5;
+				i++;
+			}
 		}
-	}
-	else if (e.wheel.y > 0 && e.type == SDL_MOUSEWHEEL)
-	{
-		while (i < s->figures_num)
+		else if (e.wheel.y > 0 && e.type == SDL_MOUSEWHEEL
+			&& s->l_obj.obj_rect[0].y < 900)
 		{
-			s->l_obj.obj_rect[i].y += 5;
-			i++;
+			while (i < s->figures_num)
+			{
+				s->l_obj.obj_rect[i].y += 5;
+				i++;
+			}
 		}
 	}
 }

@@ -37,7 +37,6 @@ void	view_init(t_view *view, const char *filename)
 	light_list_init(view);
 }
 
-
 int			exit_x(t_view *view)
 {
 	exit(1);
@@ -84,7 +83,6 @@ int			main(int argc, char **argv)
 	opencl_init(&view);
 	initing_mode(&view, argv[1]);
 	choose_mode(&view);
-
 	SDL_FreeSurface(view.rr.logo);
 	free(view.array);
 	system("leaks RT");

@@ -25,7 +25,7 @@ void	object_init(t_view *s)
 	fig = s->space->figures;
 	num = s->figures_num;
 	i = 0;
-	y = 50;
+	y = 100;
 	s->l_obj.obj_tex = (SDL_Texture **)malloc(sizeof(SDL_Texture*) * num);
 	s->l_obj.obj_rect = (SDL_Rect *)malloc(sizeof(SDL_Rect) * num);
 	while (fig)
