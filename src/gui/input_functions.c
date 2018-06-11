@@ -64,9 +64,9 @@ int		refract_val(void)
 
 	input = tinyfd_inputBox("", "Refract or not ?", "0");
 	if (input == NULL)
-		return (0.0);
+		return (-1);
 	num = atof(input);
-	if (num > 100 && num < -100)
-		return (0);
+	if (num > 200 && num < -1)
+		return (-1);
 	return (num);
 }
