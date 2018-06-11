@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   perlin_noise.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: knovytsk <knovytsk@student.unit.ua>        +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/11 12:50:43 by knovytsk          #+#    #+#             */
-/*   Updated: 2018/06/10 13:53:08 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/11 19:20:35 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ double			perlin(t_perlin *p, double x, double y, double z)
 	static int	*permutation = NULL;
 	int			i;
 
+	srand(time(0));
 	if (!(permutation))
 	{
 		permutation = (int*)malloc(sizeof(int) * 512);
