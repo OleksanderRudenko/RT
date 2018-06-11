@@ -143,6 +143,19 @@ $(BINDIR)%.o: $(CLIENT_SERVERDIR)%.c $(HEADER_RELATION)
 $(BINDIR)%.o: $(EFFECTSDIR)%.c
 	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
+norm:
+	norminette $(addprefix $(SRCDIR), $(SRCFILES))
+	norminette $(COLORDIR) 
+	norminette $(FIGUREDIR)
+	norminette $(LIGHTDIR)
+	norminette $(VECTORDIR)
+	norminette $(PARSEDIR)
+	norminette $(OPENCLDIR) 
+	norminette $(EFFECTSDIR)
+	norminette $(GUIDIR)
+	norminette $(CLIENT_SERVERDIR)
+	norminette $(HEADER_RELATION)
+
 clean:
 	@make -C ./libft/ clean
 	@make -C ./parson/ clean
