@@ -81,7 +81,6 @@ void				init_cube_prop(t_view *s)
 		s->space->cl_figures[s->rr.fl.y].position.z, 2, 32);
 	s->cub.cu_pr[3] = tf(s,
 		s->space->cl_figures[s->rr.fl.y].reflection, 2, 32);
-	s->cub.cu_pr[4] = NULL;
 	s->cub.cu_pr[5] = NULL;
 	s->cub.cu_pr[6] = NULL;
 	s->cub.cu_pr[7] = tf(s, s->space->cl_figures[s->rr.fl.y].scale.x, 2, 32);

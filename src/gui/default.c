@@ -54,6 +54,7 @@ void		default_sphere_init(t_view *view)
 	sphere->radius = 0.4;
 	new_figure->color = 0xff;
 	new_figure->reflection = 0;
+	new_figure->refract = -1;
 	new_figure->next = NULL;
 	default_helper_figures(view, new_figure);
 }
@@ -71,6 +72,7 @@ void		default_plane_init(t_view *view)
 	plane->point = (t_vector){1.0, 1.0, 1.0};
 	new_figure->color = 0xff;
 	new_figure->reflection = 0;
+	new_figure->refract = -1;
 	new_figure->next = NULL;
 	default_helper_figures(view, new_figure);
 }
@@ -88,6 +90,7 @@ void		default_cylinder_init(t_view *view)
 	cylinder->vector = vnormalize((t_vector){0.0, 1.0, 0.0});
 	cylinder->radius = 0.5;
 	new_figure->color = 0xff;
+	new_figure->refract = -1;
 	cylinder->c_distances[0] = -INFINITY;
 	cylinder->c_distances[1] = INFINITY;
 	new_figure->reflection = 0;
@@ -108,6 +111,7 @@ void		default_cone_init(t_view *view)
 	cone->radius = 0.2;
 	new_figure->color = 0x0000ff;
 	new_figure->reflection = 10;
+	new_figure->refract = -1;
 	cone->vector = vnormalize((t_vector){0.0, 1.0, 0.0});
 	new_figure->figure = cone;
 	new_figure->next = NULL;

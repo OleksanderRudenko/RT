@@ -46,6 +46,7 @@ void	default_paraboloid_init(t_view *view)
 	elips->radius = 0.5;
 	new_figure->color = 0xff;
 	new_figure->reflection = 20;
+	new_figure->refract = -1;
 	new_figure->next = NULL;
 	default_helper_figures(view, new_figure);
 }
@@ -64,6 +65,7 @@ void	default_cube_init(t_view *view)
 	cube->scale = (t_vector){1.0, 1.0, 1.0};
 	count_planes(cube);
 	new_figure->color = 0xff;
+	new_figure->refract = -1;
 	new_figure->reflection = 10;
 	new_figure->next = NULL;
 	default_helper_figures(view, new_figure);
@@ -84,6 +86,7 @@ void	default_quadrate_init(t_view *view)
 	quadr->figure = q;
 	quadr->color = 0xff;
 	quadr->reflection = 50;
+	quadr->refract = -1;
 	quadr->type = Quadrate;
 	quadr->next = NULL;
 	default_helper_figures(view, quadr);
@@ -101,8 +104,9 @@ void	default_triangle_init(t_view *view)
 	triangle->points[1] = (t_vector){-1.0, 1.0, 0.0};
 	triangle->points[2] = (t_vector){-1.0, 0.0, 0.0};
 	triangle->normale = count_triangle_normale(triangle->points);
-	new_figure->color = 0xff;
+	new_figure->color = 0xff0000;
 	new_figure->reflection = 35;
+	new_figure->refract = -1;
 	new_figure->figure = triangle;
 	new_figure->next = NULL;
 	default_helper_figures(view, new_figure);

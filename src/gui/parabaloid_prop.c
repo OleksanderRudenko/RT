@@ -34,6 +34,10 @@ static inline void	parab_prop2(t_view *s)
 	s->par.pr_tex[8] = create_text(s, "Mirror", 2, 32);
 	s->par.pr_pr_rect[8] = make_rect(120, 600, 60, 32);
 	s->par.pr_prop[8] = tf(s, 0, 2, 32);
+	s->par.pr_rect[9] = make_rect(10, 650, 90, 32);
+	s->par.pr_tex[9] = create_text(s, "Refraction", 2, 32);
+	s->par.pr_pr_rect[9] = make_rect(120, 650, 60, 32);
+	s->par.pr_prop[9] = tf(s, 0, 2, 32);
 }
 
 void				parab_prop(t_view *s)
@@ -85,6 +89,7 @@ void				init_parab_prop(t_view *s)
 	s->par.pr_prop[6] = NULL;
 	s->par.pr_prop[7] = NULL;
 	s->par.pr_prop[8] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
+	s->par.pr_prop[9] = tf(s, s->space->cl_figures[s->rr.fl.y].refract, 2, 32);
 }
 
 void				print_parab_prop(t_view *s)

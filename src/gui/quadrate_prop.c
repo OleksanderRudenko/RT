@@ -34,6 +34,10 @@ static void inline	quad2(t_view *s)
 	s->qua.qu_tex[8] = create_text(s, "Texture-id", 2, 32);
 	s->qua.qu_pr_rect[8] = make_rect(120, 600, 60, 32);
 	s->qua.qu_prop[8] = tf(s, 0, 2, 32);
+	s->qua.qu_rect[9] = make_rect(10, 650, 90, 32);
+	s->qua.qu_tex[9] = create_text(s, "Refraction", 2, 32);
+	s->qua.qu_pr_rect[9] = make_rect(120, 650, 60, 32);
+	s->qua.qu_prop[9] = tf(s, 0, 2, 32);
 }
 
 void				quadraate_prop(t_view *s)
@@ -85,6 +89,7 @@ void				init_quadraate_prop(t_view *s)
 		s->space->cl_figures[s->rr.fl.y].reflection, 2, 32);
 	s->qua.qu_prop[7] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
 	s->qua.qu_prop[8] = tf(s, s->space->cl_figures[s->rr.fl.y].texture, 2, 32);
+	s->qua.qu_prop[9] = tf(s, s->space->cl_figures[s->rr.fl.y].refract, 2, 32);
 }
 
 void				print_quadraate_prop(t_view *s)

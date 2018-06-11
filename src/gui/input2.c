@@ -49,6 +49,7 @@ void	save_parab(t_view *s, int n)
 	n == 7 ? rotate_figures(&s->space->cl_figures[s->rr.fl.y],
 		par_input(), n - 5) : 0;
 	n == 8 ? s->space->cl_figures[s->rr.fl.y].mirror = mirror_val() : 0;
+	n == 9 ? s->space->cl_figures[s->rr.fl.y].refract = refract_val() : 0;
 	redraw(s);
 }
 
@@ -68,6 +69,7 @@ void	save_quadr(t_view *s, int n)
 	n == 6 ? s->space->cl_figures[s->rr.fl.y].reflection = par_input() : 0;
 	n == 7 ? s->space->cl_figures[s->rr.fl.y].mirror = mirror_val() : 0;
 	n == 8 ? s->space->cl_figures[s->rr.fl.y].texture = texture_val() : 0;
+	n == 9 ? s->space->cl_figures[s->rr.fl.y].refract = refract_val() : 0;
 	redraw(s);
 }
 
