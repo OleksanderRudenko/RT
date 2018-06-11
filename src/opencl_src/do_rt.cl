@@ -144,7 +144,7 @@ unsigned int	do_lightrt(__constant t_cl_light *lights,
 		ray_origin.x = v.intersection.x + ray_vector.x * 0.001;
 		ray_origin.y = v.intersection.y + ray_vector.y * 0.001;
 		ray_origin.z = v.intersection.z + ray_vector.z * 0.001;
-		unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters - 1, tex);
+		unsigned int buf_color = rt(lights, figures, ray_origin, ray_vector, lights_num, figures_num, iters, tex);
 		return (buf_color);
 	}
 	if (iters <= 0 || figure.mirror == 0)
