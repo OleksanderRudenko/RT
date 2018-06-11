@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_rt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/17 10:40:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/03/22 20:25:35 by abutok           ###   ########.fr       */
+/*   Updated: 2018/06/11 19:42:26 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,5 @@ void		do_rt(t_view *view)
 			view->buff[y * WIDTH + x] = rt(view->space, ray);
 		}
 	}
-	// checkerboard_effect(view, 0);
 	free(ray);
 }

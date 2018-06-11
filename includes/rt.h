@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/11 19:21:22 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/11 19:48:41 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,7 +354,7 @@ void 		copy_tor(t_cl_figure *figure, t_figure *tmp);
 void				color_effects(t_view *view);
 
 //effects/checkerdoard
-void 	 	checkerboard_effect(t_view *v, int color);
+unsigned int 	 	*checkerboard(void);
 
 //effects/perlin_noise
 unsigned int 		*perlin_noise(void);

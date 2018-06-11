@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 01:11:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/09 19:54:54 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/11 19:44:52 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void	view_init(t_view *view, const char *filename)
 {
+	srand(time(0));
 	space_init(filename, view);
 	init_rect(&view->rr);
 	set_things_up(view);
