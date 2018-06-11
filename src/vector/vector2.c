@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/16 15:16:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/03/16 15:16:00 by abutok           ###   ########.fr       */
+/*   Created: 2018/06/11 20:21:01 by ataranov          #+#    #+#             */
+/*   Updated: 2018/06/11 20:31:32 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 t_vector	vmultiple(t_vector a, t_vector b)
 {
-  t_vector rez;
+	t_vector rez;
 
-  rez.x = (a.z * b.y) - (a.y * b.z);
-  rez.y = (a.x * b.z) - (a.z * b.x);
-  rez.z = (a.y * b.x) - (a.x * b.y);
-  return (rez);
+	rez.x = (a.z * b.y) - (a.y * b.z);
+	rez.y = (a.x * b.z) - (a.z * b.x);
+	rez.z = (a.y * b.x) - (a.x * b.y);
+	return (rez);
 }
 
 t_vector	vsum(t_vector a, t_vector b)

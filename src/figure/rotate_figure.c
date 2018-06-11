@@ -6,13 +6,13 @@
 /*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 12:09:05 by ataranov          #+#    #+#             */
-/*   Updated: 2018/06/10 14:25:27 by ataranov         ###   ########.fr       */
+/*   Updated: 2018/06/11 21:16:14 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-static func	*g_rot_arr[3] =
+static t_func	*g_rot_arr[3] =
 {
 	rotate_p_cl_x,
 	rotate_p_cl_y,
@@ -30,7 +30,7 @@ static	cl_float3	null_vec_cl(void)
 }
 
 void				calc_rot_sq(t_cl_figure *figure,
-	float angle, func *rot_func)
+	float angle, t_func *rot_func)
 {
 	cl_float3	null_vec;
 
@@ -43,7 +43,7 @@ void				calc_rot_sq(t_cl_figure *figure,
 }
 
 void				calc_rot_cube(t_cl_figure *figure,
-	float angle, func *rot_func)
+	float angle, t_func *rot_func)
 {
 	int			i;
 	cl_float3	null_vec;
@@ -61,7 +61,7 @@ void				calc_rot_cube(t_cl_figure *figure,
 	}
 }
 
-void				rots(t_cl_figure *figure, float angle, func *rot_func)
+void				rots(t_cl_figure *figure, float angle, t_func *rot_func)
 {
 	cl_float3 null_vec;
 

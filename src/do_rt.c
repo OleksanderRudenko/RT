@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   do_rt.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/17 10:40:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/11 19:42:26 by vvinogra         ###   ########.fr       */
+/*   Created: 2018/06/11 20:21:01 by ataranov          #+#    #+#             */
+/*   Updated: 2018/06/11 20:38:56 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,8 @@ void		do_rt(t_view *view)
 		x = -1;
 		while (++x < WIDTH)
 		{
-			ray->v.x = (((x + 0.5) / WIDTH) * 2 - 1) * (((double)WIDTH) / HEIGHT) *
+			ray->v.x = (((x + 0.5) / WIDTH) * 2 - 1) *
+				(((double)WIDTH) / HEIGHT) *
 					tan(M_PI / 360 * FOV_X);
 			ray->v.y = (1 - 2 * ((y + 0.5) / HEIGHT)) *
 					tan(M_PI / 360 * FOV_Y);

@@ -1,91 +1,90 @@
 {
-	"figures":
-	[
-		{
-      		"type": "plane",
-      		"normale": [0.0, -1.0, 0.0],
-      		"point": [0, -3, 0],
-      		"color": "0xffffff",
-      		"reflection": 100
-    	},
-		{
-      		"type": "plane",
-      		"normale": [0.0, -1.0, 0.0],
-      		"point": [0, 4, 0],
-      		"color": "0xffffff",
-      		"reflection": 100
-    	},
-    	{
-      		"type": "plane",
-      		"normale": [0.0, 0.0, 1.0],
-      		"point": [0, 0, 30],
-      		"color": "0xffffff",
-      		"reflection": 0
-    	},
-    	{
-			    "type": "cone",
-			    "start": [1.0, 0.0, 12],
-      		"vector": [0.0, 1.0, 0.0],
-      		"radius": 0.625,
-      		"color": "0xD0863D",
-      		"reflection": 200
-		},
-		{
-      		"type": "cylinder",
-      		"start": [-3, -2.5, 5],
-      		"vector": [0.0, 1.0, 0.0],
-      		"radius": 1,
-      		"cut plane1": 0.6,
-      		"cut plane2": -0.6,
-      		"color": "0xffffff",
-      		"reflection": 10
-    	},
-    	{
-      		"type": "cube",
-     		  "position": [3.0, -2.5, 5.0],
-     		  "rotation": [0.0, 20.0, 0.0],
-     		  "scale": [1, 1, 1],
-      		"color": "0x40BD61",
-      		"reflection": 100
-    	},
-    	{
-      		"type": "sphere",
-      		"center": [3, -1.51, 5],
-      		"radius": 0.5,
-      		"color": "0xffffff",
-      		"reflection": 10
-    	},
-    	{
-      		"type": "sphere",
+  "figures":
+  [
+    {
+          "type": "plane",
+          "normale": [0.0, -1.0, 0.0],
+          "point": [0, -3, 0],
+          "color": "0xffffff",
+          "reflection": 100,
+          "texture": 3
+      },
+    {
+          "type": "plane",
+          "normale": [0.0, -1.0, 0.0],
+          "point": [0, 5, 0],
+          "color": "0x73CBF0",
+          "reflection": 100
+      },
+      {
+          "type": "cone",
+          "start": [1.0, 0.0, 12],
+          "vector": [0.0, 1.0, 0.0],
+          "radius": 0.625,
+          "color": "0xD0863D",
+          "reflection": 200,
+          "texture": 1
+    },
+    {
+          "type": "cylinder",
+          "start": [-3, -2.5, 5],
+          "vector": [0.0, 1.0, 0.0],
+          "radius": 1,
+          "cut plane1": 0.6,
+          "cut plane2": -0.6,
+          "color": "0xffffff",
+          "reflection": 10,
+          "texture": 2
+      },
+      {
+          "type": "cube",
+          "position": [3.0, -2.5, 5.0],
+          "rotation": [0.0, 20.0, 0.0],
+          "scale": [1, 1, 1],
+          "color": "0x40BD61",
+          "reflection": 100,
+          "texture": 1
+      },
+      {
+          "type": "sphere",
+          "center": [3, -1.51, 5],
+          "radius": 0.5,
+          "color": "0xffffff",
+          "reflection": 10,
+          "texture": 4
+      },
+      {
+          "type": "sphere",
           "center": [-3, -1.42, 5],
           "radius": 0.5,
           "color": "0xffffff",
-          "reflection": 10
-    	}
-	],
-	"lights":
-	[
-		{
-			"type": "direction",
-			"position": [0.0, -2.0, -1.0],
-			"direction": [1.0, 1.0, 0.0],
-			"intensity": 0.1
-		},
-		{
-			"type": "direction",
-			"position": [0.0, 3.0, 0.0],
-			"direction": [-1.0, -1.0, 0.0],
-			"intensity": 0.2
-		},
-		{
-      		"type": "point",
-      		"position": [-2.0, 0.0, -1.0],
-      		"intensity": 0.4
-    	}
-	],
-	"cam":
-	{
-		"position": [0.0, 0.0, -10.0],
-    	"rotation": [0.0, 0.0, 0.0]
-	}
+          "reflection": 10,
+          "texture": 4
+      }
+  ],
+  "lights":
+  [
+    {
+      "type": "direction",
+      "position": [0.0, -2.0, -1.0],
+      "direction": [1.0, 1.0, 0.0],
+      "intensity": 0.4
+    },
+    {
+      "type": "direction",
+      "position": [0.0, 3.0, 0.0],
+      "direction": [-1.0, -1.0, 0.0],
+      "intensity": 0.4
+    },
+    {
+          "type": "point",
+          "position": [-2.0, 0.0, -1.0],
+          "intensity": 0.4
+      }
+  ],
+  "cam":
+  {
+    "position": [0.0, 0.0, -10.0],
+      "rotation": [0.0, 0.0, 0.0]
+  }
 }

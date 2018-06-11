@@ -3,18 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/03/16 01:11:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/11 19:44:52 by vvinogra         ###   ########.fr       */
+/*   Created: 2018/06/11 20:21:01 by ataranov          #+#    #+#             */
+/*   Updated: 2018/06/11 20:43:59 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void	view_init(t_view *view, const char *filename)
+void				view_init(t_view *view, const char *filename)
 {
-	srand(time(0));
 	space_init(filename, view);
 	init_rect(&view->rr);
 	set_things_up(view);
@@ -37,20 +36,20 @@ void	view_init(t_view *view, const char *filename)
 	light_list_init(view);
 }
 
-int			exit_x(t_view *view)
+int					exit_x(t_view *view)
 {
 	exit(1);
 	view = NULL;
 	return (0);
 }
 
-inline static void usage_exit(void)
+inline static void	usage_exit(void)
 {
 	ft_putstr("Usage: ./RT scene_filename [server,client server_ip]\n");
 	exit(EXIT_FAILURE);
 }
 
-void	usage(t_view *view, int argc, char **argv)
+void				usage(t_view *view, int argc, char **argv)
 {
 	if (argc == 2)
 		view->server_client = Normal;
@@ -60,7 +59,8 @@ void	usage(t_view *view, int argc, char **argv)
 			view->server_client = Server;
 		else
 			usage_exit();
-	} else if (argc == 4)
+	}
+	else if (argc == 4)
 	{
 		if (!ft_strcmp(argv[2], "client"))
 			view->server_client = Client;
@@ -72,7 +72,7 @@ void	usage(t_view *view, int argc, char **argv)
 		usage_exit();
 }
 
-int			main(int argc, char **argv)
+int					main(int argc, char **argv)
 {
 	t_view	view;
 

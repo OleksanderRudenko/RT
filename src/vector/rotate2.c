@@ -6,7 +6,7 @@
 /*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/10 13:28:05 by ataranov          #+#    #+#             */
-/*   Updated: 2018/06/10 13:31:12 by ataranov         ###   ########.fr       */
+/*   Updated: 2018/06/11 20:31:42 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,3 @@ void	rotate_cl_z(cl_float3 *ps, float l)
 	ps->x = nx;
 	ps->y = ny;
 }
-

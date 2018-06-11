@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   sdl_init.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/26 13:37:15 by arudenko          #+#    #+#             */
-/*   Updated: 2018/06/09 19:39:45 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/11 21:02:55 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
-void		init_sdl(t_view *s)
+void	init_sdl(t_view *s)
 {
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0 || TTF_Init() < 0)
 		sdl_init_err();
@@ -37,44 +37,50 @@ void		init_sdl(t_view *s)
 	s->rr.fl = (t_num){0, -1, 0, -1, -1, -1};
 }
 
-static void	eventess(t_view *s)
+void	buf_hide_window(t_view *s)
 {
-	SDL_HideWindow(s->win[1]);
-	SDL_HideWindow(s->win[2]);
-	SDL_HideWindow(s->win[3]);
-	if (s->server_client == Server)
-		SDL_HideWindow(s->win[0]);
+	if (s->server_client != Normal)
+	{
+		ft_putendl("Fix pliz");
+		SDL_HideWindow(s->win[1]);
+		SDL_HideWindow(s->win[2]);
+		SDL_HideWindow(s->win[3]);
+		if (s->server_client == Server)
+			SDL_HideWindow(s->win[0]);
+	}
 }
 
-int			poll_event(t_view *s)
+void	buf_if_else(t_view *s, SDL_Event e)
+{
+	if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN &&
+		e.key.keysym.sym == SDLK_ESCAPE))
+		s->exit_loop = 0;
+	else if (e.type == SDL_MOUSEBUTTONDOWN)
+	{
+		slider_click_event(e.button.button, s, e);
+		mouse_key_down(s, e);
+	}
+	else if (e.type == SDL_MOUSEMOTION && e.window.windowID == 3)
+		slider_motion_event(e.button.button, s, e);
+	else if (e.window.windowID == 2)
+		s->flag == 0 ? obj_highlight(s, e, s->l_obj.obj_rect) :
+		light_list_highlight(s, e, s->l_light.light_rect);
+	else if (e.type == SDL_KEYDOWN)
+	{
+		camera_move(s, e.key.keysym.scancode);
+		camera_rot(s, e.key.keysym.scancode);
+		if (s->server_client == Client)
+			client_send_get_info(s);
+	}
+}
+
+int		poll_event(t_view *s)
 {
 	SDL_Event e;
 
 	while (SDL_PollEvent(&e))
-	{
-		if (e.type == SDL_QUIT || (e.type == SDL_KEYDOWN &&
-			e.key.keysym.sym == SDLK_ESCAPE))
-				s->exit_loop = 0;
-		else if (e.type == SDL_MOUSEBUTTONDOWN)
-		{
-			slider_click_event(e.button.button, s, e);
-			mouse_key_down(s, e);
-		}
-		else if (e.type == SDL_MOUSEMOTION && e.window.windowID == 3)
-			slider_motion_event(e.button.button, s, e);
-		else if (e.window.windowID == 2)
-			s->flag == 0 ? obj_highlight(s, e, s->l_obj.obj_rect) :
-			light_list_highlight(s, e, s->l_light.light_rect);
-		else if (e.type == SDL_KEYDOWN)
-		{
-			camera_move(s, e.key.keysym.scancode);
-			camera_rot(s, e.key.keysym.scancode);
-			if (s->server_client == Client)
-				client_send_get_info(s);
-		}
-	}
-	if (s->server_client != Normal)
-		eventess(s);
+		buf_if_else(s, e);
+	buf_hide_window(s);
 	scroll_down(s, e);
 	return (1);
 }

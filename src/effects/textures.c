@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arudenko <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/06 11:06:45 by arudenko          #+#    #+#             */
-/*   Updated: 2018/06/10 13:40:57 by knovytsk         ###   ########.fr       */
+/*   Updated: 2018/06/11 21:02:45 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,20 @@ unsigned int	*get_textures(SDL_Surface **surf, int len)
 	ft_memcpy(&array[len * 4], tmp, len);
 	free(tmp);
 	return (array);
+}
+
+void			clean_trash(SDL_Surface **surf, SDL_Surface **tmp)
+{
+	int i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		SDL_FreeSurface(surf[i]);
+		SDL_FreeSurface(tmp[i]);
+	}
+	free(tmp);
+	free(surf);
 }
 
 unsigned int	*array_ret(void)
@@ -48,13 +62,6 @@ unsigned int	*array_ret(void)
 								SDL_PIXELFORMAT_ARGB8888, 0);
 	len = surf[0]->pitch * surf[0]->h;
 	array = get_textures(surf, len);
-	i = -1;
-	while (++i < 4)
-	{
-		SDL_FreeSurface(surf[i]);
-		SDL_FreeSurface(tmp[i]);
-	}
-	free(tmp);
-	free(surf);
+	clean_trash(surf, tmp);
 	return (array);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   modes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/06/09 01:29:30 by vvinogra          #+#    #+#             */
-/*   Updated: 2018/06/09 01:37:55 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/11 20:44:59 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	choose_mode(t_view *view)
 {
 	if (view->server_client == Server)
 		server_send_get_info(view);
-	else 
+	else
 	{
 		while (view->exit_loop == 1)
 		{
@@ -29,7 +29,6 @@ void	choose_mode(t_view *view)
 		cl_releasing(view);
 		clean_staff(view);
 	}
-	// system("leaks RT");
 }
 
 void	initing_mode(t_view *view, const char *const filename)

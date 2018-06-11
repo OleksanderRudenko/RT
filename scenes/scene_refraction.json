@@ -1,0 +1,84 @@
+{
+	"figures":
+	[
+    {
+          "type": "plane",
+          "normale": [0.0, -1.0, 0.0],
+          "point": [0, -3, 0],
+          "color": "0xDB94C6",
+          "reflection": 100,
+          "mirror": 1
+      },
+      {
+          "type": "//plane",
+          "normale": [0.0, -1.0, 0.0],
+          "point": [0, 3, 0],
+          "color": "0xDB94C6",
+          "reflection": 100,
+          "mirror": 1
+      },
+      {
+          "type": "plane",
+          "normale": [0.0, 0.0, 1.0],
+          "point": [0, 0, 20],
+          "color": "0xDB94C6",
+          "reflection": 0,
+          "mirror": 1
+      },
+      {
+          "type": "plane",
+          "normale":[1, 0, 0],
+          "point": [5, 0, 0],
+          "color": "0xDB94C6",
+          "reflection": 0,
+          "mirror": 1
+      },
+      {
+          "type": "plane",
+          "normale":[1, 0, 0],
+          "point": [-5, 0, 0],
+          "color": "0xDB94C6",
+          "reflection": 0,
+          "mirror": 1
+      },
+		  {
+      		"type": "sphere",
+      		"center": [0, 0, 10],
+      		"radius": 2,
+      		"color": "0xffffff",
+      		"refraction": 100
+    	},
+      {
+          "type": "cone",
+          "start": [0.0, 0.0, 7],
+          "vector": [0.0, 1.0, 0.0],
+          "radius": 0.8,
+          "color": "0xD0863D",
+          "refraction": 100
+    }
+	],
+	"lights":
+	[
+		{
+      		"type": "point",
+      		"position": [-3.0, 0.0, 0.0],
+      		"intensity": 0.5
+    	},
+    	{
+      		"type": "point",
+      		"position": [3.0, 0.0, 0.0],
+      		"intensity": 0.5
+    	},
+      {
+          "type": "direction",
+          "position": [1.0, 0.0, 10.0],
+          "direction": [0.0, 0.0, 1.0],
+          "intensity": 0.3
+      }
+	],
+	"cam":
+	{
+		  "position": [0.0, 0.0, -20.0],
+    	"rotation": [0.0, 0.0, 0.0]
+	}
+}

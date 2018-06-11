@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abutok <abutok@student.unit.ua>            +#+  +:+       +#+        */
+/*   By: ataranov <ataranov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:19:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/03/16 10:19:00 by abutok           ###   ########.fr       */
+/*   Updated: 2018/06/11 20:30:36 by ataranov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,5 @@ t_vector	get_default_vector(char ch)
 		return ((t_vector){0, 1, 0});
 	if (ch == 'x')
 		return ((t_vector){1, 0, 0});
-	//DELETE AFTER DEBUG
-	ft_putstr("ERROR: file vector.c; function get_default_vector, because numer ch = ");
-	ft_putnbr(ch);
-	write(1, "\n", 1);
-	exit(0);
-	//END DELETE
 	return ((t_vector){0, 0, 0});
 }

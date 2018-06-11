@@ -7,28 +7,32 @@
       		"radius": 2,
       		"color": "0xffffff",
       		"reflection": 10,
-      		"mirror": 1
+      		"mirror": 1,
+          "texture": 5
     	},
     	{
       		"type": "sphere",
       		"center": [-3, 0, 4],
       		"radius": 1,
       		"color": "0xfffff",
-      		"reflection": 10
+      		"reflection": 10,
+          "texture" : 2
     	},
     	{
       		"type": "sphere",
       		"center": [-1, -1, -2],
       		"radius": 0.5,
       		"color": "0xffffff",
-      		"reflection": 10
+      		"reflection": 10,
+          "texture" : 4
     	},
     	{
       		"type": "sphere",
       		"center": [2, 0, -2],
       		"radius": 0.2,
       		"color": "0xffffff",
-      		"reflection": 10
+      		"reflection": 10,
+          "texture" : 3
     	},
     	{
       		"type": "elipsoid",
@@ -36,7 +40,7 @@
       		"rotation": [2, 0, -2],
       		"radius": 0.2,
       		"rdistance": 0.6,
-      		"color": "0xffffff",
+      		"color": "0xfffff",
       		"reflection": 10
     	}
 	],
@@ -51,7 +55,13 @@
       		"type": "point",
       		"position": [3.0, 0.0, 0.0],
       		"intensity": 0.5
-    	}
+    	},
+      {
+          "type": "direction",
+          "position": [0.0, 0.0, 10.0],
+          "direction": [0.0, 0.0, 1.0],
+          "intensity": 0.3
+      }
 	],
 	"cam":
 	{
