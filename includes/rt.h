@@ -6,7 +6,7 @@
 /*   By: vvinogra <vvinogra@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 10:12:00 by abutok            #+#    #+#             */
-/*   Updated: 2018/06/10 20:55:52 by vvinogra         ###   ########.fr       */
+/*   Updated: 2018/06/11 19:21:22 by vvinogra         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <errno.h>
 # include <stdio.h>
 # include <mlx.h>
+# include <time.h>
 # include <math.h>
 # include <fcntl.h>
 # include <sys/socket.h>
