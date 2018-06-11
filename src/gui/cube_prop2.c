@@ -30,4 +30,8 @@ void	cube_prop3(t_view *s)
 	s->cub.cu_tex[11] = create_text(s, "Texture-id", 2, 32);
 	s->cub.cu_pr_rect[11] = make_rect(120, 750, 60, 32);
 	s->cub.cu_pr[11] = tf(s, 0, 2, 32);
+	s->cub.cu_rect[12] = make_rect(10, 800, 90, 32);
+	s->cub.cu_tex[12] = create_text(s, "Refraction", 2, 32);
+	s->cub.cu_pr_rect[12] = make_rect(120, 800, 60, 32);
+	s->cub.cu_pr[12] = tf(s, 0, 2, 32);
 }

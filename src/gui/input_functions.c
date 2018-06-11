@@ -66,7 +66,9 @@ int		refract_val(void)
 	if (input == NULL)
 		return (-1);
 	num = atof(input);
-	if (num > 200 && num < -1)
+	if (num < -1)
 		return (-1);
+	if (num > 200)
+		return (200);
 	return (num);
 }

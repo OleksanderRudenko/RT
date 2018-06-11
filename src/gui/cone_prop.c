@@ -14,9 +14,6 @@
 
 static inline void	cone_prop2(t_view *s)
 {
-	s->con.cn_rect[4] = make_rect(80, 400, 100, 32);
-	s->con.cn_tex[4] = create_text(s, "Rotate-X", 2, 32);
-	s->con.cn_pr_rect[4] = make_rect(120, 400, 60, 32);
 	s->con.cn_prop[4] = NULL;
 	s->con.cn_rect[5] = make_rect(80, 450, 100, 32);
 	s->con.cn_tex[5] = create_text(s, "Rotate-Y", 2, 32);
@@ -38,6 +35,10 @@ static inline void	cone_prop2(t_view *s)
 	s->con.cn_tex[9] = create_text(s, "Texture-id", 2, 32);
 	s->con.cn_pr_rect[9] = make_rect(120, 650, 60, 32);
 	s->con.cn_prop[9] = tf(s, 0, 2, 32);
+	s->con.cn_rect[10] = make_rect(10, 700, 90, 32);
+	s->con.cn_tex[10] = create_text(s, "Refraction", 2, 32);
+	s->con.cn_pr_rect[10] = make_rect(120, 700, 60, 32);
+	s->con.cn_prop[10] = tf(s, 0, 2, 32);
 }
 
 void				cone_prop(t_view *s)
@@ -62,6 +63,9 @@ void				cone_prop(t_view *s)
 	s->con.cn_tex[3] = create_text(s, "Reflection", 2, 32);
 	s->con.cn_pr_rect[3] = make_rect(120, 350, 60, 32);
 	s->con.cn_prop[3] = tf(s, 0, 2, 32);
+	s->con.cn_rect[4] = make_rect(80, 400, 100, 32);
+	s->con.cn_tex[4] = create_text(s, "Rotate-X", 2, 32);
+	s->con.cn_pr_rect[4] = make_rect(120, 400, 60, 32);
 	cone_prop2(s);
 }
 
@@ -90,6 +94,7 @@ void				init_cone_prop(t_view *s)
 	s->con.cn_prop[7] = tf(s, s->space->cl_figures[s->rr.fl.y].radius, 2, 32);
 	s->con.cn_prop[8] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
 	s->con.cn_prop[9] = tf(s, s->space->cl_figures[s->rr.fl.y].texture, 2, 32);
+	s->con.cn_prop[10] = tf(s, s->space->cl_figures[s->rr.fl.y].refract, 2, 32);
 }
 
 void				print_cone_prop(t_view *s)

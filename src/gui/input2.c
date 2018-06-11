@@ -29,6 +29,7 @@ void	save_cone(t_view *s, int n)
 	n == 7 ? s->space->cl_figures[s->rr.fl.y].radius = par_input() : 0;
 	n == 8 ? s->space->cl_figures[s->rr.fl.y].mirror = mirror_val() : 0;
 	n == 9 ? s->space->cl_figures[s->rr.fl.y].texture = texture_val() : 0;
+	n == 10 ? s->space->cl_figures[s->rr.fl.y].refract = refract_val() : 0;
 	redraw(s);
 }
 
@@ -87,5 +88,6 @@ void	save_elips(t_view *s, int n)
 		par_input(), n - 5) : 0;
 	n == 8 ? s->space->cl_figures[s->rr.fl.y].rdistance = par_input() : 0;
 	n == 9 ? s->space->cl_figures[s->rr.fl.y].mirror = mirror_val() : 0;
+	n == 10 ? s->space->cl_figures[s->rr.fl.y].refract = refract_val() : 0;
 	redraw(s);
 }

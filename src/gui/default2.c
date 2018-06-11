@@ -27,6 +27,7 @@ void	default_elipsoid_init(t_view *view)
 	elips->rdistance = 2.0;
 	new_figure->color = 0xff;
 	new_figure->reflection = 20;
+	new_figure->refract = -1;
 	new_figure->next = NULL;
 	default_helper_figures(view, new_figure);
 }

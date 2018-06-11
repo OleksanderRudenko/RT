@@ -27,6 +27,9 @@ unsigned int	texture_sphere(float3 normal, __global unsigned int *texture, t_cl_
 		case 4:
 			lol = 3 * kek;
 			break;
+		case 5:
+			lol = 4 * kek;
+			break;
 		break;
 	}
 	// printf("%f %f %f\n ", normal.x ,normal.y, normal.z);

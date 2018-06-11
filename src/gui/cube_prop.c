@@ -89,6 +89,7 @@ void				init_cube_prop(t_view *s)
 	s->cub.cu_pr[9] = tf(s, s->space->cl_figures[s->rr.fl.y].scale.z, 2, 32);
 	s->cub.cu_pr[10] = tf(s, s->space->cl_figures[s->rr.fl.y].mirror, 2, 32);
 	s->cub.cu_pr[11] = tf(s, s->space->cl_figures[s->rr.fl.y].texture, 2, 32);
+	s->cub.cu_pr[12] = tf(s, s->space->cl_figures[s->rr.fl.y].refract, 2, 32);
 }
 
 void				print_cube_prop(t_view *s)

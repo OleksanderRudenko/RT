@@ -27,7 +27,7 @@ void	set_arguments(t_view *v)
 	cl_set_arg(v, &cam_v, sizeof(cl_float3), 4);
 	cl_set_arg(v, &cam_o, sizeof(cl_float3), 5);
 	cl_set_arg(v, &v->space->antialiasing, sizeof(int), 6);
-	cl_set_mem_arg(v, v->array, (sizeof(unsigned int) * (1020 * 256 * 4)), 7);
+	cl_set_mem_arg(v, v->array, (sizeof(unsigned int) * (1020 * 256 * 5)), 7);
 	cl_set_arg(v, &v->cl.output_buffer, sizeof(cl_mem), 8);
 	cl_set_arg(v, &v->server_client, sizeof(int), 9);
 }

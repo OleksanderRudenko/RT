@@ -24,8 +24,8 @@ void		del_list(t_view *s)
 {
 	t_figure	*fig;
 	t_figure	*lol;
-	t_light 	*lit;
-	t_light 	*tmp;
+	t_light		*lit;
+	t_light		*tmp;
 
 	fig = s->space->figures;
 	lit = s->space->lights;
