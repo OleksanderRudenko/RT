@@ -14,8 +14,6 @@
 
 void	init_sdl(t_view *s)
 {
-	SDL_Surface *logo;
-
 	if (SDL_Init(SDL_INIT_EVERYTHING) < 0 || TTF_Init() < 0)
 		sdl_init_err();
 	if (IMG_Init(IMG_INIT_PNG) < 0)
@@ -28,9 +26,9 @@ void	init_sdl(t_view *s)
 		300, 1000, SDL_WINDOW_OPENGL);
 	s->win[3] = SDL_CreateWindow("Options-Line", SDL_WINDOWPOS_CENTERED, 100,
 		1000, 200, SDL_WINDOW_OPENGL);
-	if (!(logo = IMG_Load("img/rt_logo.png")))
+	if (!(s->rr.logo = IMG_Load("img/rt_logo.png")))
 		sdl_img_err();
-	SDL_SetWindowIcon(s->win[1], logo);
+	SDL_SetWindowIcon(s->win[1], s->rr.logo);
 	s->win_surface = SDL_GetWindowSurface(s->win[0]);
 	s->buff = s->win_surface->pixels;
 	s->exit_loop = 1;

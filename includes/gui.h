@@ -190,6 +190,7 @@ typedef struct		s_gui
 	SDL_Texture		**but_off;
 	Uint32			select_flag;
 	t_num			fl;
+	SDL_Surface		*logo;
 }					t_gui;
 
 void				sdl_init_err(void);

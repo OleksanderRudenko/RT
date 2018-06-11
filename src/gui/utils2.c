@@ -16,21 +16,36 @@ void		delete_init_cl(t_view *s)
 {
 	free(s->space->cl_figures);
 	free(s->space->cl_lights);
+	free(s->space->cl_figtmp);
+	free(s->space->cl_ligtmp);
 }
 
 void		del_list(t_view *s)
 {
 	t_figure	*fig;
 	t_figure	*lol;
+	t_light 	*lit;
+	t_light 	*tmp;
 
 	fig = s->space->figures;
+	lit = s->space->lights;
 	while (fig)
 	{
+		free(fig->figure);
 		lol = fig->next;
 		free(fig);
 		fig = lol;
 	}
+	while (lit)
+	{
+		tmp = lit->next;
+		free(lit);
+		lit = tmp;
+	}
 	s->space->figures = NULL;
+	s->space->lights = NULL;
+	free(s->space->cam);
+	free(s->space);
 }
 
 int			select_num(t_view *s)
@@ -70,7 +85,7 @@ char		*ft_ftoa(double value)
 	nb = (int)value;
 	arr = ft_itoa(nb);
 	ft_strcat(arr, ".");
-	point_part = (value - nb) * 100;
+	point_part = (value - nb) * 1000;
 	point_part = point_part < 0 ? point_part * -1 : point_part;
 	arr2 = ft_itoa(point_part);
 	tmp = arr;

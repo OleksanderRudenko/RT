@@ -34,7 +34,6 @@ void	view_init(t_view *view, const char *filename)
 	object_default_init(view);
 	select_init(view);
 	light_list_init(view);
-	// ok_button_init(view);
 }
 
 
@@ -85,6 +84,8 @@ int			main(int argc, char **argv)
 	initing_mode(&view, argv[1]);
 	choose_mode(&view);
 
-	/*destroy texture..., cleaning staff HERE*/
+	SDL_FreeSurface(view.rr.logo);
+	free(view.array);
+	system("leaks RT");
 	return (0);
 }

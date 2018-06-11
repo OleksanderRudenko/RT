@@ -15,41 +15,46 @@
 unsigned int	*get_textures(SDL_Surface **surf, int len)
 {
 	unsigned int	*array;
+	unsigned int	*tmp;
 
 	array = (unsigned int *)malloc(sizeof(unsigned int) * (len * 5));
 	ft_memcpy(array, surf[0]->pixels, len);
 	ft_memcpy(&array[len], surf[1]->pixels, len);
 	ft_memcpy(&array[len * 2], surf[2]->pixels, len);
 	ft_memcpy(&array[len * 3], surf[3]->pixels, len);
-	ft_memcpy(&array[len * 4], perlin_noise(), len);
+	tmp = perlin_noise();
+	ft_memcpy(&array[len * 4], tmp, len);
+	free(tmp);
 	return (array);
 }
 
 unsigned int	*array_ret(void)
 {
 	SDL_Surface		**surf;
+	SDL_Surface		**tmp;
 	unsigned int	*array;
 	int				i;
 	int				len;
 
 	surf = (SDL_Surface **)malloc(sizeof(SDL_Surface*) * 4);
+	tmp = (SDL_Surface **)malloc(sizeof(SDL_Surface*) * 4);
 	surf[0] = get_valid_texture("img/one.jpeg");
 	surf[1] = get_valid_texture("img/two.jpeg");
 	surf[2] = get_valid_texture("img/three.jpeg");
 	surf[3] = get_valid_texture("img/four.jpeg");
-	// if (!surf[0] || !surf[1] || !surf[2] || !surf[3])
-	// 	sdl_init_err();
 	i = -1;
 	while (++i < 4)
-		surf[i] = SDL_ConvertSurfaceFormat(surf[i],
+		tmp[i] = SDL_ConvertSurfaceFormat(surf[i],
 								SDL_PIXELFORMAT_ARGB8888, 0);
 	len = surf[0]->pitch * surf[0]->h;
-	printf("%d\n", surf[0]->pitch);
-	printf("%d\n", surf[0]->h);
 	array = get_textures(surf, len);
-	SDL_FreeSurface(surf[0]);
-	SDL_FreeSurface(surf[1]);
-	SDL_FreeSurface(surf[2]);
-	SDL_FreeSurface(surf[3]);
+	i = -1;
+	while (++i < 4)
+	{
+		SDL_FreeSurface(surf[i]);
+		SDL_FreeSurface(tmp[i]);
+	}
+	free(tmp);
+	free(surf);
 	return (array);
 }

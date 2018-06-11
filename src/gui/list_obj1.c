@@ -97,5 +97,6 @@ void	clean_list_obj(t_view *s)
 		}
 		i++;
 	}
+	free(s->l_obj.obj_tex);
 	free(s->l_obj.obj_rect);
 }

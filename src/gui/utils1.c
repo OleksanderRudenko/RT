@@ -59,6 +59,7 @@ void	open_scene(t_view *s)
 		return ;
 	}
 	ft_bzero(s->win_surface->pixels, HEIGHT * WIDTH * 4);
+	clean_list_obj(s);
 	delete_init_cl(s);
 	del_list(s);
 	space_init(name, s);
