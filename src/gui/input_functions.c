@@ -46,7 +46,7 @@ int		texture_val(void)
 	const char	*input;
 	int			num;
 
-	input = tinyfd_inputBox("", "Mirror or not ?", "0");
+	input = tinyfd_inputBox("", "Texture or not ?", "0");
 	if (input == NULL)
 		return (0.0);
 	num = atof(input);
