@@ -31,6 +31,10 @@ void	triangle_init_prop2(t_view *s)
 
 void	triangle_prop3(t_view *s)
 {
+	s->tri.tri_rect[10] = make_rect(10, 700, 60, 32);
+	s->tri.tri_tex[10] = create_text(s, "Mirror", 2, 32);
+	s->tri.tri_pr_rect[10] = make_rect(120, 700, 60, 32);
+	s->tri.tri_prop[10] = tf(s, 0, 2, 32);
 	s->tri.tri_rect[11] = make_rect(10, 750, 90, 32);
 	s->tri.tri_tex[11] = create_text(s, "Refraction", 2, 32);
 	s->tri.tri_pr_rect[11] = make_rect(120, 750, 60, 32);
