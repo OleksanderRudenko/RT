@@ -1,7 +1,7 @@
 #include "rt_h.cl"
 
 #define MAX_MIRROR_ITERS 5
-#define NO_REFRACTION 101
+#define NO_REFRACTION -1
 
 float3	calc_reflect_ray(float3 ray_vector, float3 normale, float3 p)
 {
@@ -27,7 +27,7 @@ float3	calc_refract_ray(float3 ray_vector, float3 normal, float3 intersection, f
 	float3	tmp1;
 	float3	tmp2;
 
-	n = 1. * ior / 100.;
+	n = 1. * (ior - 100) / 100.;
 	ray_vector *= -1;
 	cos1 = ray_vector.x * normal.x + ray_vector.y * normal.y + ray_vector.z * normal.z;
 	ray_vector *= -1;
