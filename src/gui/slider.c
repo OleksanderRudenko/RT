@@ -19,18 +19,18 @@ void	init_slider(t_view *s)
 	s->sl[0] = (t_slider *)malloc(sizeof(t_slider));
 	s->sl[1] = (t_slider *)malloc(sizeof(t_slider));
 	s->sl[2] = (t_slider *)malloc(sizeof(t_slider));
-	s->sl[0]->line = get_tex("img/line.bmp", s->rr.rend[2]);
+	s->sl[0]->line = get_tex("img/red.png", s->rr.rend[2]);
 	s->sl[0]->slider_but = get_tex("img/1.png", s->rr.rend[2]);
 	s->sl[0]->line_rect = make_rect(0, 10, 255, 10);
 	s->sl[0]->slider_rect = make_rect(0, 5, 11, 20);
-	s->sl[1]->line = get_tex("img/line.bmp", s->rr.rend[2]);
+	s->sl[1]->line = get_tex("img/green.png", s->rr.rend[2]);
 	s->sl[1]->slider_but = get_tex("img/1.png", s->rr.rend[2]);
 	s->sl[1]->line_rect = make_rect(0, 50, 255, 10);
 	s->sl[1]->slider_rect = make_rect(10, 45, 11, 20);
 	s->sl[2]->line = get_tex("img/line.bmp", s->rr.rend[2]);
 	s->sl[2]->slider_but = get_tex("img/1.png", s->rr.rend[2]);
-	s->sl[2]->line_rect = make_rect(0, 100, 255, 11);
-	s->sl[2]->slider_rect = make_rect(0, 95, 10, 20);
+	s->sl[2]->line_rect = make_rect(0, 90, 255, 11);
+	s->sl[2]->slider_rect = make_rect(0, 85, 10, 20);
 }
 
 void	display_colored_rect(t_view *s)
