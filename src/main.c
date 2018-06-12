@@ -85,6 +85,5 @@ int					main(int argc, char **argv)
 	choose_mode(&view);
 	SDL_FreeSurface(view.rr.logo);
 	free(view.array);
-	system("leaks RT");
 	return (0);
 }

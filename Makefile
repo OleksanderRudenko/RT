@@ -49,7 +49,7 @@ GUIDIR = ./src/gui/
 CLIENT_SERVERDIR = ./src/client_server/
 
 #	Source files
-SRCFILES = main.c do_rt.c space.c solve_cubic.c solve_quatric.c modes.c
+SRCFILES = main.c do_rt.c space.c modes.c
 COLORFILES = color.c
 FIGUREFILES = fsphere.c fplane.c fcylinder.c fcone.c ftriangle.c figure.c \
 				fcube.c fquadrate.c fparaboloid.c felipsoid.c rotate_figure.c f_pos.c
@@ -106,6 +106,7 @@ PARSONINCLUDE = ./parson
 all: $(LIBFT) $(PARSON) $(NAME)
 
 $(NAME): $(BINDIR) $(BIN)
+	@echo "\033[31;1mCompilation of RT\033[0m"
 	@$(GCC) $(LINKLIB) -o $(NAME) $(BIN) -I $(LIBFTINCLUDE) -I $(INCLUDE) \
 		-I $(PARSONINCLUDE)
 
@@ -138,10 +139,10 @@ $(BINDIR)%.o: $(OPENCLDIR)%.c $(HEADER_RELATION)
 	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(CLIENT_SERVERDIR)%.c $(HEADER_RELATION)
-	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 $(BINDIR)%.o: $(EFFECTSDIR)%.c
-	$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
+	@$(GCC) -c -I $(INCLUDE) -I $(LIBFTINCLUDE) -I $(PARSONINCLUDE) $< -o $@
 
 norm:
 	norminette $(addprefix $(SRCDIR), $(SRCFILES))
@@ -174,5 +175,4 @@ $(LIBFT):
 	@make -C ./libft/
 
 $(PARSON):
-	@echo "\033[33;1mCompilation of parson...\033[0m"
 	@make -C ./parson/
